@@ -1,0 +1,12 @@
+# Business documents (not part of the site)
+context/
+*.docx
+*.png
+
+# OS / editor
+.DS_Store
+.vscode/
+.claude/
+
+# Docs folder (plans/specs only used locally)
+docs/

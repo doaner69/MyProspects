@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyProspects — Know Who's On Your Website. By Name.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav id="site-nav"></nav>
+  <main class="page-top">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero-section section-dark glow-blue glow-amber" style="--blue-glow:rgba(0,180,255,0.1);--amber-glow:rgba(255,179,0,0.08);">
+      <div class="container" style="text-align:center;max-width:900px;">
+        <div data-fade>
+          <p class="label-tag" style="margin-bottom:1.5rem;">Person-Level Identity Resolution</p>
+          <h1 class="heading-hero" style="margin-bottom:1.5rem;">
+            Know Who's On Your Website.<br>
+            <span style="color:var(--blue);">By Name.</span>
+          </h1>
+          <p class="body-lg" style="color:var(--text-muted);max-width:640px;margin:0 auto 2.5rem;">
+            MyProspects identifies the actual person visiting your website — name, email, company, and intent — without form fills, logins, or cookies. 50%+ resolution rate. Under 100ms.
+          </p>
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+            <a href="/demo.html" class="btn btn-primary">Book a Demo →</a>
+            <a href="/product.html" class="btn btn-secondary">See How It Works</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat Strip -->
+      <div class="container" style="margin-top:4rem;" data-fade>
+        <div class="stat-strip">
+          <div class="stat-item">
+            <div class="stat-number" data-counter data-target="4.5" data-suffix="B+">4.5B+</div>
+            <div class="body-md" style="color:var(--text-muted);margin-top:0.25rem;font-size:0.875rem;">Verified Email Records</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-counter data-target="50" data-suffix="%+">50%+</div>
+            <div class="body-md" style="color:var(--text-muted);margin-top:0.25rem;font-size:0.875rem;">Visitor Resolution Rate</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-counter data-target="35" data-suffix="B">35B</div>
+            <div class="body-md" style="color:var(--text-muted);margin-top:0.25rem;font-size:0.875rem;">Daily Intent Signals</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">&lt;100<span style="font-size:1rem;">ms</span></div>
+            <div class="body-md" style="color:var(--text-muted);margin-top:0.25rem;font-size:0.875rem;">P99 API Latency</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRUST BAR ===================== -->
+    <section class="section-light" style="padding:2rem 0;overflow:hidden;">
+      <div style="display:flex;align-items:center;gap:1.5rem;overflow:hidden;">
+        <div class="marquee-track" id="trust-marquee">
+          <!-- First copy -->
+          <div style="display:flex;align-items:center;gap:3rem;flex-shrink:0;">
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">SOC2 Type II</span>
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">GDPR Compliant</span>
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">CCPA Compliant</span>
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">IAB TCF Registered</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">Google ADX</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">The Trade Desk</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">Xandr</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">DV360</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">Amazon DSP</span>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div style="display:flex;align-items:center;gap:3rem;flex-shrink:0;">
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">SOC2 Type II</span>
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">GDPR Compliant</span>
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">CCPA Compliant</span>
+            <span class="badge" style="font-size:0.8125rem;padding:0.375rem 0.875rem;border-color:var(--border-light);color:#5A6A7A;">IAB TCF Registered</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">Google ADX</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">The Trade Desk</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">Xandr</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">DV360</span>
+            <span style="color:#5A6A7A;font-weight:600;font-size:0.875rem;">Amazon DSP</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROBLEM ===================== -->
+    <section class="section-dark section-padding glow-blue">
+      <div class="container">
+        <div class="problem-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" data-fade>
+          <div>
+            <p class="label-tag" style="margin-bottom:1rem;">The Dark Funnel Problem</p>
+            <h2 class="heading-section" style="margin-bottom:1.5rem;">
+              95% of your visitors leave<br>without a trace.
+            </h2>
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:1.5rem;">
+              Every day, high-intent buyers research your product, visit your website, and vanish. No form fill. No cookie match. No record.
+            </p>
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:2rem;">
+              MyProspects resolves anonymous traffic to named individuals in real time — giving your team the who, not just the how many.
+            </p>
+            <a href="/product.html" class="btn btn-secondary">See How Resolution Works →</a>
+          </div>
+          <!-- Visual: anonymous → identified -->
+          <div style="background:var(--surface);border:1px solid var(--border-dark);border-radius:1rem;padding:2rem;">
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+              <!-- Anonymous rows -->
+              <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem;border-radius:0.5rem;background:rgba(255,255,255,0.03);">
+                <div style="width:2rem;height:2rem;border-radius:50%;background:var(--border-dark);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.75rem;color:var(--text-muted);">?</span>
+                </div>
+                <div style="flex:1;">
+                  <div style="height:0.5rem;background:var(--border-dark);border-radius:0.25rem;width:60%;margin-bottom:0.375rem;"></div>
+                  <div style="height:0.375rem;background:var(--border-dark);border-radius:0.25rem;width:40%;"></div>
+                </div>
+                <span style="font-size:0.75rem;color:var(--text-muted);">Anonymous</span>
+              </div>
+              <!-- Arrow -->
+              <div style="text-align:center;color:var(--blue);font-size:1.25rem;">↓ MyProspects</div>
+              <!-- Identified rows -->
+              <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem;border-radius:0.5rem;background:rgba(0,180,255,0.06);border:1px solid rgba(0,180,255,0.15);">
+                <div style="width:2rem;height:2rem;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;color:#000;font-weight:700;">JD</span>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:0.875rem;font-weight:600;color:var(--text-on-dark);">James Dawson</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">VP Marketing · Acme Corp · james@acme.com</div>
+                </div>
+                <span style="font-size:0.75rem;color:var(--blue);font-weight:600;">✓ Identified</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem;border-radius:0.5rem;background:rgba(0,180,255,0.06);border:1px solid rgba(0,180,255,0.15);">
+                <div style="width:2rem;height:2rem;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;color:#000;font-weight:700;">SL</span>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:0.875rem;font-weight:600;color:var(--text-on-dark);">Sarah Lin</div>
+                  <div style="font-size:0.75rem;color:var(--text-muted);">Director Demand Gen · TechFlow · sarah@techflow.io</div>
+                </div>
+                <span style="font-size:0.75rem;color:var(--blue);font-weight:600;">✓ Identified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOLUTIONS TABS ===================== -->
+    <section class="section-light section-padding">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:3rem;" data-fade>
+          <p class="label-tag" style="margin-bottom:1rem;color:var(--blue);">Built For Every Market</p>
+          <h2 class="heading-section" style="color:var(--text-on-light);">One platform. Four verticals.</h2>
+        </div>
+
+        <div data-tabs-container data-fade>
+          <div class="tab-list">
+            <button class="tab-btn active" data-tab="b2b">B2B Sales &amp; Marketing</button>
+            <button class="tab-btn" data-tab="recruitment">Recruitment</button>
+            <button class="tab-btn" data-tab="b2c">B2C &amp; Consumer</button>
+            <button class="tab-btn" data-tab="nonprofit">Nonprofit</button>
+          </div>
+
+          <div class="tab-panel active" data-tab-panel="b2b">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+              <div>
+                <p style="font-size:0.8125rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;">B2B Sales &amp; Marketing</p>
+                <h3 style="font-size:1.75rem;font-weight:700;line-height:1.2;color:var(--text-on-light);margin-bottom:1rem;">Stop guessing who's researching you.</h3>
+                <p style="color:#5A6A7A;line-height:1.65;margin-bottom:1.5rem;">Identify the exact VP of Marketing or Director of Demand Gen visiting your site — before they ever fill out a form. See which pages they visited, how long they stayed, and what they're actively researching across the web.</p>
+                <a href="/solutions/b2b.html" class="btn btn-secondary-light">Explore B2B Solution →</a>
+              </div>
+              <div class="card-light">
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--blue);font-size:1.25rem;">✓</span>
+                    <div><strong>Person-level identity</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">Name, email, company, title — not just account</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--blue);font-size:1.25rem;">✓</span>
+                    <div><strong>Off-domain intent signals</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">See who's researching your category before they visit</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--blue);font-size:1.25rem;">✓</span>
+                    <div><strong>0–100 precision scoring</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">Not high/medium/low — exact intent score per person</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-tab-panel="recruitment">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+              <div>
+                <p style="font-size:0.8125rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;">Recruitment</p>
+                <h3 style="font-size:1.75rem;font-weight:700;line-height:1.2;color:var(--text-on-light);margin-bottom:1rem;">See who's visiting your careers page before they apply anywhere else.</h3>
+                <p style="color:#5A6A7A;line-height:1.65;margin-bottom:1.5rem;">Every passive candidate who visits your careers page is a warm lead. MyProspects is the only platform with a recruitment-native configuration — identify those candidates and reach them before competitors do.</p>
+                <a href="/solutions/recruitment.html" class="btn btn-secondary-light">Explore Recruitment Solution →</a>
+              </div>
+              <div class="card-light">
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--amber);font-size:1.25rem;">✓</span>
+                    <div><strong>Careers page visitor ID</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">See exactly who visited, which roles, how long</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--amber);font-size:1.25rem;">✓</span>
+                    <div><strong>Reduce cost-per-hire</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">From $2,700–$4,700+ down to a fraction</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--amber);font-size:1.25rem;">✓</span>
+                    <div><strong>Zero competitors offer this</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">First recruitment-native identity platform on market</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-tab-panel="b2c">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+              <div>
+                <p style="font-size:0.8125rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;">B2C &amp; Consumer</p>
+                <h3 style="font-size:1.75rem;font-weight:700;line-height:1.2;color:var(--text-on-light);margin-bottom:1rem;">Turn anonymous shoppers into known customers.</h3>
+                <p style="color:#5A6A7A;line-height:1.65;margin-bottom:1.5rem;">70%+ of your website visitors abandon without converting. Cookieless, privacy-first identity resolution resolves them to real people — so you can re-engage with personalized outreach instead of spray-and-pray retargeting.</p>
+                <a href="/solutions/b2c.html" class="btn btn-secondary-light">Explore B2C Solution →</a>
+              </div>
+              <div class="card-light">
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--teal);font-size:1.25rem;">✓</span>
+                    <div><strong>Cookieless resolution</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">Future-proof identity without third-party cookies</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--teal);font-size:1.25rem;">✓</span>
+                    <div><strong>Only platform for B2C</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">Competitors only serve B2B — we built for consumer brands</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--teal);font-size:1.25rem;">✓</span>
+                    <div><strong>Recover dark traffic</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">Identify and re-engage the 70% who abandon</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-tab-panel="nonprofit">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+              <div>
+                <p style="font-size:0.8125rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;">Nonprofit</p>
+                <h3 style="font-size:1.75rem;font-weight:700;line-height:1.2;color:var(--text-on-light);margin-bottom:1rem;">Know who's researching your cause before you ask for a gift.</h3>
+                <p style="color:#5A6A7A;line-height:1.65;margin-bottom:1.5rem;">Donation page abandonment, invisible donor research, shrinking volunteer pipelines — MyProspects resolves your anonymous visitors to named donors and volunteers, with Local Sphere enabling direct mail outreach.</p>
+                <a href="/solutions/nonprofit.html" class="btn btn-secondary-light">Explore Nonprofit Solution →</a>
+              </div>
+              <div class="card-light">
+                <div style="display:flex;flex-direction:column;gap:1rem;">
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--green);font-size:1.25rem;">✓</span>
+                    <div><strong>Donation page resolution</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">See who researched giving before abandoning</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--green);font-size:1.25rem;">✓</span>
+                    <div><strong>Local Sphere direct mail</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">Reach identified donors via physical mail</span></div>
+                  </div>
+                  <div style="display:flex;gap:1rem;align-items:flex-start;">
+                    <span style="color:var(--green);font-size:1.25rem;">✓</span>
+                    <div><strong>Zero competitors offer this</strong><br><span style="color:#5A6A7A;font-size:0.9375rem;">No competitor has a nonprofit-native configuration</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CAPABILITIES BENTO ===================== -->
+    <section class="section-dark section-padding">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:3rem;" data-fade>
+          <p class="label-tag" style="margin-bottom:1rem;">Platform Capabilities</p>
+          <h2 class="heading-section">Four capabilities.<br>One identity graph.</h2>
+        </div>
+        <div class="bento-grid" data-fade>
+          <div class="spotlight-card bento-6">
+            <p style="font-size:1.75rem;margin-bottom:1rem;">🎯</p>
+            <h3 class="heading-card" style="margin-bottom:0.75rem;">Identity Resolution</h3>
+            <p style="color:var(--text-muted);line-height:1.65;margin-bottom:1.5rem;">A lightweight JavaScript pixel resolves anonymous visitors to named individuals — name, email, company, pages visited — at 50%+ match rates. Live within 24–48 hours.</p>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+              <span class="badge">On-Domain Pixel</span>
+              <span class="badge">50%+ Match Rate</span>
+              <span class="badge">Cookieless</span>
+            </div>
+          </div>
+          <div class="spotlight-card bento-6">
+            <p style="font-size:1.75rem;margin-bottom:1rem;">📡</p>
+            <h3 class="heading-card" style="margin-bottom:0.75rem;">Intent Intelligence</h3>
+            <p style="color:var(--text-muted);line-height:1.65;margin-bottom:1.5rem;">Identify individuals researching your category across the open web before they visit your site. 0–100 precision scoring across 26,000+ behavioral intent topics.</p>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+              <span class="badge">Off-Domain</span>
+              <span class="badge">0–100 Scoring</span>
+              <span class="badge">26K+ Topics</span>
+            </div>
+          </div>
+          <div class="spotlight-card bento-4">
+            <p style="font-size:1.75rem;margin-bottom:1rem;">📺</p>
+            <h3 class="heading-card" style="margin-bottom:0.75rem;">Ad Serving</h3>
+            <p style="color:var(--text-muted);line-height:1.65;margin-bottom:1.5rem;">Reach identified individuals across display, CTV/OTT, audio, and social via a full-stack DSP with identity resolution built in. 1,000+ DSP integrations.</p>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+              <span class="badge">Identity-Powered DSP</span>
+              <span class="badge">CTV/OTT</span>
+            </div>
+          </div>
+          <div class="spotlight-card bento-4">
+            <p style="font-size:1.75rem;margin-bottom:1rem;">🗺️</p>
+            <h3 class="heading-card" style="margin-bottom:0.75rem;">Buyers Journey</h3>
+            <p style="color:var(--text-muted);line-height:1.65;margin-bottom:1.5rem;">Closed-loop attribution from first anonymous touch to closed-won. Map the complete research journey for every individual. Eliminate the dark funnel.</p>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+              <span class="badge">Attribution</span>
+              <span class="badge">Dark Funnel</span>
+            </div>
+          </div>
+          <div class="spotlight-card bento-4" style="background:linear-gradient(135deg,rgba(0,180,255,0.08),rgba(255,179,0,0.06));border-color:rgba(0,180,255,0.2);">
+            <p class="stat-number" style="font-size:3rem;margin-bottom:0.5rem;" data-counter data-target="491" data-suffix="M">491M</p>
+            <p style="color:var(--text-muted);font-size:0.9375rem;">US Person Profiles</p>
+            <p class="stat-number" style="font-size:2rem;margin-top:1rem;margin-bottom:0.5rem;" data-counter data-target="300" data-suffix="M">300M</p>
+            <p style="color:var(--text-muted);font-size:0.9375rem;">Phone Numbers</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOCIAL PROOF ===================== -->
+    <section class="section-light section-padding">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:3rem;" data-fade>
+          <p class="label-tag" style="margin-bottom:1rem;color:var(--blue);">Proven Results</p>
+          <h2 class="heading-section" style="color:var(--text-on-light);">Real outcomes. Real companies.</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" data-fade>
+          <div class="case-study-card">
+            <div class="case-metric" data-counter data-target="4.2" data-prefix="$" data-suffix="M">$4.2M</div>
+            <p style="font-weight:700;color:var(--text-on-light);margin-bottom:0.5rem;">Pipeline in 90 days</p>
+            <p style="font-size:0.9375rem;color:#5A6A7A;line-height:1.6;">A cybersecurity SaaS identified 3,400 named visitors in their first month. Outbound team closed 12 deals directly attributed to visitor identity data.</p>
+            <p style="margin-top:1rem;font-size:0.8125rem;font-weight:600;color:#5A6A7A;letter-spacing:0.05em;text-transform:uppercase;">B2B · Cybersecurity SaaS</p>
+          </div>
+          <div class="case-study-card">
+            <div class="case-metric">62%</div>
+            <p style="font-weight:700;color:var(--text-on-light);margin-bottom:0.5rem;">Dark traffic resolved</p>
+            <p style="font-size:0.9375rem;color:#5A6A7A;line-height:1.6;">A DTC brand resolved 62% of previously anonymous traffic and identified $340K/month in ad spend going to already-known audiences.</p>
+            <p style="margin-top:1rem;font-size:0.8125rem;font-weight:600;color:#5A6A7A;letter-spacing:0.05em;text-transform:uppercase;">B2C · DTC Brand</p>
+          </div>
+          <div class="case-study-card">
+            <div class="case-metric">89%</div>
+            <p style="font-weight:700;color:var(--text-on-light);margin-bottom:0.5rem;">Match rate achieved</p>
+            <p style="font-size:0.9375rem;color:#5A6A7A;line-height:1.6;">An enterprise fintech achieved 89% match rate, saving $1.2M annually and consolidating 6 identity vendors into one platform.</p>
+            <p style="margin-top:1rem;font-size:0.8125rem;font-weight:600;color:#5A6A7A;letter-spacing:0.05em;text-transform:uppercase;">B2B · Enterprise Fintech</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOCAL SPHERE MOAT ===================== -->
+    <section class="section-dark section-padding glow-amber">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" data-fade>
+          <div>
+            <p class="label-tag" style="color:var(--amber);margin-bottom:1rem;">The Local Sphere Advantage</p>
+            <h2 class="heading-section" style="margin-bottom:1.5rem;">
+              The only platform with<br>
+              <span style="color:var(--amber);">offline + online activation.</span>
+            </h2>
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:1.5rem;">
+              Every competitor stops at digital identity. MyProspects is powered by Local Sphere — a proprietary offline intelligence layer that adds household-level context, demographics, psychographics, and omnichannel activation.
+            </p>
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:2rem;">
+              Reach identified people across digital, CTV/OTT, radio, direct mail, and social media. No competitor can replicate this. They don't own the infrastructure.
+            </p>
+            <a href="/about.html" class="btn btn-secondary">About Local Sphere →</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div class="card-dark" style="border-left:3px solid var(--amber);">
+              <h4 style="font-weight:700;margin-bottom:0.5rem;">Offline Intelligence</h4>
+              <p style="color:var(--text-muted);font-size:0.9375rem;">Household demographics, psychographics, income range, commute radius layered onto digital identity.</p>
+            </div>
+            <div class="card-dark" style="border-left:3px solid var(--blue);">
+              <h4 style="font-weight:700;margin-bottom:0.5rem;">Omnichannel Activation</h4>
+              <p style="color:var(--text-muted);font-size:0.9375rem;">Reach identified individuals across digital, CTV/OTT, audio, direct mail, and social — all from one platform.</p>
+            </div>
+            <div class="card-dark" style="border-left:3px solid var(--teal);">
+              <h4 style="font-weight:700;margin-bottom:0.5rem;">Proprietary Moat</h4>
+              <p style="color:var(--text-muted);font-size:0.9375rem;">Stand-alone identity platforms have no offline infrastructure. Local Sphere owns and operates this layer exclusively.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FINAL CTA ===================== -->
+    <section class="section-dark section-padding glow-blue" style="text-align:center;">
+      <div class="container" style="max-width:700px;" data-fade>
+        <p class="label-tag" style="margin-bottom:1.5rem;">Get Started</p>
+        <h2 class="heading-section" style="margin-bottom:1.5rem;">Ready to see your visitors?</h2>
+        <p class="body-lg" style="color:var(--text-muted);margin-bottom:2.5rem;">
+          Install our pixel in 24–48 hours and start seeing named individuals on your website. Month-to-month contracts. 30-day free trial. No long-term commitment.
+        </p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="/demo.html" class="btn btn-primary" style="font-size:1rem;padding:0.875rem 2rem;">Book a Demo →</a>
+          <a href="/pricing.html" class="btn btn-secondary">View Pricing</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer id="site-footer"></footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

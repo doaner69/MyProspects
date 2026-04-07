@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Demo — MyProspects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Simplified header — logo only -->
+  <header style="position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 0;background:rgba(8,12,20,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-dark);">
+    <div class="container">
+      <a href="/index.html" class="nav-logo">
+        <span>My</span><span>Prospects</span>
+      </a>
+    </div>
+  </header>
+
+  <main style="padding-top:80px;min-height:100vh;background:var(--bg-dark);">
+    <div class="container" style="padding:5rem 1.5rem;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;max-width:1100px;margin:0 auto;">
+
+        <!-- LEFT: Value props -->
+        <div data-fade>
+          <p class="label-tag" style="color:var(--amber);margin-bottom:1.5rem;">30-Day Free Trial</p>
+          <h1 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;">
+            See your website visitors.<br>
+            <span style="color:var(--blue);">By name. In 48 hours.</span>
+          </h1>
+          <p class="body-lg" style="color:var(--text-muted);margin-bottom:3rem;">
+            Book a 30-minute demo and we'll show you exactly which named individuals are visiting your website today — before you commit to anything.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:1.25rem;">
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
+              <div>
+                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">See named visitors within 48 hours</p>
+                <p style="font-size:0.9375rem;color:var(--text-muted);">One-line pixel installation. No engineering required.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
+              <div>
+                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">Month-to-month contracts</p>
+                <p style="font-size:0.9375rem;color:var(--text-muted);">No long-term lock-in. Cancel anytime.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
+              <div>
+                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">30-day free trial included</p>
+                <p style="font-size:0.9375rem;color:var(--text-muted);">The product sells itself. We're confident you'll see the value.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
+              <div>
+                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">SOC2 certified, GDPR &amp; CCPA compliant</p>
+                <p style="font-size:0.9375rem;color:var(--text-muted);">Enterprise-grade privacy and security from day one.</p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:3rem;padding:1.5rem;background:var(--surface);border:1px solid var(--border-dark);border-radius:0.75rem;">
+            <p style="font-size:0.875rem;color:var(--text-muted);font-style:italic;line-height:1.65;">"We installed the pixel on a Tuesday. By Thursday we had 847 named visitors in our dashboard. Our SDR team had never seen anything like it."</p>
+            <p style="font-size:0.8125rem;font-weight:600;color:var(--text-muted);margin-top:0.75rem;letter-spacing:0.05em;text-transform:uppercase;">— Director of Demand Gen · Cybersecurity SaaS</p>
+          </div>
+        </div>
+
+        <!-- RIGHT: Calendly embed placeholder -->
+        <div data-fade style="background:var(--surface);border:1px solid var(--border-dark);border-radius:1rem;overflow:hidden;min-height:600px;display:flex;align-items:center;justify-content:center;">
+          <!-- Replace the div below with your Calendly embed script -->
+          <!-- Example: <div class="calendly-inline-widget" data-url="https://calendly.com/YOUR_LINK" style="min-width:320px;height:700px;"></div> -->
+          <!-- <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script> -->
+          <div style="text-align:center;padding:3rem;">
+            <p style="font-size:1.5rem;margin-bottom:1rem;">📅</p>
+            <p style="font-weight:700;color:white;margin-bottom:0.5rem;">Calendly Embed</p>
+            <p style="font-size:0.9375rem;color:var(--text-muted);">Replace this placeholder with your Calendly inline widget embed code.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
