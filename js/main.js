@@ -6,7 +6,7 @@ const NAV_HTML = `
 <div class="container">
   <div class="nav-inner">
     <a href="/index.html" class="nav-logo">
-      <span>My</span><span>Prospects</span>
+      <img src="/assets/images/myprospects-logo-2.png" alt="MyProspects" class="nav-logo-img">
     </a>
     <ul class="nav-links">
       <li class="nav-dropdown">
@@ -52,8 +52,8 @@ const FOOTER_HTML = `
 <div class="container">
   <div class="footer-grid">
     <div class="footer-col">
-      <div class="nav-logo" style="margin-bottom:0.75rem;font-size:1.125rem;">
-        <span>My</span><span>Prospects</span>
+      <div class="nav-logo" style="margin-bottom:0.75rem;">
+        <img src="/assets/images/myprospects-logo-2.png" alt="MyProspects" class="nav-logo-img">
       </div>
       <p style="font-size:0.9375rem;color:var(--text-muted);max-width:280px;line-height:1.65;">
         Person-level visitor identity resolution and buyer intent data — for B2B, B2C, Recruitment, and Nonprofit.

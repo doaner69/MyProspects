@@ -429,7 +429,7 @@ img { max-width: 100%; display: block; }
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1rem 0;
+  padding: 0.0rem 0 0.0rem; 
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
@@ -447,12 +447,13 @@ img { max-width: 100%; display: block; }
 }
 
 .nav-logo {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
 }
-.nav-logo span:first-child { color: var(--blue); }
-.nav-logo span:last-child { color: var(--amber); }
+.nav-logo-img {
+  height: 72px;
+  width: auto;
+}
 
 .nav-links {
   display: flex;

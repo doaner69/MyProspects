@@ -2,6 +2,7 @@
 context/
 *.docx
 *.png
+!assets/images/*.png
 
 # OS / editor
 .DS_Store
