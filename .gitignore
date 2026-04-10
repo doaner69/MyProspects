@@ -11,3 +11,4 @@ context/
 
 # Docs folder (plans/specs only used locally)
 docs/
+.vercel

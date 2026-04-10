@@ -3,91 +3,995 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book a Demo — MyProspects</title>
+  <title>Interactive Demo — MyProspects</title>
+  <meta name="description" content="Explore how MyProspects turns anonymous website traffic into named buyers, enriched profiles, activated audiences, and measurable revenue outcomes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ── Demo-specific styles ── */
+    .demo-hero { background: var(--bg-dark); padding: 8rem 0 5rem; position: relative; overflow: hidden; }
+    .demo-hero::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 700px;
+      background: radial-gradient(ellipse at center, rgba(0,180,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Persona toggle */
+    .persona-bar {
+      background: var(--surface); border-bottom: 1px solid var(--border-dark);
+      padding: 0.75rem 0; position: sticky; top: 80px; z-index: 40;
+    }
+    .persona-tabs { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+    .ptab {
+      padding: 0.5rem 1.25rem; border-radius: 2rem; border: 1px solid var(--border-dark);
+      font-size: 0.875rem; font-weight: 600; cursor: pointer; color: var(--text-muted);
+      background: transparent; transition: all 0.2s;
+    }
+    .ptab.active { background: var(--blue); border-color: var(--blue); color: #000; }
+    .ptab:hover:not(.active) { border-color: rgba(0,180,255,0.4); color: white; }
+
+    /* Step nav */
+    .step-nav {
+      background: var(--surface-2); border-bottom: 1px solid var(--border-dark);
+      padding: 0.625rem 0; position: sticky; top: calc(80px + 49px); z-index: 39;
+    }
+    .step-tabs { display: flex; justify-content: center; gap: 0; }
+    .stab {
+      display: flex; align-items: center; gap: 0.625rem;
+      padding: 0.5rem 1.5rem; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted);
+      border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .stab .step-num {
+      width: 1.375rem; height: 1.375rem; border-radius: 50%; border: 1.5px solid currentColor;
+      display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-family: var(--font-mono);
+      flex-shrink: 0;
+    }
+    .stab.active { color: var(--blue); border-bottom-color: var(--blue); }
+    .stab.done { color: var(--green); border-bottom-color: transparent; }
+    .stab.done .step-num { background: var(--green); border-color: var(--green); color: #000; }
+
+    /* Demo section shells */
+    .demo-step { padding: 6rem 0; }
+    .demo-step.light { background: var(--light-bg); color: var(--text-on-light); }
+    .demo-step.dark { background: var(--bg-dark); color: var(--text-on-dark); }
+    .demo-step.surface { background: var(--surface); color: var(--text-on-dark); }
+
+    /* UI mock shared */
+    .ui-mock {
+      background: var(--surface); border: 1px solid var(--border-dark); border-radius: 1rem;
+      overflow: hidden; font-size: 0.875rem;
+    }
+    .ui-mock.light { background: white; border: 1px solid var(--border-light); }
+    .mock-titlebar {
+      background: var(--surface-2); border-bottom: 1px solid var(--border-dark);
+      padding: 0.625rem 1rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .mock-titlebar.light { background: #F0F2F5; border-bottom-color: var(--border-light); }
+    .mock-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; }
+
+    /* Visitor row */
+    .visitor-row {
+      display: flex; align-items: center; gap: 0.875rem; padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-dark); cursor: pointer; transition: background 0.15s;
+    }
+    .visitor-row:hover { background: rgba(0,180,255,0.06); }
+    .visitor-row.selected { background: rgba(0,180,255,0.1); border-left: 3px solid var(--blue); }
+    .visitor-row:last-child { border-bottom: none; }
+    .avatar-circle {
+      width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-weight: 800; font-size: 0.6875rem; flex-shrink: 0;
+    }
+    .intent-badge {
+      font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.5rem;
+      border-radius: 2rem; letter-spacing: 0.04em; text-transform: uppercase; flex-shrink: 0;
+    }
+    .intent-high { background: rgba(0,180,255,0.15); color: var(--blue); }
+    .intent-med { background: rgba(255,179,0,0.15); color: var(--amber); }
+    .intent-warm { background: rgba(74,222,128,0.15); color: var(--green); }
+
+    /* Profile drawer */
+    .profile-drawer {
+      display: none; padding: 1.25rem; background: rgba(0,180,255,0.04);
+      border-top: 1px solid var(--border-dark); animation: fadeSlide 0.2s ease;
+    }
+    .profile-drawer.open { display: block; }
+    @keyframes fadeSlide { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+    .profile-tag {
+      display: inline-block; font-size: 0.6875rem; font-weight: 600; padding: 0.2rem 0.6rem;
+      border-radius: 2rem; border: 1px solid var(--border-dark); color: var(--text-muted); margin: 0.25rem;
+    }
+
+    /* Channel pill */
+    .channel-pill {
+      display: flex; align-items: center; gap: 0.625rem; padding: 0.875rem 1rem;
+      border: 1px solid var(--border-dark); border-radius: 0.625rem; cursor: pointer;
+      transition: all 0.2s; background: transparent;
+    }
+    .channel-pill.active { border-color: var(--blue); background: rgba(0,180,255,0.08); }
+    .channel-pill:hover:not(.active) { border-color: rgba(0,180,255,0.3); }
+    .channel-icon { width: 2rem; height: 2rem; border-radius: 0.375rem; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; flex-shrink: 0; }
+
+    /* KPI card */
+    .kpi-card {
+      background: var(--surface-2); border: 1px solid var(--border-dark); border-radius: 0.875rem;
+      padding: 1.5rem; text-align: center;
+    }
+    .kpi-num { font-family: var(--font-mono); font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+
+    /* Why panel */
+    .why-panel {
+      background: var(--surface-2); border: 1px solid var(--border-dark); border-radius: 0.875rem;
+      padding: 1.5rem;
+    }
+    .why-panel.light { background: white; border-color: var(--border-light); }
+
+    /* Before/After */
+    .baf-col { border-radius: 0.875rem; padding: 2rem; }
+    .baf-before { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+    .baf-after { background: rgba(0,180,255,0.07); border: 1px solid rgba(0,180,255,0.2); }
+    .baf-item { display: flex; gap: 0.75rem; padding: 0.625rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .baf-item:last-child { border-bottom: none; }
+
+    /* Persistent CTA */
+    #persistent-cta {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 100;
+      display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;
+      opacity: 0; transform: translateY(12px); pointer-events: none;
+      transition: all 0.35s ease;
+    }
+    #persistent-cta.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .pcta-btn {
+      display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem;
+      border-radius: 2rem; font-weight: 700; font-size: 0.875rem; cursor: pointer;
+      border: none; transition: all 0.2s; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      white-space: nowrap;
+    }
+    .pcta-primary { background: var(--blue); color: #000; }
+    .pcta-primary:hover { background: #00C8FF; }
+    .pcta-secondary { background: var(--surface-2); color: white; border: 1px solid var(--border-dark); }
+    .pcta-secondary:hover { border-color: rgba(0,180,255,0.4); }
+
+    /* Mobile sticky bar */
+    @media (max-width: 768px) {
+      body { padding-bottom: 72px; }
+      #persistent-cta { display: none; }
+      #mobile-cta-bar {
+        position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+        display: flex; gap: 0.75rem; padding: 0.875rem 1rem;
+        background: var(--surface); border-top: 1px solid var(--border-dark);
+      }
+      #mobile-cta-bar a { flex: 1; text-align: center; padding: 0.75rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.875rem; }
+      .step-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; justify-content: flex-start; padding: 0 1rem; }
+      .stab { padding: 0.5rem 1rem; }
+      .demo-step { padding: 4rem 0 6rem; }
+    }
+    @media (min-width: 769px) {
+      #mobile-cta-bar { display: none; }
+    }
+
+    /* Persona-driven text */
+    [data-persona] { display: none; }
+    [data-persona].active { display: block; }
+
+    /* Skeleton shimmer */
+    @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 400px 100%; animation: shimmer 1.5s infinite; border-radius: 0.375rem;
+    }
+
+    /* Microcopy disclaimer */
+    .microcopy { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
+  </style>
 </head>
 <body>
-  <!-- Simplified header — logo only -->
-  <header style="position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 0;background:rgba(8,12,20,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-dark);">
-    <div class="container">
-      <a href="/index.html" class="nav-logo">
-        <span>My</span><span>Prospects</span>
-      </a>
+  <nav id="site-nav"></nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section class="demo-hero page-top">
+    <div class="container" style="max-width:860px;text-align:center;position:relative;z-index:1;" data-fade>
+      <p class="label-tag" style="color:var(--blue);margin-bottom:1.5rem;">Interactive Product Demo</p>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;">
+        See how MyProspects turns<br>
+        <span style="color:var(--blue);">anonymous traffic into pipeline</span>
+      </h1>
+      <p class="body-lg" style="color:var(--text-muted);max-width:640px;margin:0 auto 2rem;">
+        Explore a guided demo built for GTM teams that want to identify real buyers, enrich intent signals, activate audiences, and measure impact.
+      </p>
+      <p class="microcopy" style="margin-bottom:2rem;">Representative data shown for demonstration purposes.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="#book" class="btn btn-primary" style="min-width:180px;">Book Live Demo →</a>
+        <a href="#step-identify" class="btn btn-secondary" style="min-width:180px;">Explore the Product ↓</a>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main style="padding-top:80px;min-height:100vh;background:var(--bg-dark);">
-    <div class="container" style="padding:5rem 1.5rem;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;max-width:1100px;margin:0 auto;">
+  <!-- ═══════════════════════════════════════════
+       ENTERPRISE TRUST STRIP
+  ═══════════════════════════════════════════ -->
+  <section style="background:var(--surface);border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark);padding:1rem 0;">
+    <div class="container">
+      <div style="display:flex;align-items:center;gap:2rem;justify-content:center;flex-wrap:wrap;">
+        <span style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4A5A6A;">Enterprise Ready</span>
+        <span style="color:var(--text-muted);font-size:0.8125rem;display:flex;align-items:center;gap:0.375rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          SOC 2 Type II
+        </span>
+        <span style="color:var(--text-muted);font-size:0.8125rem;display:flex;align-items:center;gap:0.375rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          GDPR Compliant
+        </span>
+        <span style="color:var(--text-muted);font-size:0.8125rem;display:flex;align-items:center;gap:0.375rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          CCPA Compliant
+        </span>
+        <span style="color:var(--text-muted);font-size:0.8125rem;display:flex;align-items:center;gap:0.375rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Privacy-Safe Identity
+        </span>
+        <span style="color:var(--text-muted);font-size:0.8125rem;display:flex;align-items:center;gap:0.375rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          IAB TCF Registered
+        </span>
+      </div>
+    </div>
+  </section>
 
-        <!-- LEFT: Value props -->
-        <div data-fade>
-          <p class="label-tag" style="color:var(--amber);margin-bottom:1.5rem;">30-Day Free Trial</p>
-          <h1 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem;">
-            See your website visitors.<br>
-            <span style="color:var(--blue);">By name. In 48 hours.</span>
-          </h1>
-          <p class="body-lg" style="color:var(--text-muted);margin-bottom:3rem;">
-            Book a 30-minute demo and we'll show you exactly which named individuals are visiting your website today — before you commit to anything.
-          </p>
-          <div style="display:flex;flex-direction:column;gap:1.25rem;">
-            <div style="display:flex;gap:1rem;align-items:flex-start;">
-              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
-              <div>
-                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">See named visitors within 48 hours</p>
-                <p style="font-size:0.9375rem;color:var(--text-muted);">One-line pixel installation. No engineering required.</p>
-              </div>
-            </div>
-            <div style="display:flex;gap:1rem;align-items:flex-start;">
-              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
-              <div>
-                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">Month-to-month contracts</p>
-                <p style="font-size:0.9375rem;color:var(--text-muted);">No long-term lock-in. Cancel anytime.</p>
-              </div>
-            </div>
-            <div style="display:flex;gap:1rem;align-items:flex-start;">
-              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
-              <div>
-                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">30-day free trial included</p>
-                <p style="font-size:0.9375rem;color:var(--text-muted);">The product sells itself. We're confident you'll see the value.</p>
-              </div>
-            </div>
-            <div style="display:flex;gap:1rem;align-items:flex-start;">
-              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
-              <div>
-                <p style="font-weight:700;color:white;margin-bottom:0.25rem;">SOC2 certified, GDPR &amp; CCPA compliant</p>
-                <p style="font-size:0.9375rem;color:var(--text-muted);">Enterprise-grade privacy and security from day one.</p>
-              </div>
-            </div>
+  <!-- ═══════════════════════════════════════════
+       PERSONA TOGGLE
+  ═══════════════════════════════════════════ -->
+  <div class="persona-bar">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <span style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#4A5A6A;">View demo as:</span>
+        <div class="persona-tabs">
+          <button class="ptab active" data-persona-target="demandgen">Demand Gen Leader</button>
+          <button class="ptab" data-persona-target="revops">RevOps</button>
+          <button class="ptab" data-persona-target="sales">Sales</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       STEP NAV
+  ═══════════════════════════════════════════ -->
+  <div class="step-nav">
+    <div class="step-tabs">
+      <div class="stab active" data-step="step-identify">
+        <span class="step-num">1</span>Identify Visitors
+      </div>
+      <div class="stab" data-step="step-enrich">
+        <span class="step-num">2</span>Enrich Profiles
+      </div>
+      <div class="stab" data-step="step-activate">
+        <span class="step-num">3</span>Activate Audiences
+      </div>
+      <div class="stab" data-step="step-measure">
+        <span class="step-num">4</span>Measure Outcomes
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       STEP 1: IDENTIFY VISITORS
+  ═══════════════════════════════════════════ -->
+  <section class="demo-step dark" id="step-identify">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;" data-fade>
+
+        <!-- Left: Copy + context panels -->
+        <div>
+          <p class="label-tag" style="color:var(--blue);margin-bottom:1rem;">Step 1 of 4</p>
+          <h2 style="font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;line-height:1.15;margin-bottom:1.25rem;">
+            Most teams can measure traffic.<br>
+            <span style="color:var(--blue);">Very few can see who's behind it.</span>
+          </h2>
+
+          <!-- Persona-driven copy -->
+          <div data-persona="demandgen" class="active">
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:2rem;">
+              Your campaigns are driving traffic — but 95%+ of those visitors leave without a trace. MyProspects resolves anonymous sessions to real named people: name, email, company, job title, and what they viewed.
+            </p>
           </div>
-          <div style="margin-top:3rem;padding:1.5rem;background:var(--surface);border:1px solid var(--border-dark);border-radius:0.75rem;">
-            <p style="font-size:0.875rem;color:var(--text-muted);font-style:italic;line-height:1.65;">"We installed the pixel on a Tuesday. By Thursday we had 847 named visitors in our dashboard. Our SDR team had never seen anything like it."</p>
-            <p style="font-size:0.8125rem;font-weight:600;color:var(--text-muted);margin-top:0.75rem;letter-spacing:0.05em;text-transform:uppercase;">— Director of Demand Gen · Cybersecurity SaaS</p>
+          <div data-persona="revops">
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:2rem;">
+              You're reporting on traffic volume, not buyer identity. MyProspects feeds deterministic visitor data directly into your CRM, replacing probabilistic guesswork with named records and timestamped intent signals.
+            </p>
+          </div>
+          <div data-persona="sales">
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:2rem;">
+              Your prospects visited your website and you never knew. MyProspects gives you a daily feed of named individuals who researched your product — so you can reach out with context instead of cold.
+            </p>
+          </div>
+
+          <div class="why-panel" style="margin-bottom:1rem;">
+            <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:0.625rem;">Why This Matters</p>
+            <p style="font-size:0.9375rem;color:var(--text-muted);line-height:1.6;">95% of website visitors leave without filling out a form. Identity resolution converts that lost traffic into a prioritized prospect list — without adding any friction to the buyer experience.</p>
+          </div>
+          <div class="why-panel">
+            <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.625rem;">Impact</p>
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+              <div>
+                <div style="font-family:var(--font-mono);font-size:1.375rem;font-weight:700;color:var(--blue);">3–5×</div>
+                <div style="font-size:0.8125rem;color:var(--text-muted);">More prospects without more ad spend</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-mono);font-size:1.375rem;font-weight:700;color:var(--blue);">48h</div>
+                <div style="font-size:0.8125rem;color:var(--text-muted);">To first named visitors after pixel install</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-mono);font-size:1.375rem;font-weight:700;color:var(--blue);">50%+</div>
+                <div style="font-size:0.8125rem;color:var(--text-muted);">Typical match rate on B2B traffic</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- RIGHT: Calendly embed placeholder -->
-        <div data-fade style="background:var(--surface);border:1px solid var(--border-dark);border-radius:1rem;overflow:hidden;min-height:600px;display:flex;align-items:center;justify-content:center;">
-          <!-- Replace the div below with your Calendly embed script -->
-          <!-- Example: <div class="calendly-inline-widget" data-url="https://calendly.com/YOUR_LINK" style="min-width:320px;height:700px;"></div> -->
-          <!-- <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script> -->
+        <!-- Right: Live visitor feed UI mock -->
+        <div>
+          <div class="ui-mock">
+            <div class="mock-titlebar">
+              <div class="mock-dot" style="background:#FF5F57;"></div>
+              <div class="mock-dot" style="background:#FEBC2E;"></div>
+              <div class="mock-dot" style="background:#28C840;"></div>
+              <span style="flex:1;text-align:center;font-size:0.75rem;color:var(--text-muted);">Live Visitor Feed</span>
+              <span style="font-size:0.6875rem;color:var(--green);font-family:var(--font-mono);">● LIVE</span>
+            </div>
+            <!-- Filter bar -->
+            <div style="padding:0.75rem 1rem;border-bottom:1px solid var(--border-dark);display:flex;gap:0.5rem;align-items:center;">
+              <span style="font-size:0.75rem;color:var(--text-muted);">Filter:</span>
+              <span style="font-size:0.6875rem;padding:0.2rem 0.625rem;border-radius:2rem;background:rgba(0,180,255,0.15);color:var(--blue);font-weight:600;">High Intent</span>
+              <span style="font-size:0.6875rem;padding:0.2rem 0.625rem;border-radius:2rem;background:rgba(255,255,255,0.06);color:var(--text-muted);">All</span>
+              <span style="margin-left:auto;font-size:0.75rem;color:var(--text-muted);">247 identified today</span>
+            </div>
+
+            <!-- Visitor rows (clickable) -->
+            <div id="visitor-feed">
+              <div class="visitor-row selected" onclick="toggleDrawer(this)" data-id="1">
+                <div class="avatar-circle" style="background:rgba(0,180,255,0.15);color:var(--blue);">JD</div>
+                <div style="flex:1;min-width:0;">
+                  <p style="font-weight:700;font-size:0.9375rem;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">James Dorsey</p>
+                  <p style="font-size:0.8125rem;color:var(--text-muted);">VP Marketing · Arkon Health</p>
+                </div>
+                <div style="text-align:right;flex-shrink:0;">
+                  <span class="intent-badge intent-high">High Intent</span>
+                  <p style="font-size:0.6875rem;color:var(--text-muted);margin-top:0.25rem;">2m ago</p>
+                </div>
+              </div>
+              <!-- Profile drawer for James -->
+              <div class="profile-drawer open" id="drawer-1">
+                <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1rem;">
+                  <div>
+                    <p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Email</p>
+                    <p style="font-size:0.875rem;color:white;">j.dorsey@arkonhealth.com</p>
+                  </div>
+                  <div>
+                    <p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Pages Viewed</p>
+                    <p style="font-size:0.875rem;color:white;">Pricing (3×), Product, Case Studies</p>
+                  </div>
+                  <div>
+                    <p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Time on Site</p>
+                    <p style="font-size:0.875rem;color:white;">11m 42s</p>
+                  </div>
+                </div>
+                <div>
+                  <p style="font-size:0.6875rem;color:var(--text-muted);margin-bottom:0.5rem;">Intent Signals:</p>
+                  <span class="profile-tag">Identity Resolution</span>
+                  <span class="profile-tag">B2B SaaS</span>
+                  <span class="profile-tag">Pipeline Attribution</span>
+                  <span class="profile-tag">Intent Data</span>
+                </div>
+                <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+                  <button style="padding:0.375rem 0.875rem;font-size:0.8125rem;font-weight:600;border-radius:0.375rem;background:var(--blue);color:#000;border:none;cursor:pointer;">+ Add to CRM</button>
+                  <button style="padding:0.375rem 0.875rem;font-size:0.8125rem;font-weight:600;border-radius:0.375rem;background:transparent;color:var(--blue);border:1px solid var(--blue);cursor:pointer;">Alert Sales</button>
+                </div>
+              </div>
+
+              <div class="visitor-row" onclick="toggleDrawer(this)" data-id="2">
+                <div class="avatar-circle" style="background:rgba(255,179,0,0.15);color:var(--amber);">SL</div>
+                <div style="flex:1;min-width:0;">
+                  <p style="font-weight:700;font-size:0.9375rem;color:white;">Sarah Lim</p>
+                  <p style="font-size:0.8125rem;color:var(--text-muted);">Director of Demand Gen · Stratus AI</p>
+                </div>
+                <div style="text-align:right;flex-shrink:0;">
+                  <span class="intent-badge intent-med">Medium</span>
+                  <p style="font-size:0.6875rem;color:var(--text-muted);margin-top:0.25rem;">8m ago</p>
+                </div>
+              </div>
+              <div class="profile-drawer" id="drawer-2">
+                <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1rem;">
+                  <div><p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Email</p><p style="font-size:0.875rem;color:white;">s.lim@stratus.ai</p></div>
+                  <div><p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Pages Viewed</p><p style="font-size:0.875rem;color:white;">Home, Solutions/B2B</p></div>
+                  <div><p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Time on Site</p><p style="font-size:0.875rem;color:white;">4m 18s</p></div>
+                </div>
+                <div style="margin-top:0.75rem;display:flex;gap:0.5rem;">
+                  <button style="padding:0.375rem 0.875rem;font-size:0.8125rem;font-weight:600;border-radius:0.375rem;background:var(--blue);color:#000;border:none;cursor:pointer;">+ Add to CRM</button>
+                </div>
+              </div>
+
+              <div class="visitor-row" onclick="toggleDrawer(this)" data-id="3">
+                <div class="avatar-circle" style="background:rgba(74,222,128,0.15);color:var(--green);">MK</div>
+                <div style="flex:1;min-width:0;">
+                  <p style="font-weight:700;font-size:0.9375rem;color:white;">Michael Kovacs</p>
+                  <p style="font-size:0.8125rem;color:var(--text-muted);">Head of Revenue Ops · Vertex Capital</p>
+                </div>
+                <div style="text-align:right;flex-shrink:0;">
+                  <span class="intent-badge intent-warm">Warm</span>
+                  <p style="font-size:0.6875rem;color:var(--text-muted);margin-top:0.25rem;">23m ago</p>
+                </div>
+              </div>
+              <div class="profile-drawer" id="drawer-3">
+                <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1rem;">
+                  <div><p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Email</p><p style="font-size:0.875rem;color:white;">m.kovacs@vertexcapital.com</p></div>
+                  <div><p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Pages Viewed</p><p style="font-size:0.875rem;color:white;">Product, Pricing</p></div>
+                  <div><p style="font-size:0.6875rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem;">Time on Site</p><p style="font-size:0.875rem;color:white;">6m 55s</p></div>
+                </div>
+                <div style="margin-top:0.75rem;display:flex;gap:0.5rem;">
+                  <button style="padding:0.375rem 0.875rem;font-size:0.8125rem;font-weight:600;border-radius:0.375rem;background:var(--blue);color:#000;border:none;cursor:pointer;">+ Add to CRM</button>
+                  <button style="padding:0.375rem 0.875rem;font-size:0.8125rem;font-weight:600;border-radius:0.375rem;background:transparent;color:var(--blue);border:1px solid var(--blue);cursor:pointer;">Alert Sales</button>
+                </div>
+              </div>
+
+              <!-- Skeleton rows -->
+              <div style="padding:0.875rem 1rem;border-bottom:1px solid var(--border-dark);display:flex;gap:0.875rem;align-items:center;">
+                <div class="skeleton" style="width:2rem;height:2rem;border-radius:50%;"></div>
+                <div style="flex:1;">
+                  <div class="skeleton" style="height:0.875rem;width:55%;margin-bottom:0.375rem;"></div>
+                  <div class="skeleton" style="height:0.75rem;width:38%;"></div>
+                </div>
+                <div class="skeleton" style="height:1.25rem;width:4rem;border-radius:2rem;"></div>
+              </div>
+              <div style="padding:0.875rem 1rem;display:flex;gap:0.875rem;align-items:center;">
+                <div class="skeleton" style="width:2rem;height:2rem;border-radius:50%;"></div>
+                <div style="flex:1;">
+                  <div class="skeleton" style="height:0.875rem;width:48%;margin-bottom:0.375rem;"></div>
+                  <div class="skeleton" style="height:0.75rem;width:32%;"></div>
+                </div>
+                <div class="skeleton" style="height:1.25rem;width:4rem;border-radius:2rem;"></div>
+              </div>
+            </div>
+
+            <div style="padding:0.75rem 1rem;border-top:1px solid var(--border-dark);text-align:center;">
+              <p class="microcopy">Click any row to expand profile details</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next step CTA -->
+      <div style="text-align:center;margin-top:4rem;" data-fade>
+        <a href="#step-enrich" class="btn btn-secondary">Next: Enrich Profiles →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STEP 2: ENRICH PROFILES
+  ═══════════════════════════════════════════ -->
+  <section class="demo-step light" id="step-enrich">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;" data-fade>
+
+        <!-- Left: Profile card UI mock -->
+        <div>
+          <div class="ui-mock light">
+            <div class="mock-titlebar light">
+              <div class="mock-dot" style="background:#FF5F57;"></div>
+              <div class="mock-dot" style="background:#FEBC2E;"></div>
+              <div class="mock-dot" style="background:#28C840;"></div>
+              <span style="flex:1;text-align:center;font-size:0.75rem;color:#5A6A7A;">Buyer Profile — James Dorsey</span>
+            </div>
+            <div style="padding:1.5rem;">
+              <!-- Header -->
+              <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border-light);">
+                <div style="width:3rem;height:3rem;border-radius:50%;background:#DBEAFE;color:#1D4ED8;font-weight:800;font-size:0.875rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">JD</div>
+                <div style="flex:1;">
+                  <p style="font-weight:800;font-size:1rem;color:var(--text-on-light);">James Dorsey</p>
+                  <p style="font-size:0.875rem;color:#5A6A7A;">VP Marketing · Arkon Health</p>
+                  <p style="font-size:0.8125rem;color:#5A6A7A;">j.dorsey@arkonhealth.com</p>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-family:var(--font-mono);font-size:1.5rem;font-weight:700;color:var(--blue);">87</div>
+                  <div style="font-size:0.6875rem;color:#5A6A7A;">Intent Score</div>
+                </div>
+              </div>
+              <!-- Data grid -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;">
+                <div style="background:#F5F7FA;border-radius:0.5rem;padding:0.875rem;">
+                  <p style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9AAABA;margin-bottom:0.375rem;">Account Fit</p>
+                  <p style="font-weight:700;color:var(--text-on-light);font-size:0.9375rem;">Strong ICP Match</p>
+                  <p style="font-size:0.8125rem;color:#5A6A7A;">$22M ARR · 140 employees</p>
+                </div>
+                <div style="background:#F5F7FA;border-radius:0.5rem;padding:0.875rem;">
+                  <p style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9AAABA;margin-bottom:0.375rem;">Persona</p>
+                  <p style="font-weight:700;color:var(--text-on-light);font-size:0.9375rem;">Economic Buyer</p>
+                  <p style="font-size:0.8125rem;color:#5A6A7A;">Decision-making authority</p>
+                </div>
+                <div style="background:#F5F7FA;border-radius:0.5rem;padding:0.875rem;">
+                  <p style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9AAABA;margin-bottom:0.375rem;">Stage Signal</p>
+                  <p style="font-weight:700;color:var(--text-on-light);font-size:0.9375rem;">Late Evaluation</p>
+                  <p style="font-size:0.8125rem;color:#5A6A7A;">Pricing page visited 3×</p>
+                </div>
+                <div style="background:#F5F7FA;border-radius:0.5rem;padding:0.875rem;">
+                  <p style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9AAABA;margin-bottom:0.375rem;">Suggested Action</p>
+                  <p style="font-weight:700;color:#16A34A;font-size:0.9375rem;">Route to AE</p>
+                  <p style="font-size:0.8125rem;color:#5A6A7A;">High close probability</p>
+                </div>
+              </div>
+              <!-- Intent themes -->
+              <div style="margin-bottom:1.25rem;">
+                <p style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9AAABA;margin-bottom:0.5rem;">Intent Themes</p>
+                <div>
+                  <span style="display:inline-block;font-size:0.75rem;font-weight:600;padding:0.25rem 0.625rem;border-radius:2rem;background:#DBEAFE;color:#1D4ED8;margin:0.2rem;">Identity Resolution</span>
+                  <span style="display:inline-block;font-size:0.75rem;font-weight:600;padding:0.25rem 0.625rem;border-radius:2rem;background:#DBEAFE;color:#1D4ED8;margin:0.2rem;">Pipeline Attribution</span>
+                  <span style="display:inline-block;font-size:0.75rem;font-weight:600;padding:0.25rem 0.625rem;border-radius:2rem;background:#FEF9C3;color:#92400E;margin:0.2rem;">Intent Data</span>
+                  <span style="display:inline-block;font-size:0.75rem;font-weight:600;padding:0.25rem 0.625rem;border-radius:2rem;background:#DCFCE7;color:#15803D;margin:0.2rem;">B2B SaaS Evaluation</span>
+                </div>
+              </div>
+              <!-- Page activity -->
+              <div>
+                <p style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9AAABA;margin-bottom:0.625rem;">Recent Activity</p>
+                <div style="display:flex;flex-direction:column;gap:0.375rem;">
+                  <div style="display:flex;justify-content:space-between;font-size:0.8125rem;padding:0.375rem 0.625rem;background:#F5F7FA;border-radius:0.375rem;">
+                    <span style="color:var(--text-on-light);">/pricing</span>
+                    <span style="color:#5A6A7A;">4m 12s</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.8125rem;padding:0.375rem 0.625rem;background:#F5F7FA;border-radius:0.375rem;">
+                    <span style="color:var(--text-on-light);">/product</span>
+                    <span style="color:#5A6A7A;">3m 48s</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:0.8125rem;padding:0.375rem 0.625rem;background:#F5F7FA;border-radius:0.375rem;">
+                    <span style="color:var(--text-on-light);">/case-studies</span>
+                    <span style="color:#5A6A7A;">3m 42s</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Copy + panels -->
+        <div>
+          <p class="label-tag" style="color:var(--blue);margin-bottom:1rem;">Step 2 of 4</p>
+          <h2 style="font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;line-height:1.15;color:var(--text-on-light);margin-bottom:1.25rem;">
+            Identification alone isn't enough.<br>
+            <span style="color:var(--blue);">Context closes deals.</span>
+          </h2>
+
+          <div data-persona="demandgen" class="active">
+            <p class="body-lg" style="color:#5A6A7A;margin-bottom:1.5rem;">Every identified visitor is automatically enriched with firmographic data, intent themes, and behavioral signals — so your team knows which accounts to prioritize and why.</p>
+          </div>
+          <div data-persona="revops">
+            <p class="body-lg" style="color:#5A6A7A;margin-bottom:1.5rem;">Enriched profiles flow into your CRM with structured fields: account fit tier, intent score, persona type, stage signal, and suggested routing — no manual research required.</p>
+          </div>
+          <div data-persona="sales">
+            <p class="body-lg" style="color:#5A6A7A;margin-bottom:1.5rem;">You get a complete picture before your first call: their role, what pages they spent time on, which topics they're researching, and how urgently they're evaluating. Walk in warm.</p>
+          </div>
+
+          <div class="why-panel light" style="margin-bottom:1rem;">
+            <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:0.625rem;">Why This Matters</p>
+            <p style="font-size:0.9375rem;color:#5A6A7A;line-height:1.6;">A name without context is a cold lead. With account fit, intent score, and behavioral signals, your team can prioritize the right prospects, craft the right message, and engage at the right time.</p>
+          </div>
+          <div class="why-panel light">
+            <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.625rem;">Impact</p>
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+              <div>
+                <div style="font-family:var(--font-mono);font-size:1.375rem;font-weight:700;color:var(--blue);">40%</div>
+                <div style="font-size:0.8125rem;color:#5A6A7A;">Faster rep ramp with pre-built context</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-mono);font-size:1.375rem;font-weight:700;color:var(--blue);">2×</div>
+                <div style="font-size:0.8125rem;color:#5A6A7A;">Higher connect rate on context-aware outreach</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:4rem;" data-fade>
+        <a href="#step-activate" class="btn btn-secondary">Next: Activate Audiences →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STEP 3: ACTIVATE AUDIENCES
+  ═══════════════════════════════════════════ -->
+  <section class="demo-step dark" id="step-activate">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;" data-fade>
+
+        <!-- Left: Copy + panels -->
+        <div>
+          <p class="label-tag" style="color:var(--blue);margin-bottom:1rem;">Step 3 of 4</p>
+          <h2 style="font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;line-height:1.15;margin-bottom:1.25rem;">
+            From visibility to execution.<br>
+            <span style="color:var(--blue);">One platform, every channel.</span>
+          </h2>
+
+          <div data-persona="demandgen" class="active">
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:1.5rem;">Take your identified audiences directly to LinkedIn, Meta, CTV, programmatic, and direct mail — without rebuilding segments in every platform. One audience, every channel, automatically synced.</p>
+          </div>
+          <div data-persona="revops">
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:1.5rem;">Activation rules route identified visitors to the right channel automatically. High-intent ICP accounts go to SDR sequences. Mid-funnel prospects enter programmatic retargeting. Everything is logged and attributable.</p>
+          </div>
+          <div data-persona="sales">
+            <p class="body-lg" style="color:var(--text-muted);margin-bottom:1.5rem;">High-priority visitors trigger instant Slack or CRM alerts so you can reach out before they talk to a competitor. Your name in their inbox the same day they visited your pricing page.</p>
+          </div>
+
+          <div class="why-panel" style="margin-bottom:1rem;">
+            <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:0.625rem;">Why This Matters</p>
+            <p style="font-size:0.9375rem;color:var(--text-muted);line-height:1.6;">Most teams identify intent signals and then scramble to act on them manually. MyProspects closes the loop — activation is built in, not bolted on.</p>
+          </div>
+          <div class="why-panel">
+            <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.625rem;">Impact</p>
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+              <div>
+                <div style="font-family:var(--font-mono);font-size:1.375rem;font-weight:700;color:var(--blue);">6×</div>
+                <div style="font-size:0.8125rem;color:var(--text-muted);">Channels activated from a single identity graph</div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-mono);font-size:1.375rem;font-weight:700;color:var(--blue);">65%</div>
+                <div style="font-size:0.8125rem;color:var(--text-muted);">Reduction in wasted ad spend on known contacts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Channel grid UI mock -->
+        <div>
+          <div class="ui-mock" style="padding:1.5rem;">
+            <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:1rem;">Activate Audience: "High-Intent ICP Visitors"</p>
+            <p style="font-size:0.8125rem;color:var(--text-muted);margin-bottom:1.25rem;">247 identified contacts · Updated 2m ago</p>
+
+            <div id="channel-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem;">
+              <div class="channel-pill active" onclick="toggleChannel(this)">
+                <div class="channel-icon" style="background:rgba(10,102,194,0.15);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A66C2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                </div>
+                <div>
+                  <p style="font-weight:700;font-size:0.875rem;color:white;">LinkedIn Ads</p>
+                  <p style="font-size:0.75rem;color:var(--green);">● Active · 247 matched</p>
+                </div>
+              </div>
+              <div class="channel-pill active" onclick="toggleChannel(this)">
+                <div class="channel-icon" style="background:rgba(24,119,242,0.15);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </div>
+                <div>
+                  <p style="font-weight:700;font-size:0.875rem;color:white;">Meta / Facebook</p>
+                  <p style="font-size:0.75rem;color:var(--green);">● Active · 219 matched</p>
+                </div>
+              </div>
+              <div class="channel-pill" onclick="toggleChannel(this)">
+                <div class="channel-icon" style="background:rgba(0,212,180,0.12);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                </div>
+                <div>
+                  <p style="font-weight:700;font-size:0.875rem;color:var(--text-muted);">Programmatic / CTV</p>
+                  <p style="font-size:0.75rem;color:var(--text-muted);">○ Inactive</p>
+                </div>
+              </div>
+              <div class="channel-pill" onclick="toggleChannel(this)">
+                <div class="channel-icon" style="background:rgba(255,179,0,0.12);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8,12 12,16 16,12"/><line x1="12" y1="3" x2="12" y2="16"/></svg>
+                </div>
+                <div>
+                  <p style="font-weight:700;font-size:0.875rem;color:var(--text-muted);">CRM Export</p>
+                  <p style="font-size:0.75rem;color:var(--text-muted);">○ Inactive</p>
+                </div>
+              </div>
+              <div class="channel-pill" onclick="toggleChannel(this)">
+                <div class="channel-icon" style="background:rgba(74,222,128,0.12);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                  <p style="font-weight:700;font-size:0.875rem;color:var(--text-muted);">Direct Mail</p>
+                  <p style="font-size:0.75rem;color:var(--text-muted);">○ Inactive</p>
+                </div>
+              </div>
+              <div class="channel-pill" onclick="toggleChannel(this)">
+                <div class="channel-icon" style="background:rgba(0,180,255,0.12);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                </div>
+                <div>
+                  <p style="font-weight:700;font-size:0.875rem;color:var(--text-muted);">Sales Alert</p>
+                  <p style="font-size:0.75rem;color:var(--text-muted);">○ Inactive</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="padding:1rem;background:rgba(0,180,255,0.06);border:1px solid rgba(0,180,255,0.2);border-radius:0.625rem;">
+              <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue);margin-bottom:0.5rem;">Sync Status</p>
+              <div style="display:flex;justify-content:space-between;font-size:0.8125rem;margin-bottom:0.25rem;">
+                <span style="color:var(--text-muted);">LinkedIn Matched Audience</span>
+                <span style="color:var(--green);font-weight:600;">247 / 247</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8125rem;">
+                <span style="color:var(--text-muted);">Meta Custom Audience</span>
+                <span style="color:var(--green);font-weight:600;">219 / 247</span>
+              </div>
+            </div>
+            <p class="microcopy" style="margin-top:0.75rem;text-align:center;">Click channels above to toggle activation</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:4rem;" data-fade>
+        <a href="#step-measure" class="btn btn-secondary">Next: Measure Outcomes →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STEP 4: MEASURE OUTCOMES
+  ═══════════════════════════════════════════ -->
+  <section class="demo-step light" id="step-measure">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3.5rem;" data-fade>
+        <p class="label-tag" style="color:var(--blue);margin-bottom:1rem;">Step 4 of 4</p>
+        <h2 style="font-size:clamp(1.75rem,3vw,2.5rem);font-weight:800;line-height:1.15;color:var(--text-on-light);margin-bottom:1.25rem;">
+          Every dollar, every deal.<br>
+          <span style="color:var(--blue);">Fully attributed.</span>
+        </h2>
+
+        <div data-persona="demandgen" class="active" style="max-width:640px;margin:0 auto;">
+          <p class="body-lg" style="color:#5A6A7A;">Close the loop from first anonymous visit to closed revenue. See exactly which channels, campaigns, and visitors drove pipeline — and eliminate the ones that didn't.</p>
+        </div>
+        <div data-persona="revops" style="max-width:640px;margin:0 auto;">
+          <p class="body-lg" style="color:#5A6A7A;">Full attribution across every touchpoint, every channel, every campaign — without the guesswork of multi-touch models. Deterministic identity means each credit goes exactly where it belongs.</p>
+        </div>
+        <div data-persona="sales" style="max-width:640px;margin:0 auto;">
+          <p class="body-lg" style="color:#5A6A7A;">See which of your identified prospects became opportunities. Track the path from first visit to closed deal and build playbooks from what actually works.</p>
+        </div>
+      </div>
+
+      <!-- KPI cards -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:3rem;" data-fade>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color:var(--blue);" data-counter data-target="4.2" data-prefix="$" data-suffix="M">$4.2M</div>
+          <div style="font-weight:700;color:var(--text-on-dark);font-size:0.9375rem;margin-bottom:0.25rem;">Pipeline Influenced</div>
+          <div style="font-size:0.8125rem;color:var(--text-muted);">This quarter</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color:var(--green);" data-counter data-target="3400" data-suffix="">3,400</div>
+          <div style="font-weight:700;color:var(--text-on-dark);font-size:0.9375rem;margin-bottom:0.25rem;">Visitors Identified</div>
+          <div style="font-size:0.8125rem;color:var(--text-muted);">Past 30 days</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color:var(--amber);" data-counter data-target="14" data-suffix="">14</div>
+          <div style="font-weight:700;color:var(--text-on-dark);font-size:0.9375rem;margin-bottom:0.25rem;">Audiences Activated</div>
+          <div style="font-size:0.8125rem;color:var(--text-muted);">Across 6 channels</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color:var(--teal);" data-counter data-target="22" data-suffix="h">22h</div>
+          <div style="font-weight:700;color:var(--text-on-dark);font-size:0.9375rem;margin-bottom:0.25rem;">Research Time Saved</div>
+          <div style="font-size:0.8125rem;color:var(--text-muted);">Per rep, per week</div>
+        </div>
+      </div>
+
+      <!-- Why panel row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem;" data-fade>
+        <div class="why-panel light">
+          <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:0.75rem;">Why This Matters</p>
+          <p style="font-size:0.9375rem;color:#5A6A7A;line-height:1.6;">Most attribution tools tell you which ads performed. MyProspects tells you which <em>people</em> converted — tracing every deal back to a named individual's first anonymous visit.</p>
+        </div>
+        <div class="why-panel light">
+          <p style="font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.75rem;">Customer Proof</p>
+          <p style="font-size:0.9375rem;color:#5A6A7A;line-height:1.6;font-style:italic;">"We installed the pixel on a Tuesday. By Thursday we had 847 named visitors. By end of month, our SDRs had identified 12 ICP accounts. We closed 3 in 90 days."</p>
+          <p style="font-size:0.8125rem;font-weight:600;color:#9AAABA;margin-top:0.625rem;">— Director of Demand Gen · Cybersecurity SaaS</p>
+        </div>
+      </div>
+
+      <!-- Next: CTA to book -->
+      <div style="text-align:center;" data-fade>
+        <a href="#book" class="btn btn-primary" style="font-size:1rem;padding:0.875rem 2.5rem;">Book a Live Demo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       BEFORE / AFTER
+  ═══════════════════════════════════════════ -->
+  <section class="demo-step surface" style="padding:5rem 0;">
+    <div class="container" style="max-width:900px;" data-fade>
+      <div style="text-align:center;margin-bottom:3rem;">
+        <p class="label-tag" style="color:var(--amber);margin-bottom:1rem;">The Transformation</p>
+        <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;line-height:1.2;margin-bottom:0;">What GTM looks like before and after MyProspects</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+        <div class="baf-col baf-before">
+          <p style="font-weight:800;font-size:1rem;color:var(--text-muted);margin-bottom:1.25rem;letter-spacing:0.02em;">WITHOUT</p>
+          <div class="baf-item"><span style="color:#4A5A6A;font-size:1.125rem;flex-shrink:0;">✗</span><span style="color:var(--text-muted);font-size:0.9375rem;line-height:1.5;">Anonymous traffic — no idea who visited</span></div>
+          <div class="baf-item"><span style="color:#4A5A6A;font-size:1.125rem;flex-shrink:0;">✗</span><span style="color:var(--text-muted);font-size:0.9375rem;line-height:1.5;">Cold outreach to unknown prospects</span></div>
+          <div class="baf-item"><span style="color:#4A5A6A;font-size:1.125rem;flex-shrink:0;">✗</span><span style="color:var(--text-muted);font-size:0.9375rem;line-height:1.5;">Broad targeting, high ad waste</span></div>
+          <div class="baf-item"><span style="color:#4A5A6A;font-size:1.125rem;flex-shrink:0;">✗</span><span style="color:var(--text-muted);font-size:0.9375rem;line-height:1.5;">Multi-touch guesswork for attribution</span></div>
+          <div class="baf-item"><span style="color:#4A5A6A;font-size:1.125rem;flex-shrink:0;">✗</span><span style="color:var(--text-muted);font-size:0.9375rem;line-height:1.5;">Slow follow-up — days or weeks</span></div>
+          <div class="baf-item"><span style="color:#4A5A6A;font-size:1.125rem;flex-shrink:0;">✗</span><span style="color:var(--text-muted);font-size:0.9375rem;line-height:1.5;">Siloed data across 6+ vendors</span></div>
+        </div>
+        <div class="baf-col baf-after">
+          <p style="font-weight:800;font-size:1rem;color:var(--blue);margin-bottom:1.25rem;letter-spacing:0.02em;">WITH MYPROSPECTS</p>
+          <div class="baf-item"><span style="color:var(--blue);font-size:1.125rem;flex-shrink:0;">✓</span><span style="color:white;font-size:0.9375rem;line-height:1.5;">Named buyers identified from every visit</span></div>
+          <div class="baf-item"><span style="color:var(--blue);font-size:1.125rem;flex-shrink:0;">✓</span><span style="color:white;font-size:0.9375rem;line-height:1.5;">Context-aware outreach to warm prospects</span></div>
+          <div class="baf-item"><span style="color:var(--blue);font-size:1.125rem;flex-shrink:0;">✓</span><span style="color:white;font-size:0.9375rem;line-height:1.5;">Person-level targeting, 65% less waste</span></div>
+          <div class="baf-item"><span style="color:var(--blue);font-size:1.125rem;flex-shrink:0;">✓</span><span style="color:white;font-size:0.9375rem;line-height:1.5;">Deterministic attribution, deal by deal</span></div>
+          <div class="baf-item"><span style="color:var(--blue);font-size:1.125rem;flex-shrink:0;">✓</span><span style="color:white;font-size:0.9375rem;line-height:1.5;">Same-day alerts to your sales team</span></div>
+          <div class="baf-item"><span style="color:var(--blue);font-size:1.125rem;flex-shrink:0;">✓</span><span style="color:white;font-size:0.9375rem;line-height:1.5;">One identity graph, every channel</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       BOOK / CALENDLY
+  ═══════════════════════════════════════════ -->
+  <section class="demo-step dark" id="book" style="padding:6rem 0;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;max-width:1100px;margin:0 auto;" data-fade>
+
+        <!-- Left: Value props -->
+        <div>
+          <p class="label-tag" style="color:var(--amber);margin-bottom:1.5rem;">30-Day Free Trial</p>
+          <h2 style="font-size:clamp(1.75rem,3vw,2.75rem);font-weight:800;line-height:1.15;margin-bottom:1.25rem;">
+            Ready to see your<br>
+            <span style="color:var(--blue);">actual visitors?</span>
+          </h2>
+          <p class="body-lg" style="color:var(--text-muted);margin-bottom:2.5rem;">
+            Book a 30-minute live demo and we'll show you exactly which named individuals are visiting your website today — before you commit to anything.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem;">
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.6875rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
+              <div>
+                <p style="font-weight:700;color:white;margin-bottom:0.125rem;">Named visitors within 48 hours</p>
+                <p style="font-size:0.9375rem;color:var(--text-muted);">One-line pixel. No engineering required.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.6875rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
+              <div>
+                <p style="font-weight:700;color:white;margin-bottom:0.125rem;">Month-to-month, cancel anytime</p>
+                <p style="font-size:0.9375rem;color:var(--text-muted);">No long-term lock-in required.</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:flex-start;">
+              <div style="width:1.5rem;height:1.5rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:0.6875rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.125rem;">✓</div>
+              <div>
+                <p style="font-weight:700;color:white;margin-bottom:0.125rem;">SOC 2 · GDPR · CCPA certified</p>
+                <p style="font-size:0.9375rem;color:var(--text-muted);">Enterprise-grade privacy from day one.</p>
+              </div>
+            </div>
+          </div>
+          <div style="padding:1.25rem;background:var(--surface);border:1px solid var(--border-dark);border-radius:0.75rem;">
+            <p style="font-size:0.875rem;color:var(--text-muted);font-style:italic;line-height:1.65;">"We installed the pixel on a Tuesday. By Thursday we had 847 named visitors in our dashboard. Our SDR team had never seen anything like it."</p>
+            <p style="font-size:0.8125rem;font-weight:600;color:var(--text-muted);margin-top:0.625rem;letter-spacing:0.05em;text-transform:uppercase;">— Director of Demand Gen · Cybersecurity SaaS</p>
+          </div>
+          <p class="microcopy" style="margin-top:1rem;">Or skip the call — <a href="/pricing.html" style="color:var(--blue);text-decoration:underline;">start your free trial directly</a>.</p>
+        </div>
+
+        <!-- Right: Calendly embed -->
+        <div style="background:var(--surface);border:1px solid var(--border-dark);border-radius:1rem;overflow:hidden;min-height:580px;display:flex;align-items:center;justify-content:center;">
+          <!-- Replace this placeholder with your Calendly inline widget embed code:
+               <div class="calendly-inline-widget" data-url="https://calendly.com/YOUR_LINK" style="min-width:320px;height:630px;"></div>
+               <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          -->
           <div style="text-align:center;padding:3rem;">
-            <p style="font-size:1.5rem;margin-bottom:1rem;">📅</p>
+            <div style="width:3rem;height:3rem;border-radius:50%;background:rgba(0,180,255,0.12);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
             <p style="font-weight:700;color:white;margin-bottom:0.5rem;">Calendly Embed</p>
             <p style="font-size:0.9375rem;color:var(--text-muted);">Replace this placeholder with your Calendly inline widget embed code.</p>
           </div>
         </div>
-
       </div>
     </div>
-  </main>
+  </section>
 
+  <!-- ═══════════════════════════════════════════
+       PERSISTENT CTA (desktop floating)
+  ═══════════════════════════════════════════ -->
+  <div id="persistent-cta">
+    <a href="#book" class="pcta-btn pcta-primary">Book Live Demo →</a>
+    <a href="/pricing.html" class="pcta-btn pcta-secondary">See Pricing</a>
+  </div>
+
+  <!-- Mobile sticky bar -->
+  <div id="mobile-cta-bar">
+    <a href="#book" class="btn btn-primary" style="flex:1;text-align:center;">Book Live Demo</a>
+    <a href="/pricing.html" class="btn btn-secondary" style="flex:1;text-align:center;">Pricing</a>
+  </div>
+
+  <footer id="site-footer"></footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    /* ── Persona toggle ── */
+    const ptabs = document.querySelectorAll('.ptab');
+    ptabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        ptabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.personaTarget;
+        document.querySelectorAll('[data-persona]').forEach(el => {
+          el.classList.toggle('active', el.dataset.persona === target);
+        });
+      });
+    });
+
+    /* ── Step nav highlight on scroll ── */
+    const stepSections = ['step-identify','step-enrich','step-activate','step-measure'];
+    const stabs = document.querySelectorAll('.stab');
+    stabs.forEach(stab => {
+      stab.addEventListener('click', () => {
+        const target = document.getElementById(stab.dataset.step);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    function updateStepNav() {
+      const scrollY = window.scrollY + 200;
+      let current = 0;
+      stepSections.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) current = i;
+      });
+      stabs.forEach((stab, i) => {
+        stab.classList.remove('active','done');
+        if (i < current) stab.classList.add('done');
+        else if (i === current) stab.classList.add('active');
+      });
+    }
+    window.addEventListener('scroll', updateStepNav, { passive: true });
+    updateStepNav();
+
+    /* ── Visitor row drawer toggle ── */
+    function toggleDrawer(row) {
+      const id = row.dataset.id;
+      const drawer = document.getElementById('drawer-' + id);
+      const isOpen = drawer.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.profile-drawer').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.visitor-row').forEach(r => r.classList.remove('selected'));
+      // Open clicked if it was closed
+      if (!isOpen) {
+        drawer.classList.add('open');
+        row.classList.add('selected');
+      }
+    }
+
+    /* ── Channel pill toggle ── */
+    function toggleChannel(pill) {
+      pill.classList.toggle('active');
+      const label = pill.querySelector('p:last-child');
+      const name = pill.querySelector('p:first-child').textContent.trim();
+      if (pill.classList.contains('active')) {
+        label.style.color = 'var(--green)';
+        label.textContent = '● Active · syncing...';
+        setTimeout(() => {
+          label.textContent = '● Active · matched';
+        }, 1200);
+      } else {
+        label.style.color = 'var(--text-muted)';
+        label.textContent = '○ Inactive';
+      }
+    }
+
+    /* ── Persistent CTA show after scrolling past hero ── */
+    const heroCTA = document.getElementById('persistent-cta');
+    function updateCTA() {
+      if (window.scrollY > 500) heroCTA.classList.add('visible');
+      else heroCTA.classList.remove('visible');
+    }
+    window.addEventListener('scroll', updateCTA, { passive: true });
+    updateCTA();
+  </script>
 </body>
 </html>

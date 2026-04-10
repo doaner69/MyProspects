@@ -26,6 +26,19 @@ const NAV_HTML = `
       <li><a href="/product.html">Product</a></li>
       <li><a href="/pricing.html">Pricing</a></li>
       <li><a href="/about.html">About</a></li>
+      <li class="nav-dropdown">
+        <a href="#" style="display:flex;align-items:center;gap:0.375rem;">
+          Resources
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.5">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="nav-dropdown-menu">
+          <a href="/blog.html">Blog</a>
+          <a href="/case-studies.html">Case Studies</a>
+          <a href="/use-cases.html">Use Cases</a>
+        </div>
+      </li>
     </ul>
     <a href="/demo.html" class="btn btn-primary nav-cta" style="font-size:0.875rem;padding:0.625rem 1.25rem;">Book a Demo</a>
     <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Open menu">
@@ -43,6 +56,9 @@ const NAV_HTML = `
     <a href="/product.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Product</a>
     <a href="/pricing.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Pricing</a>
     <a href="/about.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">About</a>
+    <a href="/blog.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Blog</a>
+    <a href="/case-studies.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Case Studies</a>
+    <a href="/use-cases.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Use Cases</a>
     <a href="/demo.html" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">Book a Demo</a>
   </div>
 </div>
@@ -71,7 +87,7 @@ const FOOTER_HTML = `
         <li><a href="/product.html">Identity Resolution</a></li>
         <li><a href="/product.html#intent">Intent Intelligence</a></li>
         <li><a href="/product.html#ads">Ad Serving</a></li>
-        <li><a href="/product.html#journey">Buyers Journey</a></li>
+        <li><a href="/product.html#journey">Buyer's Journey</a></li>
         <li><a href="/pricing.html">Pricing</a></li>
       </ul>
     </div>
@@ -88,13 +104,32 @@ const FOOTER_HTML = `
       <h4>Company</h4>
       <ul>
         <li><a href="/about.html">About</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/case-studies.html">Case Studies</a></li>
         <li><a href="/demo.html">Book a Demo</a></li>
       </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="/terms-of-service.html">Terms of Service</a></li>
+      </ul>
+      <div style="margin-top:1.25rem;">
+        <a href="https://linkedin.com/company/myprospects" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.5rem;color:var(--text-muted);font-size:0.875rem;font-weight:500;transition:color 0.2s;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--text-muted)'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Local Sphere. All rights reserved.</span>
-    <span>A <strong style="color:var(--blue)">Local Sphere</strong> product</span>
+    <div style="display:flex;gap:1.5rem;align-items:center;">
+      <a href="/privacy-policy.html" style="color:var(--text-muted);font-size:0.8125rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text-muted)'">Privacy Policy</a>
+      <a href="/terms-of-service.html" style="color:var(--text-muted);font-size:0.8125rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text-muted)'">Terms of Service</a>
+      <span style="color:var(--text-muted);font-size:0.8125rem;">A <strong style="color:var(--blue)">Local Sphere</strong> product</span>
+    </div>
   </div>
 </div>
 `;
