@@ -3,256 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Four Capabilities. One Identity Graph — MyProspects</title>
-  <meta name="description" content="Identity Resolution, Intent Intelligence, Ad Serving, and Buyer's Journey — four capabilities unified in one person-level identity graph.">
-  <meta property="og:title" content="Four Capabilities. One Identity Graph — MyProspects">
-  <meta property="og:description" content="See how MyProspects resolves anonymous visitors to named buyers and activates them across every channel.">
+  <title>Person-Level Identity and Intent Platform — MyProspects</title>
+  <meta name="description" content="Turn anonymous visitor signals into named profiles, intent scores, activation audiences, and measurable buyer journeys with MyProspects.">
+  <meta property="og:title" content="One Identity Graph. Every Revenue Signal. — MyProspects">
+  <meta property="og:description" content="Identify, enrich, score, activate, and measure person-level demand from one connected platform.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/images/myprospects-logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css?v=20260713">
+  <link rel="stylesheet" href="css/subpages.css?v=20260713">
 </head>
 <body>
   <nav id="site-nav"></nav>
-  <main class="page-top">
-
-    <!-- HERO -->
-    <section class="hero-section section-dark glow-blue" style="min-height:60vh;padding:8rem 0 5rem;">
-      <div class="container" style="text-align:center;max-width:850px;" data-fade>
-        <p class="label-tag" style="margin-bottom:1.5rem;">Platform</p>
-        <h1 class="heading-hero" style="margin-bottom:1.5rem;">Four Capabilities.<br><span style="color:var(--blue);">One Identity Graph.</span></h1>
-        <p class="body-lg" style="color:var(--text-muted);max-width:600px;margin:0 auto 2.5rem;">
-          Every capability shares the same 4.5B-record identity graph, giving you consistent, person-level accuracy across on-domain resolution, off-domain intent, ad serving, and attribution.
-        </p>
-        <a href="/demo.html" class="btn btn-primary">Book a Demo →</a>
+  <main class="subpage-main">
+    <section class="subpage-hero">
+      <div class="container subpage-hero-grid">
+        <div class="subpage-hero-copy" data-fade>
+          <p class="section-kicker">The MyProspects Platform</p>
+          <h1>One identity graph.<br><span>Every revenue signal.</span></h1>
+          <p>Identify the people behind your traffic, understand what they care about, and move high-value audiences into action without rebuilding your workflow.</p>
+          <div class="subpage-actions">
+            <a class="btn btn-primary" href="/trial.html">Start Your Free Trial</a>
+            <a class="btn btn-secondary-light" href="/pricing.html">See Pricing</a>
+          </div>
+        </div>
+        <figure class="subpage-visual" data-fade>
+          <img src="assets/images/subpages/product-identity-graph.webp" width="1586" height="992" alt="Identity signals converging into a verified person and branching into intent and activation channels">
+        </figure>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="section-light section-padding">
+    <section class="proof-rail" aria-label="Platform scale">
+      <div class="container proof-rail-grid">
+        <div class="proof-item"><strong>4.5B+</strong><span>verified email records supporting identity resolution</span></div>
+        <div class="proof-item"><strong>35B</strong><span>daily intent signals across buyer research activity</span></div>
+        <div class="proof-item"><strong>&lt;100ms</strong><span>real-time identity response designed for fast experiences</span></div>
+        <div class="proof-item"><strong>24-48h</strong><span>typical implementation window for the core pixel</span></div>
+      </div>
+    </section>
+
+    <section class="section-shell soft" id="identity-graph">
       <div class="container">
-        <div style="text-align:center;margin-bottom:3rem;" data-fade>
-          <h2 class="heading-section" style="color:var(--text-on-light);">Live in 24–48 hours.</h2>
+        <div class="section-intro center" data-fade>
+          <p class="section-kicker">How the graph works</p>
+          <h2>From first signal to coordinated action.</h2>
+          <p>Five connected capabilities turn anonymous activity into a usable, person-level growth signal.</p>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center;" data-fade>
-          <div>
-            <div style="width:3rem;height:3rem;border-radius:50%;background:var(--blue);color:#000;font-weight:800;font-size:1.125rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">1</div>
-            <h3 style="font-weight:700;font-size:1.125rem;color:var(--text-on-light);margin-bottom:0.5rem;">Install the Pixel</h3>
-            <p style="color:#5A6A7A;font-size:0.9375rem;line-height:1.65;">Paste one line of JavaScript on your website. No engineering sprint. No IT ticket. Done in minutes.</p>
+
+        <div class="story-layout" data-story-tabs data-fade>
+          <div class="story-nav" role="tablist" aria-label="Identity graph stages">
+            <button class="story-tab active" type="button" role="tab" aria-selected="true" aria-controls="story-identify" data-story-tab="identify" data-step-label="01">Identify</button>
+            <button class="story-tab" type="button" role="tab" aria-selected="false" aria-controls="story-resolve" data-story-tab="resolve" data-step-label="02" tabindex="-1">Resolve</button>
+            <button class="story-tab" type="button" role="tab" aria-selected="false" aria-controls="story-enrich" data-story-tab="enrich" data-step-label="03" tabindex="-1">Enrich</button>
+            <button class="story-tab" type="button" role="tab" aria-selected="false" aria-controls="story-score" data-story-tab="score" data-step-label="04" tabindex="-1">Score</button>
+            <button class="story-tab" type="button" role="tab" aria-selected="false" aria-controls="story-activate" data-story-tab="activate" data-step-label="05" tabindex="-1">Activate</button>
           </div>
-          <div>
-            <div style="width:3rem;height:3rem;border-radius:50%;background:var(--amber);color:#000;font-weight:800;font-size:1.125rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">2</div>
-            <h3 style="font-weight:700;font-size:1.125rem;color:var(--text-on-light);margin-bottom:0.5rem;">Resolve Visitors</h3>
-            <p style="color:#5A6A7A;font-size:0.9375rem;line-height:1.65;">Our identity graph matches anonymous visitors to named individuals using 4.5B verified email records. 50%+ match rate within the first 48 hours.</p>
-          </div>
-          <div>
-            <div style="width:3rem;height:3rem;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--amber));color:#000;font-weight:800;font-size:1.125rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">3</div>
-            <h3 style="font-weight:700;font-size:1.125rem;color:var(--text-on-light);margin-bottom:0.5rem;">Activate &amp; Reach</h3>
-            <p style="color:#5A6A7A;font-size:0.9375rem;line-height:1.65;">Push identified contacts to your CRM, trigger automated outreach, serve targeted ads, or activate via Local Sphere omnichannel.</p>
+
+          <div class="story-stage">
+            <article class="story-panel active" id="story-identify" role="tabpanel" data-story-panel="identify">
+              <div><p class="section-kicker">On-domain signal</p><h2>See the interest forms miss.</h2><p>A lightweight pixel observes consented website activity and creates a real-time signal when a visitor engages with high-value pages.</p><ul class="feature-list"><li><strong>Fast implementation.</strong> Add one JavaScript snippet to your site.</li><li><strong>Behavioral context.</strong> Capture pages, recency, frequency, and engagement.</li><li><strong>Quiet buyer journey.</strong> Understand interest without adding another gate.</li></ul></div>
+              <div class="story-visual" aria-hidden="true"><span class="story-core"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3zM3 9h18M7 7h.01M10 7h.01"/></svg></span><span class="story-node one"><svg viewBox="0 0 24 24"><path d="M4 19V9l8-5 8 5v10M8 19v-6h8v6"/></svg></span><span class="story-node two"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 9h8M8 13h5"/></svg></span><span class="story-node three"><svg viewBox="0 0 24 24"><path d="M12 20v-6M9 17h6M5 5h14v7H5z"/></svg></span></div>
+            </article>
+
+            <article class="story-panel" id="story-resolve" role="tabpanel" data-story-panel="resolve" hidden>
+              <div><p class="section-kicker">Person-level resolution</p><h2>Turn a session into a person.</h2><p>MyProspects matches approved signals against the identity graph to produce a named profile your team can work with.</p><ul class="feature-list"><li><strong>Deterministic matching.</strong> Connect signals using hashed identity keys.</li><li><strong>One persistent profile.</strong> Recognize repeat engagement across the journey.</li><li><strong>Privacy-aware controls.</strong> Apply consent and suppression rules before activation.</li></ul></div>
+              <div class="story-visual" aria-hidden="true"><span class="story-core"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg></span><span class="story-node one"><svg viewBox="0 0 24 24"><path d="M3 12h18M12 3v18M5 5l14 14M19 5 5 19"/></svg></span><span class="story-node two"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span><span class="story-node four"><svg viewBox="0 0 24 24"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v11H5z"/></svg></span></div>
+            </article>
+
+            <article class="story-panel" id="story-enrich" role="tabpanel" data-story-panel="enrich" hidden>
+              <div><p class="section-kicker">Enriched profile</p><h2>Give every signal usable context.</h2><p>Append the contact, company, firmographic, and journey details that make a visitor meaningful to sales and marketing.</p><ul class="feature-list"><li><strong>Contact context.</strong> Name, business email, role, and company.</li><li><strong>Company context.</strong> Industry, size, and organizational fit.</li><li><strong>Journey context.</strong> Pages viewed, topics researched, and recent activity.</li></ul></div>
+              <div class="story-visual" aria-hidden="true"><span class="story-core"><svg viewBox="0 0 24 24"><path d="M4 3h16v18H4zM8 8h8M8 12h8M8 16h5"/></svg></span><span class="story-node one"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg></span><span class="story-node two"><svg viewBox="0 0 24 24"><path d="M4 19V9l8-5 8 5v10M8 19v-6h8v6"/></svg></span><span class="story-node three"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 16V9M12 16V6M16 16v-4"/></svg></span></div>
+            </article>
+
+            <article class="story-panel" id="story-score" role="tabpanel" data-story-panel="score" hidden>
+              <div><p class="section-kicker">Intent intelligence</p><h2>Separate curiosity from urgency.</h2><p>Combine on-site behavior with off-domain research to prioritize the people showing the strongest buying signals now.</p><ul class="feature-list"><li><strong>Signal recency.</strong> Give current research more weight.</li><li><strong>Topic intensity.</strong> Understand how focused the research has become.</li><li><strong>Actionable ranking.</strong> Route the strongest fit-and-intent combinations first.</li></ul></div>
+              <div class="story-visual" aria-hidden="true"><span class="story-core"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span><span class="story-node one"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span><span class="story-node two"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m12 12 4-4"/></svg></span><span class="story-node four"><svg viewBox="0 0 24 24"><path d="m4 17 5-5 4 3 7-8M15 7h5v5"/></svg></span></div>
+            </article>
+
+            <article class="story-panel" id="story-activate" role="tabpanel" data-story-panel="activate" hidden>
+              <div><p class="section-kicker">Audience activation</p><h2>Move one audience everywhere.</h2><p>Sync identified, scored audiences into the channels where your team already works and coordinate the next best action.</p><ul class="feature-list"><li><strong>CRM and MAP.</strong> Route named profiles and journey context.</li><li><strong>Media activation.</strong> Build consistent audiences for display, social, and CTV.</li><li><strong>Close the loop.</strong> Connect follow-up and measurement back to the person.</li></ul></div>
+              <div class="story-visual" aria-hidden="true"><span class="story-core"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 8l8 6 8-6"/></svg></span><span class="story-node one"><svg viewBox="0 0 24 24"><path d="M7 2h10v20H7zM11 18h2"/></svg></span><span class="story-node two"><svg viewBox="0 0 24 24"><path d="M3 5h18v12H3zM8 21h8M12 17v4"/></svg></span><span class="story-node three"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM8 22h8M12 18v4"/></svg></span><span class="story-node four"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 16V9M12 16V6M16 16v-4"/></svg></span></div>
+            </article>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CAPABILITY: IDENTITY RESOLUTION -->
-    <section class="section-dark section-padding" id="identity">
+    <section class="section-shell" id="capabilities">
       <div class="container">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" data-fade>
-          <div>
-            <p class="label-tag" style="margin-bottom:1rem;">Capability 01</p>
-            <h2 class="heading-section" style="margin-bottom:1.5rem;">Identity Resolution<br><span style="color:var(--blue);">(On-Domain Pixel)</span></h2>
-            <p class="body-lg" style="color:var(--text-muted);margin-bottom:1.5rem;">A lightweight JavaScript pixel placed on your website resolves anonymous visitors to named individuals in real time. You see their name, email, company, job title, and every page they visited.</p>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem;">
-              <li style="display:flex;gap:0.75rem;align-items:flex-start;color:var(--text-muted);">
-                <span style="color:var(--blue);flex-shrink:0;">✓</span>
-                <span><strong style="color:white;">50%+ resolution rate</strong> — 2x the industry average of 30–40%</span>
-              </li>
-              <li style="display:flex;gap:0.75rem;align-items:flex-start;color:var(--text-muted);">
-                <span style="color:var(--blue);flex-shrink:0;">✓</span>
-                <span><strong style="color:white;">Cookieless &amp; privacy-first</strong> — hashed SHA-256 matching, consent-forward</span>
-              </li>
-              <li style="display:flex;gap:0.75rem;align-items:flex-start;color:var(--text-muted);">
-                <span style="color:var(--blue);flex-shrink:0;">✓</span>
-                <span><strong style="color:white;">&lt;100ms p99 latency</strong> — zero impact on page load speed</span>
-              </li>
-              <li style="display:flex;gap:0.75rem;align-items:flex-start;color:var(--text-muted);">
-                <span style="color:var(--blue);flex-shrink:0;">✓</span>
-                <span><strong style="color:white;">24–48 hour implementation</strong> — no engineering resources required</span>
-              </li>
-            </ul>
-          </div>
-          <div class="card-dark" style="border-color:rgba(0,180,255,0.2);">
-            <p class="label-tag" style="margin-bottom:1.5rem;">Identity Graph Scale</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-              <div style="text-align:center;padding:1rem;background:var(--surface-2);border-radius:0.5rem;">
-                <div class="stat-number" style="font-size:1.75rem;" data-counter data-target="4.5" data-suffix="B+">4.5B+</div>
-                <div style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.25rem;">Email Records</div>
-              </div>
-              <div style="text-align:center;padding:1rem;background:var(--surface-2);border-radius:0.5rem;">
-                <div class="stat-number" style="font-size:1.75rem;" data-counter data-target="491" data-suffix="M">491M</div>
-                <div style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.25rem;">US Profiles</div>
-              </div>
-              <div style="text-align:center;padding:1rem;background:var(--surface-2);border-radius:0.5rem;">
-                <div class="stat-number" style="font-size:1.75rem;" data-counter data-target="300" data-suffix="M">300M</div>
-                <div style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.25rem;">Phone Numbers</div>
-              </div>
-              <div style="text-align:center;padding:1rem;background:var(--surface-2);border-radius:0.5rem;">
-                <div class="stat-number" style="font-size:1.75rem;">&lt;100ms</div>
-                <div style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.25rem;">P99 Latency</div>
-              </div>
-            </div>
-          </div>
+        <div class="section-intro" data-fade><p class="section-kicker">Built to work together</p><h2>More useful than another data feed.</h2><p>MyProspects is designed to make identity operational across the full buyer journey.</p></div>
+        <div class="outcome-grid" data-fade>
+          <article class="outcome-card"><span class="outcome-label">Resolution</span><strong>Know the individual</strong><p>Move beyond anonymous sessions and account-level guesses with person-level profiles.</p></article>
+          <article class="outcome-card"><span class="outcome-label">Intelligence</span><strong>Know why they are here</strong><p>Combine fit, on-site behavior, and open-web research into a usable priority signal.</p></article>
+          <article class="outcome-card"><span class="outcome-label">Activation</span><strong>Know what to do next</strong><p>Route audiences to sales, lifecycle, media, and one-to-one marketing workflows.</p></article>
         </div>
       </div>
     </section>
 
-    <!-- CAPABILITY: INTENT INTELLIGENCE -->
-    <section class="section-light section-padding" id="intent">
+    <section class="section-shell soft" id="implementation">
       <div class="container">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" data-fade>
-          <div class="card-light">
-            <p class="label-tag" style="margin-bottom:1rem;color:var(--blue);">Intent Score Example</p>
-            <div style="display:flex;flex-direction:column;gap:0.75rem;">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.75rem;background:#F0F4F8;border-radius:0.5rem;">
-                <span style="font-size:0.9375rem;font-weight:600;color:var(--text-on-light);">Sarah Lin · TechFlow</span>
-                <span style="font-family:var(--font-mono);font-weight:700;color:var(--blue);font-size:1.125rem;">94</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.75rem;background:#F0F4F8;border-radius:0.5rem;">
-                <span style="font-size:0.9375rem;font-weight:600;color:var(--text-on-light);">James Dawson · Acme</span>
-                <span style="font-family:var(--font-mono);font-weight:700;color:var(--blue);font-size:1.125rem;">87</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.75rem;background:#F0F4F8;border-radius:0.5rem;">
-                <span style="font-size:0.9375rem;font-weight:600;color:var(--text-on-light);">Marcus Chen · Petal Inc</span>
-                <span style="font-family:var(--font-mono);font-weight:700;color:var(--amber);font-size:1.125rem;">72</span>
-              </div>
-              <p style="font-size:0.8125rem;color:#5A6A7A;margin-top:0.5rem;">0–100 precision score. Not "high/medium/low".</p>
-            </div>
-          </div>
-          <div>
-            <p class="label-tag" style="margin-bottom:1rem;color:var(--blue);">Capability 02</p>
-            <h2 class="heading-section" style="color:var(--text-on-light);margin-bottom:1.5rem;">Intent Intelligence<br><span style="color:var(--blue);">(Off-Domain)</span></h2>
-            <p style="color:#5A6A7A;line-height:1.65;margin-bottom:1.5rem;" class="body-lg">Identify individuals researching your category across the open web — before they ever visit your site. 35 billion daily intent signals processed across 26,000+ behavioral topic categories.</p>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem;">
-              <li style="display:flex;gap:0.75rem;color:#5A6A7A;">
-                <span style="color:var(--blue);flex-shrink:0;">✓</span>
-                <span><strong style="color:var(--text-on-light);">0–100 precision scoring</strong> — exact intent intensity, not buckets</span>
-              </li>
-              <li style="display:flex;gap:0.75rem;color:#5A6A7A;">
-                <span style="color:var(--blue);flex-shrink:0;">✓</span>
-                <span><strong style="color:var(--text-on-light);">Cold topic activation</strong> — catch earliest-stage research signals</span>
-              </li>
-              <li style="display:flex;gap:0.75rem;color:#5A6A7A;">
-                <span style="color:var(--blue);flex-shrink:0;">✓</span>
-                <span><strong style="color:var(--text-on-light);">High-intent identified buyers</strong> — flagged and ready for outreach</span>
-              </li>
-            </ul>
-          </div>
+        <div class="section-intro center" data-fade><p class="section-kicker">Fast implementation</p><h2>Start seeing signals in days, not quarters.</h2></div>
+        <div class="journey-grid" data-cycle-steps data-fade>
+          <article class="journey-step"><span class="journey-step-icon"><svg viewBox="0 0 24 24"><path d="M8 9 3 12l5 3M16 9l5 3-5 3M14 5l-4 14"/></svg></span><h3>Install the pixel</h3><p>Add one lightweight script to your primary domain.</p></article>
+          <article class="journey-step"><span class="journey-step-icon"><svg viewBox="0 0 24 24"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v11H5z"/></svg></span><h3>Set your controls</h3><p>Define consent, suppression, fit, and routing rules.</p></article>
+          <article class="journey-step"><span class="journey-step-icon"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg></span><h3>Resolve visitors</h3><p>See named profiles and journey context populate.</p></article>
+          <article class="journey-step"><span class="journey-step-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 16V9M12 16V6M16 16v-4"/></svg></span><h3>Activate and learn</h3><p>Sync audiences, measure outcomes, and refine priority rules.</p></article>
         </div>
       </div>
     </section>
 
-    <!-- CAPABILITY: AD SERVING -->
-    <section class="section-dark section-padding" id="ads">
-      <div class="container">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" data-fade>
-          <div>
-            <p class="label-tag" style="margin-bottom:1rem;">Capability 03</p>
-            <h2 class="heading-section" style="margin-bottom:1.5rem;">Ad Serving<br><span style="color:var(--blue);">Identity-Powered DSP</span></h2>
-            <p class="body-lg" style="color:var(--text-muted);margin-bottom:1.5rem;">Reach the specific individuals you've identified — across every channel — using a full-stack Demand-Side Platform with identity resolution built in from the ground up.</p>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem;">
-              <li style="display:flex;gap:0.75rem;color:var(--text-muted);"><span style="color:var(--blue);flex-shrink:0;">✓</span><span>Display, CTV/OTT, audio, social media</span></li>
-              <li style="display:flex;gap:0.75rem;color:var(--text-muted);"><span style="color:var(--blue);flex-shrink:0;">✓</span><span>1,000+ DSP integrations (Google ADX, Trade Desk, Xandr, DV360, Amazon DSP)</span></li>
-              <li style="display:flex;gap:0.75rem;color:var(--text-muted);"><span style="color:var(--blue);flex-shrink:0;">✓</span><span>Person-level reach verification</span></li>
-              <li style="display:flex;gap:0.75rem;color:var(--text-muted);"><span style="color:var(--blue);flex-shrink:0;">✓</span><span>Eliminate wasted impressions on already-known audiences</span></li>
-            </ul>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;">
-            <div class="card-dark" style="text-align:center;padding:1.25rem;">
-              <div style="font-size:1.5rem;margin-bottom:0.5rem;">🖥️</div>
-              <p style="font-weight:600;font-size:0.9375rem;">Display</p>
-            </div>
-            <div class="card-dark" style="text-align:center;padding:1.25rem;">
-              <div style="font-size:1.5rem;margin-bottom:0.5rem;">📺</div>
-              <p style="font-weight:600;font-size:0.9375rem;">CTV / OTT</p>
-            </div>
-            <div class="card-dark" style="text-align:center;padding:1.25rem;">
-              <div style="font-size:1.5rem;margin-bottom:0.5rem;">🎵</div>
-              <p style="font-weight:600;font-size:0.9375rem;">Audio</p>
-            </div>
-            <div class="card-dark" style="text-align:center;padding:1.25rem;">
-              <div style="font-size:1.5rem;margin-bottom:0.5rem;">📱</div>
-              <p style="font-weight:600;font-size:0.9375rem;">Social</p>
-            </div>
-          </div>
-        </div>
+    <section class="cta-band">
+      <div class="container cta-band-inner" data-fade>
+        <div><h2>Put your anonymous traffic to work.</h2><p>Start with the identity layer, then add intent and activation as your team is ready.</p></div>
+        <div class="cta-band-actions"><a class="btn btn-primary" href="/trial.html">Start Your Free Trial</a><a class="btn btn-secondary" href="/pricing.html">See Pricing</a></div>
       </div>
     </section>
-
-    <!-- CAPABILITY: BUYERS JOURNEY -->
-    <section class="section-light section-padding" id="journey">
-      <div class="container">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" data-fade>
-          <div class="card-light">
-            <p class="label-tag" style="margin-bottom:1.5rem;color:var(--blue);">Journey Map Example</p>
-            <div style="display:flex;flex-direction:column;gap:0;position:relative;">
-              <div style="display:flex;gap:1rem;align-items:flex-start;padding-bottom:1.5rem;position:relative;">
-                <div style="width:0.75rem;height:0.75rem;border-radius:50%;background:var(--blue);margin-top:0.25rem;flex-shrink:0;"></div>
-                <div style="flex:1;border-left:1px dashed #D1D9E0;padding-left:1rem;margin-left:-0.375rem;">
-                  <p style="font-size:0.8125rem;color:#5A6A7A;">Day 1 — Off-Domain</p>
-                  <p style="font-weight:600;font-size:0.9375rem;color:var(--text-on-light);">Researches "identity resolution software" across 4 sites</p>
-                </div>
-              </div>
-              <div style="display:flex;gap:1rem;align-items:flex-start;padding-bottom:1.5rem;">
-                <div style="width:0.75rem;height:0.75rem;border-radius:50%;background:var(--amber);margin-top:0.25rem;flex-shrink:0;"></div>
-                <div style="flex:1;border-left:1px dashed #D1D9E0;padding-left:1rem;margin-left:-0.375rem;">
-                  <p style="font-size:0.8125rem;color:#5A6A7A;">Day 4 — On-Domain</p>
-                  <p style="font-weight:600;font-size:0.9375rem;color:var(--text-on-light);">Visits pricing page (3x), reads case studies</p>
-                </div>
-              </div>
-              <div style="display:flex;gap:1rem;align-items:flex-start;padding-bottom:1.5rem;">
-                <div style="width:0.75rem;height:0.75rem;border-radius:50%;background:var(--teal);margin-top:0.25rem;flex-shrink:0;"></div>
-                <div style="flex:1;border-left:1px dashed #D1D9E0;padding-left:1rem;margin-left:-0.375rem;">
-                  <p style="font-size:0.8125rem;color:#5A6A7A;">Day 6 — Ad Served</p>
-                  <p style="font-weight:600;font-size:0.9375rem;color:var(--text-on-light);">Sees CTV ad, clicks LinkedIn retargeting</p>
-                </div>
-              </div>
-              <div style="display:flex;gap:1rem;align-items:flex-start;">
-                <div style="width:0.75rem;height:0.75rem;border-radius:50%;background:var(--green);margin-top:0.25rem;flex-shrink:0;"></div>
-                <div style="flex:1;padding-left:1rem;margin-left:-0.375rem;">
-                  <p style="font-size:0.8125rem;color:#5A6A7A;">Day 9 — Closed Won</p>
-                  <p style="font-weight:600;font-size:0.9375rem;color:var(--green);">Books demo → closes $48K deal</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <p class="label-tag" style="margin-bottom:1rem;color:var(--blue);">Capability 04</p>
-            <h2 class="heading-section" style="color:var(--text-on-light);margin-bottom:1.5rem;">Buyer's Journey<br><span style="color:var(--blue);">Attribution &amp; Mapping</span></h2>
-            <p style="color:#5A6A7A;line-height:1.65;margin-bottom:1.5rem;" class="body-lg">Closed-loop attribution from first anonymous touch to closed-won. Map the complete research journey for every individual and eliminate the dark funnel permanently.</p>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem;">
-              <li style="display:flex;gap:0.75rem;color:#5A6A7A;"><span style="color:var(--blue);flex-shrink:0;">✓</span><span>First touch to closed-won attribution</span></li>
-              <li style="display:flex;gap:0.75rem;color:#5A6A7A;"><span style="color:var(--blue);flex-shrink:0;">✓</span><span>Deterministic identity across all channels</span></li>
-              <li style="display:flex;gap:0.75rem;color:#5A6A7A;"><span style="color:var(--blue);flex-shrink:0;">✓</span><span>Eliminates multi-touch attribution guesswork</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section-dark section-padding glow-blue" style="text-align:center;">
-      <div class="container" style="max-width:700px;" data-fade>
-        <h2 class="heading-section" style="margin-bottom:1.5rem;">See all four capabilities in action.</h2>
-        <p class="body-lg" style="color:var(--text-muted);margin-bottom:2.5rem;">Book a 30-minute demo and we'll show you exactly what MyProspects sees on your website today.</p>
-        <a href="/demo.html" class="btn btn-primary">Book a Demo →</a>
-      </div>
-    </section>
-
   </main>
   <footer id="site-footer"></footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20260713"></script>
+  <script src="js/subpages.js?v=20260713"></script>
 </body>
 </html>

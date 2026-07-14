@@ -1,365 +1,403 @@
-// ============================================
-// SHARED COMPONENTS
-// ============================================
-
 const NAV_HTML = `
-<div class="container">
-  <div class="nav-inner">
-    <a href="/index.html" class="nav-logo">
-      <img src="/assets/images/myprospects-logo-2.png" alt="MyProspects" class="nav-logo-img">
-    </a>
-    <ul class="nav-links">
-      <li class="nav-dropdown">
-        <a href="#" style="display:flex;align-items:center;gap:0.375rem;">
-          Solutions
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.5">
-            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <div class="nav-dropdown-menu">
-          <a href="/solutions/b2b.html">B2B Sales & Marketing</a>
-          <a href="/solutions/recruitment.html">Recruitment</a>
-          <a href="/solutions/b2c.html">B2C & Consumer</a>
-          <a href="/solutions/nonprofit.html">Nonprofit</a>
-        </div>
-      </li>
-      <li><a href="/product.html">Product</a></li>
-      <li><a href="/pricing.html">Pricing</a></li>
-      <li><a href="/about.html">About</a></li>
-      <li class="nav-dropdown">
-        <a href="#" style="display:flex;align-items:center;gap:0.375rem;">
-          Resources
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="opacity:0.5">
-            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <div class="nav-dropdown-menu">
-          <a href="/blog.html">Blog</a>
-          <a href="/case-studies.html">Case Studies</a>
-          <a href="/use-cases.html">Use Cases</a>
-        </div>
-      </li>
-    </ul>
-    <a href="/demo.html" class="btn btn-primary nav-cta" style="font-size:0.875rem;padding:0.625rem 1.25rem;">Book a Demo</a>
-    <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Open menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/index.html" class="brand-wordmark" aria-label="MyProspects home">
+        <img src="assets/images/myprospects-logo.png" alt="MyProspects">
+      </a>
+      <ul class="nav-links">
+        <li class="nav-dropdown">
+          <button class="nav-dropdown-trigger" type="button" aria-expanded="false">Solutions <span aria-hidden="true">⌄</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/solutions/b2b.html">B2B Sales &amp; Marketing</a>
+            <a href="/solutions/recruitment.html">Recruitment</a>
+            <a href="/solutions/b2c.html">B2C Products &amp; Services</a>
+            <a href="/solutions/nonprofit.html">Nonprofit</a>
+          </div>
+        </li>
+        <li><a href="/product.html">Product</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li class="nav-dropdown">
+          <button class="nav-dropdown-trigger" type="button" aria-expanded="false">Resources <span aria-hidden="true">⌄</span></button>
+          <div class="nav-dropdown-menu">
+            <a href="/blog.html">Resource Hub</a>
+            <a href="/case-studies.html">Outcome Playbooks</a>
+            <a href="/use-cases.html">Use Cases</a>
+          </div>
+        </li>
+      </ul>
+      <a href="/trial.html" class="btn btn-primary nav-cta">Start Your Free Trial</a>
+      <button class="nav-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"
+        aria-controls="mobile-site-menu" data-mobile-toggle>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-site-menu" aria-hidden="true" data-mobile-menu>
+      <a href="/solutions/b2b.html">B2B Sales &amp; Marketing</a>
+      <a href="/solutions/recruitment.html">Recruitment</a>
+      <a href="/solutions/b2c.html">B2C Products &amp; Services</a>
+      <a href="/solutions/nonprofit.html">Nonprofit</a>
+      <a href="/product.html">Product</a>
+      <a href="/demo.html">Interactive Demo</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/about.html">About</a>
+      <a href="/blog.html">Resource Hub</a>
+      <a href="/case-studies.html">Outcome Playbooks</a>
+      <a href="/use-cases.html">Use Cases</a>
+      <a href="/trial.html">Start Your Free Trial</a>
+    </div>
   </div>
-  <!-- Mobile menu -->
-  <div id="mobile-menu" style="display:none;padding:1rem 0;">
-    <a href="/solutions/b2b.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">B2B Sales & Marketing</a>
-    <a href="/solutions/recruitment.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Recruitment</a>
-    <a href="/solutions/b2c.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">B2C & Consumer</a>
-    <a href="/solutions/nonprofit.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Nonprofit</a>
-    <a href="/product.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Product</a>
-    <a href="/pricing.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Pricing</a>
-    <a href="/about.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">About</a>
-    <a href="/blog.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Blog</a>
-    <a href="/case-studies.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Case Studies</a>
-    <a href="/use-cases.html" style="display:block;padding:0.75rem 0;color:var(--text-muted);font-weight:500;border-bottom:1px solid var(--border-dark);">Use Cases</a>
-    <a href="/demo.html" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">Book a Demo</a>
-  </div>
-</div>
 `;
 
 const FOOTER_HTML = `
-<div class="container">
-  <div class="footer-grid">
-    <div class="footer-col">
-      <div class="nav-logo" style="margin-bottom:0.75rem;">
-        <img src="/assets/images/myprospects-logo-2.png" alt="MyProspects" class="nav-logo-img">
+  <div class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="/index.html" class="brand-wordmark footer-logo" aria-label="MyProspects home">
+            <img src="assets/images/myprospects-logo.png" alt="MyProspects">
+          </a>
+          <p style="margin-top:16px;max-width:320px;">Person-level visitor identity resolution and buyer intent data for B2B, B2C, recruitment, and nonprofit teams.</p>
+          <div class="footer-badges">
+            <span class="badge">Person-level identity</span>
+            <span class="badge">Privacy-first activation</span>
+          </div>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/product.html#identity-graph">Identity Resolution</a></li>
+            <li><a href="/product.html#identity-graph">Intent Intelligence</a></li>
+            <li><a href="/product.html#capabilities">Audience Activation</a></li>
+            <li><a href="/product.html#implementation">Implementation</a></li>
+            <li><a href="/demo.html">Interactive Demo</a></li>
+            <li><a href="/pricing.html">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Solutions</h4>
+          <ul>
+            <li><a href="/solutions/b2b.html">B2B Sales &amp; Marketing</a></li>
+            <li><a href="/solutions/recruitment.html">Recruitment</a></li>
+            <li><a href="/solutions/b2c.html">B2C Products &amp; Services</a></li>
+            <li><a href="/solutions/nonprofit.html">Nonprofit</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="/blog.html">Resource Hub</a></li>
+            <li><a href="/case-studies.html">Outcome Playbooks</a></li>
+            <li><a href="/use-cases.html">Use Cases</a></li>
+            <li><a href="/trial.html">Start Your Free Trial</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="/terms-of-service.html">Terms of Service</a></li>
+            <li><a href="https://linkedin.com/company/myprospects" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          </ul>
+        </div>
       </div>
-      <p style="font-size:0.9375rem;color:var(--text-muted);max-width:280px;line-height:1.65;">
-        Person-level visitor identity resolution and buyer intent data — for B2B, B2C, Recruitment, and Nonprofit.
-      </p>
-      <div class="footer-badges">
-        <span class="badge">SOC2 Type II</span>
-        <span class="badge">GDPR</span>
-        <span class="badge">CCPA</span>
-        <span class="badge">IAB TCF</span>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Product</h4>
-      <ul>
-        <li><a href="/product.html">Identity Resolution</a></li>
-        <li><a href="/product.html#intent">Intent Intelligence</a></li>
-        <li><a href="/product.html#ads">Ad Serving</a></li>
-        <li><a href="/product.html#journey">Buyer's Journey</a></li>
-        <li><a href="/pricing.html">Pricing</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Solutions</h4>
-      <ul>
-        <li><a href="/solutions/b2b.html">B2B Sales & Marketing</a></li>
-        <li><a href="/solutions/recruitment.html">Recruitment</a></li>
-        <li><a href="/solutions/b2c.html">B2C & Consumer</a></li>
-        <li><a href="/solutions/nonprofit.html">Nonprofit</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/blog.html">Blog</a></li>
-        <li><a href="/case-studies.html">Case Studies</a></li>
-        <li><a href="/demo.html">Book a Demo</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <ul>
-        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-        <li><a href="/terms-of-service.html">Terms of Service</a></li>
-      </ul>
-      <div style="margin-top:1.25rem;">
-        <a href="https://linkedin.com/company/myprospects" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.5rem;color:var(--text-muted);font-size:0.875rem;font-weight:500;transition:color 0.2s;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--text-muted)'">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
+      <div class="footer-bottom">
+        <span>© 2026 Local Sphere. All rights reserved.</span>
+        <span>A Local Sphere product</span>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 Local Sphere. All rights reserved.</span>
-    <div style="display:flex;gap:1.5rem;align-items:center;">
-      <a href="/privacy-policy.html" style="color:var(--text-muted);font-size:0.8125rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text-muted)'">Privacy Policy</a>
-      <a href="/terms-of-service.html" style="color:var(--text-muted);font-size:0.8125rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text-muted)'">Terms of Service</a>
-      <span style="color:var(--text-muted);font-size:0.8125rem;">A <strong style="color:var(--blue)">Local Sphere</strong> product</span>
-    </div>
-  </div>
-</div>
 `;
 
-// ============================================
-// PATH PREFIX DETECTION
-// (solutions pages live one level deeper)
-// ============================================
-
 function getPathPrefix() {
-  const path = window.location.pathname;
-  return path.includes('/solutions/') ? '..' : '';
+  return /\/(solutions|resources)\//.test(window.location.pathname) ? '..' : '';
 }
 
 function fixPaths(html, prefix) {
   if (!prefix) return html;
-  return html.replace(/href="\//g, `href="${prefix}/`).replace(/src="\//g, `src="${prefix}/`);
+  return html
+    .replace(/href="\//g, `href="${prefix}/`)
+    .replace(/src="assets\//g, `src="${prefix}/assets/`);
 }
 
-// ============================================
-// COMPONENT INJECTION
-// ============================================
-
-function injectComponents() {
+function injectSharedChrome() {
   const prefix = getPathPrefix();
   const nav = document.getElementById('site-nav');
   const footer = document.getElementById('site-footer');
   if (nav) nav.innerHTML = fixPaths(NAV_HTML, prefix);
   if (footer) footer.innerHTML = fixPaths(FOOTER_HTML, prefix);
-}
 
-// ============================================
-// NAV SCROLL BEHAVIOR
-// ============================================
+  const currentPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
+  nav?.querySelectorAll('a[href]').forEach((link) => {
+    const linkPath = new URL(link.href, window.location.href).pathname.replace(/\/$/, '');
+    if (linkPath === currentPath) link.setAttribute('aria-current', 'page');
+  });
+}
 
 function initNav() {
   const nav = document.getElementById('site-nav');
+  const toggle = document.querySelector('[data-mobile-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]');
   if (!nav) return;
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
-  });
+  const setScrolled = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  };
 
-  // Mobile toggle
-  document.addEventListener('click', (e) => {
-    const menu = document.getElementById('mobile-menu');
-    if (!menu) return;
-    if (e.target.closest('#mobile-toggle')) {
-      menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-    } else if (!e.target.closest('#mobile-menu') && menu.style.display === 'block') {
-      menu.style.display = 'none';
-    }
-  });
+  setScrolled();
+  window.addEventListener('scroll', setScrolled, { passive: true });
+
+  if (toggle && menu) {
+    const menuLinks = [...menu.querySelectorAll('a')];
+
+    const setMenuState = (isOpen, restoreFocus = false) => {
+      menu.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      menu.setAttribute('aria-hidden', String(!isOpen));
+      document.body.classList.toggle('mobile-menu-open', isOpen);
+      if (isOpen) {
+        requestAnimationFrame(() => menuLinks[0]?.focus());
+      } else if (restoreFocus) {
+        toggle.focus();
+      }
+    };
+
+    toggle.addEventListener('click', () => {
+      setMenuState(!menu.classList.contains('open'));
+    });
+
+    menu.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        setMenuState(false);
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (menu.classList.contains('open') && !menu.contains(event.target) && !toggle.contains(event.target)) {
+        setMenuState(false);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (!menu.classList.contains('open')) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMenuState(false, true);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !menuLinks.length) return;
+      const first = menuLinks[0];
+      const last = menuLinks[menuLinks.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    window.matchMedia('(min-width: 821px)').addEventListener('change', (event) => {
+      if (event.matches) setMenuState(false);
+    });
+  }
 }
 
-// ============================================
-// ACTIVE NAV LINK HIGHLIGHTING
-// ============================================
+function initFadeIn() {
+  const items = document.querySelectorAll('[data-fade]');
+  if (!items.length) return;
 
-function highlightActiveNav() {
-  const path = window.location.pathname;
-  document.querySelectorAll('#site-nav a').forEach(link => {
-    const href = link.getAttribute('href');
-    if (!href || href === '#') return;
-    // Normalize href by stripping leading ../ or /
-    const normalizedHref = href.replace(/^\.\.\//, '/');
-    if (path.endsWith(normalizedHref) || (path.endsWith('/') && normalizedHref === '/index.html')) {
-      link.style.color = 'var(--text-on-dark)';
-    }
-  });
+  if (!('IntersectionObserver' in window)) {
+    items.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px 10% 0px', threshold: 0.08 });
+
+  items.forEach((item) => observer.observe(item));
 }
 
-// ============================================
-// ANIMATED COUNTERS
-// ============================================
+function initSolutionTabs() {
+  const tabs = document.querySelectorAll('[data-solution-tab]');
+  if (!tabs.length) return;
 
-function animateCounter(el) {
-  const target = el.dataset.target;
-  if (!target || isNaN(parseFloat(target))) return;
-  const suffix = el.dataset.suffix || '';
-  const prefix = el.dataset.prefix || '';
-  const isFloat = target.includes('.');
-  const numTarget = parseFloat(target);
-  const duration = 2;
+  const panels = document.querySelectorAll('[data-solution-panel]');
 
-  const obj = { val: 0 };
-  gsap.to(obj, {
-    val: numTarget,
-    duration,
-    ease: 'power2.out',
-    onUpdate: function() {
-      el.textContent = prefix + (isFloat
-        ? obj.val.toFixed(1)
-        : Math.round(obj.val).toLocaleString()) + suffix;
-    }
-  });
-}
+  const activateTab = (tab, moveFocus = false) => {
+    const id = tab.dataset.solutionTab;
+    tabs.forEach((candidate) => {
+      const active = candidate === tab;
+      candidate.classList.toggle('active', active);
+      candidate.setAttribute('aria-selected', String(active));
+      candidate.tabIndex = active ? 0 : -1;
+    });
+    panels.forEach((panel) => {
+      const active = panel.dataset.solutionPanel === id;
+      panel.classList.toggle('active', active);
+      panel.hidden = !active;
+    });
+    if (moveFocus) tab.focus();
+  };
 
-function initCounters() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      activateTab(tab);
+    });
 
-  document.querySelectorAll('[data-counter]').forEach(el => {
-    ScrollTrigger.create({
-      trigger: el,
-      start: 'top 85%',
-      once: true,
-      onEnter: () => animateCounter(el)
+    tab.addEventListener('keydown', (event) => {
+      const currentIndex = [...tabs].indexOf(tab);
+      let nextIndex = null;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (currentIndex + 1) % tabs.length;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      activateTab(tabs[nextIndex], true);
     });
   });
 }
 
-// ============================================
-// TABS
-// ============================================
+function initWorkflowStory() {
+  const flow = document.querySelector('[data-workflow-story]');
+  if (!flow) return;
 
-function initTabs() {
-  document.querySelectorAll('.tab-list').forEach(tabList => {
-    const buttons = tabList.querySelectorAll('.tab-btn');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetId = btn.dataset.tab;
-        const container = btn.closest('[data-tabs-container]') || document;
+  const steps = [...flow.querySelectorAll('.workflow-step')];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let activeIndex = 0;
+  let timer = null;
+  let isVisible = false;
 
-        // Deactivate all
-        buttons.forEach(b => b.classList.remove('active'));
-        container.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const render = (index) => {
+    activeIndex = index;
+    steps.forEach((step, stepIndex) => {
+      step.classList.toggle('is-active', stepIndex === index);
+      step.classList.toggle('is-complete', stepIndex < index);
+    });
+    flow.style.setProperty('--workflow-progress', `${8 + (index * 18)}%`);
+  };
 
-        // Activate clicked
-        btn.classList.add('active');
-        const panel = container.querySelector(`[data-tab-panel="${targetId}"]`);
-        if (panel) panel.classList.add('active');
+  const stop = () => {
+    window.clearInterval(timer);
+    timer = null;
+  };
+
+  const start = () => {
+    if (reduceMotion || timer || !isVisible) return;
+    timer = window.setInterval(() => render((activeIndex + 1) % steps.length), 1700);
+  };
+
+  if (reduceMotion) {
+    steps.forEach((step) => step.classList.add('is-complete'));
+    flow.style.setProperty('--workflow-progress', '80%');
+    return;
+  }
+
+  render(0);
+  const observer = new IntersectionObserver(([entry]) => {
+    isVisible = entry.isIntersecting;
+    if (isVisible) start();
+    else stop();
+  }, { threshold: 0.3 });
+
+  observer.observe(flow);
+  flow.addEventListener('mouseenter', stop);
+  flow.addEventListener('mouseleave', start);
+}
+
+function initLegacyTabs() {
+  document.querySelectorAll('[data-tabs-container]').forEach((container) => {
+    const tabs = container.querySelectorAll('[data-tab]');
+    const panels = container.querySelectorAll('[data-tab-panel]');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        tabs.forEach((candidate) => candidate.classList.toggle('active', candidate === tab));
+        panels.forEach((panel) => panel.classList.toggle('active', panel.dataset.tabPanel === target));
       });
     });
   });
 }
 
-// ============================================
-// ACCORDION
-// ============================================
-
 function initAccordions() {
-  document.querySelectorAll('.accordion-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.accordion-item');
-      const body = item.querySelector('.accordion-body');
-      const inner = item.querySelector('.accordion-body-inner');
-      const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.accordion-item').forEach((item, index) => {
+    const button = item.querySelector('.accordion-btn');
+    const body = item.querySelector('.accordion-body');
+    if (!button || !body) return;
 
-      // Close all in same accordion group
-      const group = item.closest('.accordion-group');
-      if (group) {
-        group.querySelectorAll('.accordion-item.open').forEach(openItem => {
-          if (openItem !== item) {
-            openItem.classList.remove('open');
-            openItem.querySelector('.accordion-body').style.maxHeight = '0';
-          }
-        });
-      }
+    const bodyId = body.id || `accordion-panel-${index + 1}`;
+    body.id = bodyId;
+    button.setAttribute('aria-controls', bodyId);
+    button.setAttribute('aria-expanded', 'false');
 
-      if (isOpen) {
-        item.classList.remove('open');
-        body.style.maxHeight = '0';
-      } else {
-        if (!inner) return;
-        item.classList.add('open');
-        body.style.maxHeight = inner.scrollHeight + 32 + 'px';
-      }
+    button.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('open');
+      button.setAttribute('aria-expanded', String(isOpen));
+      body.style.maxHeight = isOpen ? `${body.scrollHeight}px` : '0px';
     });
   });
 }
 
-// ============================================
-// SPOTLIGHT CARDS (cursor glow)
-// ============================================
+function initCounters() {
+  const counters = document.querySelectorAll('[data-counter]');
+  if (!counters.length) return;
 
-function initSpotlightCards() {
-  document.querySelectorAll('.spotlight-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mouse-x', x + '%');
-      card.style.setProperty('--mouse-y', y + '%');
-    });
-  });
-}
+  const animate = (counter) => {
+    const target = Number(counter.dataset.target);
+    if (!Number.isFinite(target)) return;
 
-// ============================================
-// GSAP FADE-IN ON SCROLL
-// ============================================
+    const prefix = counter.dataset.prefix || '';
+    const suffix = counter.dataset.suffix || '';
+    const decimals = String(counter.dataset.target).includes('.') ? 1 : 0;
+    const start = performance.now();
+    const duration = 900;
 
-function initScrollAnimations() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = target * eased;
+      counter.textContent = `${prefix}${value.toFixed(decimals)}${suffix}`;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
 
-  gsap.utils.toArray('[data-fade]').forEach(el => {
-    gsap.fromTo(el,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          once: true
-        }
+    requestAnimationFrame(tick);
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    counters.forEach(animate);
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animate(entry.target);
+        observer.unobserve(entry.target);
       }
-    );
-  });
-}
+    });
+  }, { threshold: 0.5 });
 
-// ============================================
-// INIT
-// ============================================
+  counters.forEach((counter) => observer.observe(counter));
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-  }
-  injectComponents();
+  injectSharedChrome();
   initNav();
-  highlightActiveNav();
-  initCounters();
-  initTabs();
+  initFadeIn();
+  initSolutionTabs();
+  initWorkflowStory();
+  initLegacyTabs();
   initAccordions();
-  initSpotlightCards();
-  initScrollAnimations();
+  initCounters();
 });
