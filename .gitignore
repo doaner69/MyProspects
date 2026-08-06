@@ -13,3 +13,4 @@ context/
 docs/
 .vercel
 .env*
+node_modules/

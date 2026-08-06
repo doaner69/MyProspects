@@ -70,9 +70,13 @@ The free-trial flow collects contact details, company, website, use case, traffi
 - Subpage and resource styles: `css/subpages.css`
 - Trial request API: `api/trial-request.js`
 - Contact request API: `api/contact-request.js`
+- Shared persistence and Slack notification pipeline: `api/_lead-submissions.js`
+- Lead schema: `db/001-create-myprospects-leads.sql`
 - Generated visual assets: `assets/images/subpages/`
 
 Use native browser capabilities, CSS transitions, and `IntersectionObserver` for motion. Preserve keyboard access, visible focus, responsive layouts, and `prefers-reduced-motion` support.
+
+Both forms must persist a validated row to Neon before reporting success. Slack notifications run only after persistence and are best-effort. Preview uses only `SLACK_WEBHOOK_URL_PREVIEW`; production uses only `SLACK_WEBHOOK_URL`. Database and Slack credentials must remain server-side Vercel environment variables.
 
 ## Content Guardrails
 

@@ -1,4 +1,8 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const {
+  getUserAgent,
+  saveLeadWithNotification,
+} = require('./_lead-submissions.js');
 
 function cleanString(value, maxLength) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -31,49 +35,44 @@ function sendJson(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
-async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return sendJson(res, 405, { error: 'Method not allowed.' });
-  }
+function createHandler(dependencies = {}) {
+  const submitLead = dependencies.submitLead ?? saveLeadWithNotification;
+  const logger = dependencies.logger ?? console;
 
-  let body = req.body;
-  if (typeof body === 'string') {
-    try {
-      body = JSON.parse(body);
-    } catch {
-      return sendJson(res, 400, { error: 'Request body must be valid JSON.' });
+  return async function handler(req, res) {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return sendJson(res, 405, { error: 'Method not allowed.' });
     }
-  }
 
-  const validation = validatePayload(body);
-  if (!validation.ok) return sendJson(res, 400, { error: 'Review the highlighted fields.', fields: validation.errors });
-  if (validation.honeypot) return sendJson(res, 200, { ok: true });
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch {
+        return sendJson(res, 400, { error: 'Request body must be valid JSON.' });
+      }
+    }
 
-  const webhookUrl = process.env.TRIAL_REQUEST_WEBHOOK_URL;
-  if (!webhookUrl) {
-    return sendJson(res, 503, { error: 'Online contact requests are being configured. Please try again shortly.' });
-  }
+    const validation = validatePayload(body);
+    if (!validation.ok) return sendJson(res, 400, { error: 'Review the highlighted fields.', fields: validation.errors });
+    if (validation.honeypot) return sendJson(res, 200, { ok: true });
 
-  try {
-    const webhookResponse = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...validation.payload,
+    try {
+      await submitLead({
+        submissionType: 'contact',
         source: 'myprospects-contact-page',
-        submittedAt: new Date().toISOString(),
-      }),
-      signal: AbortSignal.timeout(8000),
-    });
-
-    if (!webhookResponse.ok) throw new Error(`Webhook returned ${webhookResponse.status}`);
-    return sendJson(res, 200, { ok: true });
-  } catch (error) {
-    console.error('Contact request forwarding failed:', error.message);
-    return sendJson(res, 502, { error: 'We could not send your message right now. Please try again shortly.' });
-  }
+        ...validation.payload,
+        userAgent: getUserAgent(req),
+      });
+      return sendJson(res, 200, { ok: true });
+    } catch (error) {
+      logger.error('Contact request persistence failed:', error);
+      return sendJson(res, 503, { error: 'We could not save your message right now. Please try again shortly.' });
+    }
+  };
 }
 
-module.exports = handler;
+module.exports = createHandler();
+module.exports.createHandler = createHandler;
 module.exports.validatePayload = validatePayload;

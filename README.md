@@ -13,23 +13,35 @@ Static marketing site for MyProspects, a Local Sphere product. The site explains
 ## Run Locally
 
 ```bash
+npm install
 npm run dev
 ```
 
-The site is static HTML, CSS, and JavaScript. `api/trial-request.js` is a Vercel serverless function and is available when running through Vercel or a compatible local environment.
+The site is static HTML, CSS, and JavaScript. The form endpoints are Vercel serverless functions and are available through Vercel Development or a compatible local environment.
 
-## Trial Requests
+## Lead Submissions
 
 `trial.html` and `contact.html` validate their forms in the browser and post to `/api/trial-request` and `/api/contact-request` respectively.
 
-- Set `TRIAL_REQUEST_WEBHOOK_URL` in the server environment to forward validated trial and contact requests. Each payload includes a distinct `source` value.
-- Without that variable, the APIs return a transparent temporary-configuration error.
-- The webhook URL is never included in client-side source.
+- Validated submissions are inserted first into `public.myprospects_leads` in Neon. The two flows are distinguished by `submission_type` and the exact `source` values `myprospects-trial-page` and `myprospects-contact-page`.
+- After persistence succeeds, the server sends a formatted Slack notification. A missing or failing Slack webhook is logged but does not lose the saved lead or turn the form into an error.
+- The idempotent schema is maintained in `db/001-create-myprospects-leads.sql` and is also ensured by the server function before its first insert.
+
+### Required Vercel Environment Variables
+
+| Variable | Scope | Purpose |
+| --- | --- | --- |
+| `NEON_DATABASE_URL` | Preview and Production, with environment-specific values | Preferred pooled Neon connection string. `DATABASE_URL`, `POSTGRES_URL`, and common Neon integration variants are also accepted. |
+| `SLACK_WEBHOOK_URL_PREVIEW` | Preview only | Optional preview/test Slack Incoming Webhook. Preview never falls back to the production webhook. |
+| `SLACK_WEBHOOK_URL` | Production only | Optional production Slack Incoming Webhook. |
+
+Database configuration is required for successful form submission. Slack is optional and best-effort. All values must remain server-side in Vercel; never include them in HTML, browser JavaScript, committed files, or screenshots.
 
 ## Validation
 
 ```bash
 node tests/site-smoke.mjs
+node tests/lead-submissions.mjs
 node tests/trial-api.mjs
 node tests/contact-api.mjs
 ```

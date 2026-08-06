@@ -1,0 +1,11 @@
+{
+  "name": "myprospects-marketing-site",
+  "private": true,
+  "scripts": {
+    "dev": "npx vercel dev",
+    "test": "node tests/site-smoke.mjs && node tests/lead-submissions.mjs && node tests/trial-api.mjs && node tests/contact-api.mjs"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0"
+  }
+}

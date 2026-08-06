@@ -1,6 +1,10 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ALLOWED_USE_CASES = new Set(['b2b', 'b2c', 'recruitment', 'nonprofit', 'other']);
 const ALLOWED_TRAFFIC = new Set(['under-10k', '10k-50k', '50k-250k', '250k-plus', 'unknown']);
+const {
+  getUserAgent,
+  saveLeadWithNotification,
+} = require('./_lead-submissions.js');
 
 function cleanString(value, maxLength) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -57,49 +61,54 @@ function sendJson(res, status, body) {
   res.end(JSON.stringify(body));
 }
 
-async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return sendJson(res, 405, { error: 'Method not allowed.' });
-  }
+function createHandler(dependencies = {}) {
+  const submitLead = dependencies.submitLead ?? saveLeadWithNotification;
+  const logger = dependencies.logger ?? console;
 
-  let body = req.body;
-  if (typeof body === 'string') {
-    try {
-      body = JSON.parse(body);
-    } catch {
-      return sendJson(res, 400, { error: 'Request body must be valid JSON.' });
+  return async function handler(req, res) {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return sendJson(res, 405, { error: 'Method not allowed.' });
     }
-  }
 
-  const validation = validatePayload(body);
-  if (!validation.ok) return sendJson(res, 400, { error: 'Review the highlighted fields.', fields: validation.errors });
-  if (validation.honeypot) return sendJson(res, 200, { ok: true });
+    let body = req.body;
+    if (typeof body === 'string') {
+      try {
+        body = JSON.parse(body);
+      } catch {
+        return sendJson(res, 400, { error: 'Request body must be valid JSON.' });
+      }
+    }
 
-  const webhookUrl = process.env.TRIAL_REQUEST_WEBHOOK_URL;
-  if (!webhookUrl) {
-    return sendJson(res, 503, { error: 'Online trial requests are being configured. Please try again shortly.' });
-  }
+    const validation = validatePayload(body);
+    if (!validation.ok) return sendJson(res, 400, { error: 'Review the highlighted fields.', fields: validation.errors });
+    if (validation.honeypot) return sendJson(res, 200, { ok: true });
 
-  try {
-    const webhookResponse = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...validation.payload,
+    try {
+      const name = `${validation.payload.firstName} ${validation.payload.lastName}`.trim();
+      await submitLead({
+        submissionType: 'free_trial',
         source: 'myprospects-trial-page',
-        submittedAt: new Date().toISOString(),
-      }),
-      signal: AbortSignal.timeout(8000),
-    });
-
-    if (!webhookResponse.ok) throw new Error(`Webhook returned ${webhookResponse.status}`);
-    return sendJson(res, 200, { ok: true });
-  } catch (error) {
-    console.error('Trial request forwarding failed:', error.message);
-    return sendJson(res, 502, { error: 'We could not send your request right now. Please try again shortly.' });
-  }
+        name,
+        firstName: validation.payload.firstName,
+        lastName: validation.payload.lastName,
+        email: validation.payload.workEmail,
+        company: validation.payload.company,
+        website: validation.payload.website,
+        useCase: validation.payload.useCase,
+        monthlyTraffic: validation.payload.monthlyTraffic,
+        notes: validation.payload.notes,
+        consent: validation.payload.consent,
+        userAgent: getUserAgent(req),
+      });
+      return sendJson(res, 200, { ok: true });
+    } catch (error) {
+      logger.error('Trial request persistence failed:', error);
+      return sendJson(res, 503, { error: 'We could not save your request right now. Please try again shortly.' });
+    }
+  };
 }
 
-module.exports = handler;
+module.exports = createHandler();
+module.exports.createHandler = createHandler;
 module.exports.validatePayload = validatePayload;

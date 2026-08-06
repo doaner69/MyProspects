@@ -108,6 +108,20 @@ const subpageScript = read('js/subpages.js');
 assert.ok(subpageScript.includes('Someone from MyProspects will be contacting you soon!'), 'forms should use the approved confirmation message');
 assert.ok(subpageScript.includes('https://${value}'), 'trial website input should normalize bare domains');
 
+const leadPipeline = read('api/_lead-submissions.js');
+assert.ok(leadPipeline.includes('public.myprospects_leads'), 'lead pipeline should persist into the dedicated Neon table');
+assert.ok(leadPipeline.indexOf('const savedLead = await persist(input)') < leadPipeline.indexOf('await sendNotification(input)'), 'lead persistence must complete before Slack notification');
+assert.ok(leadPipeline.includes('SLACK_WEBHOOK_URL_PREVIEW') && leadPipeline.includes('SLACK_WEBHOOK_URL'), 'lead pipeline should isolate preview and production Slack webhooks');
+
+const leadSchema = read('db/001-create-myprospects-leads.sql');
+for (const field of ['submission_type', 'source', 'email', 'created_at']) {
+  assert.ok(leadSchema.includes(field), `lead schema should include ${field}`);
+}
+
+for (const file of ['api/contact-request.js', 'api/trial-request.js', 'api/_lead-submissions.js', 'README.md', 'SITE-REFERENCE.md']) {
+  assert.ok(!read(file).includes('TRIAL_REQUEST_WEBHOOK_URL'), `${file} should not rely on the retired generic webhook`);
+}
+
 const redirects = JSON.parse(read('vercel.json')).redirects;
 for (const source of ['/demo', '/demo.html']) {
   assert.ok(redirects.some((redirect) => redirect.source === source && redirect.destination === '/contact' && redirect.permanent), `${source} should permanently redirect to Contact`);
