@@ -78,10 +78,7 @@ async function handler(req, res) {
 
   const webhookUrl = process.env.TRIAL_REQUEST_WEBHOOK_URL;
   if (!webhookUrl) {
-    return sendJson(res, 503, {
-      error: 'Online trial requests are being configured. Please use the live demo request for now.',
-      fallback: '/demo.html#book',
-    });
+    return sendJson(res, 503, { error: 'Online trial requests are being configured. Please try again shortly.' });
   }
 
   try {
@@ -100,10 +97,7 @@ async function handler(req, res) {
     return sendJson(res, 200, { ok: true });
   } catch (error) {
     console.error('Trial request forwarding failed:', error.message);
-    return sendJson(res, 502, {
-      error: 'We could not send your request right now. Please use the live demo request instead.',
-      fallback: '/demo.html#book',
-    });
+    return sendJson(res, 502, { error: 'We could not send your request right now. Please try again shortly.' });
   }
 }
 

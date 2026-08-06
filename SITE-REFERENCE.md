@@ -23,7 +23,7 @@ Every explanation should keep consent, suppression, frequency, and responsible a
 | --- | --- | --- |
 | Primary | Start Your Free Trial | `/trial.html` |
 | Secondary | See Pricing | `/pricing.html` |
-| Supporting evaluation | Explore the Demo | `/demo.html` |
+| Expert conversation | Talk to an Expert | `/contact.html` |
 
 The free-trial flow collects contact details, company, website, use case, traffic range, notes, and consent. It evaluates fit, signal quality, and workflow design; it is not described as a complete production implementation.
 
@@ -31,11 +31,11 @@ The free-trial flow collects contact details, company, website, use case, traffi
 
 | Area | Routes |
 | --- | --- |
-| Platform | `/product.html`, `/pricing.html`, `/about.html`, `/demo.html` |
+| Platform | `/product.html`, `/pricing.html`, `/about.html` |
 | Solutions | `/solutions/b2b.html`, `/solutions/b2c.html`, `/solutions/recruitment.html`, `/solutions/nonprofit.html` |
 | Practical workflows | `/use-cases.html`, `/case-studies.html` |
 | Resources | `/blog.html`, `/resources/anonymous-traffic-to-named-pipeline.html`, `/resources/on-domain-and-off-domain-intent.html`, `/resources/activating-known-audiences.html` |
-| Conversion and legal | `/trial.html`, `/privacy-policy.html`, `/terms-of-service.html`, `/ccpa.html` |
+| Conversion and legal | `/trial.html`, `/contact.html`, `/privacy-policy.html`, `/terms-of-service.html`, `/ccpa.html` |
 
 `case-studies.html` uses illustrative outcome playbooks until approved customer proof is available. Legal body copy is intentionally preserved and should receive separate legal review.
 
@@ -52,13 +52,13 @@ The free-trial flow collects contact details, company, website, use case, traffi
 
 | Plan | Price | Resolved visitor capacity | Public framing |
 | --- | ---: | ---: | --- |
-| Launch | $4,000/month | Up to 1,000 monthly | Website identity |
-| Growth | $6,500/month | Up to 3,000 monthly | Identity and intent |
-| Scale | $10,000/month | Up to 7,500 monthly | Coordinated activation |
+| Launch | $2,000/month | Up to 1,000 monthly | Website identity |
+| Growth | $3,500/month | Up to 3,000 monthly | Identity and intent |
+| Scale | $5,000/month | Up to 7,500 monthly | Coordinated activation |
 | Enterprise | Custom | Custom | Identity graph configuration |
 
 - Plans are presented as month-to-month.
-- Standard onboarding is $4,000 and covers pixel setup, routing, and launch support.
+- Standard onboarding is $2,000 and covers pixel setup, routing, and launch support.
 - Annual billing offers a 15% discount once the platform is proven in the workflow.
 - Intent, premium activation destinations, and custom integrations are scoped separately; do not add public pricing for modules unless it has current commercial approval.
 
@@ -66,11 +66,10 @@ The free-trial flow collects contact details, company, website, use case, traffi
 
 - Shared navigation and footer: `js/main.js`
 - Shared page interaction and trial validation: `js/subpages.js`
-- Demo interaction: `js/demo.js`
 - Homepage style system: `css/styles.css`
 - Subpage and resource styles: `css/subpages.css`
-- Demo styles: `css/demo.css`
 - Trial request API: `api/trial-request.js`
+- Contact request API: `api/contact-request.js`
 - Generated visual assets: `assets/images/subpages/`
 
 Use native browser capabilities, CSS transitions, and `IntersectionObserver` for motion. Preserve keyboard access, visible focus, responsive layouts, and `prefers-reduced-motion` support.

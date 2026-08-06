@@ -7,7 +7,7 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const read = (path) => readFileSync(join(root, path), 'utf8');
 
 const pages = [
-  'index.html', 'product.html', 'pricing.html', 'about.html', 'demo.html',
+  'index.html', 'product.html', 'pricing.html', 'about.html', 'contact.html',
   'use-cases.html', 'case-studies.html', 'blog.html', 'trial.html',
   'solutions/b2b.html', 'solutions/b2c.html', 'solutions/recruitment.html',
   'solutions/nonprofit.html', 'resources/anonymous-traffic-to-named-pipeline.html',
@@ -75,23 +75,50 @@ assert.equal((product.match(/data-story-panel=/g) || []).length, 5, 'product sho
 const useCases = read('use-cases.html');
 assert.ok(useCases.includes('data-query-key="segment"'), 'use case filter should preserve shareable segment state');
 assert.equal((useCases.match(/data-filter-panel=/g) || []).length, 4, 'use case explorer should include four segments');
+assert.equal((useCases.match(/class="use-case-body"/g) || []).length, 4, 'each use case should use the readable split layout');
 
 const pricing = read('pricing.html');
 assert.ok(pricing.includes('data-pricing-estimator') && pricing.includes('data-resolution-range'), 'pricing should include a resolution estimator');
 assert.equal((pricing.match(/data-price-card=/g) || []).length, 4, 'pricing should include four plan levels');
-
-const demo = read('demo.html');
-for (const control of ['data-demo-persona-tab', 'data-visitor-explorer', 'data-channel-toggle', 'data-meter']) {
-  assert.ok(demo.includes(control), `demo should include ${control}`);
+for (const price of ['data-monthly-price="2000"', 'data-monthly-price="3500"', 'data-monthly-price="5000"']) {
+  assert.ok(pricing.includes(price), `pricing should include ${price}`);
 }
+assert.ok(pricing.includes('Standard onboarding is $2,000'), 'pricing should show the approved onboarding fee');
+assert.ok(pricing.indexOf('pricing-grid-primary') < pricing.indexOf('data-pricing-estimator'), 'plans should appear before the estimator');
 
 const trial = read('trial.html');
 for (const field of ['firstName', 'lastName', 'workEmail', 'company', 'website', 'useCase', 'monthlyTraffic', 'consent', 'website_confirm']) {
   assert.ok(trial.includes(`name="${field}"`), `trial form should include ${field}`);
 }
 
+const contact = read('contact.html');
+for (const field of ['name', 'email', 'message', 'website_confirm']) {
+  assert.ok(contact.includes(`name="${field}"`), `contact form should include ${field}`);
+}
+assert.equal((contact.match(/\brequired\b/g) || []).length, 3, 'contact form should have exactly three required fields');
+
 const mainScript = read('js/main.js');
 assert.ok(mainScript.includes('/trial.html') && mainScript.includes('Start Your Free Trial'), 'shared navigation should use the trial CTA');
 assert.ok(mainScript.includes('(solutions|resources)'), 'shared path handling should support both nested route groups');
+assert.ok(mainScript.includes('https://app.localsphere.com'), 'shared navigation should link to the Local Sphere app');
+assert.doesNotMatch(mainScript, /href="https:\/\/app\.localsphere\.com"[^>]*target=/, 'Log In should open in the same tab');
+assert.ok(mainScript.includes('/contact.html'), 'shared navigation and footer should link to Contact');
+
+const subpageScript = read('js/subpages.js');
+assert.ok(subpageScript.includes('Someone from MyProspects will be contacting you soon!'), 'forms should use the approved confirmation message');
+assert.ok(subpageScript.includes('https://${value}'), 'trial website input should normalize bare domains');
+
+const redirects = JSON.parse(read('vercel.json')).redirects;
+for (const source of ['/demo', '/demo.html']) {
+  assert.ok(redirects.some((redirect) => redirect.source === source && redirect.destination === '/contact' && redirect.permanent), `${source} should permanently redirect to Contact`);
+}
+
+const scannedFiles = [...pages, 'js/main.js', 'js/subpages.js', 'README.md', 'SITE-REFERENCE.md'];
+for (const file of scannedFiles) {
+  const content = read(file);
+  assert.doesNotMatch(content, /real[ -]?time/i, `${file} should not include real-time claims`);
+  assert.doesNotMatch(content, /(?:under\s+|&lt;|<)100ms/i, `${file} should not include sub-100ms claims`);
+  assert.doesNotMatch(content, /\/demo(?:\.html)?|interactive demo|demo\.html/i, `${file} should not reference the removed demo route or files`);
+}
 
 console.log(`site-smoke: ${pages.length} routes, ${requiredAssets.length} generated assets, and local links validated`);

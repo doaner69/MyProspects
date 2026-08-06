@@ -48,7 +48,7 @@ try {
 
   res = await invoke();
   assert.equal(res.statusCode, 503);
-  assert.equal(res.body.fallback, '/demo.html#book');
+  assert.equal(res.body.fallback, undefined);
 
   process.env.TRIAL_REQUEST_WEBHOOK_URL = 'https://hooks.example/trial';
   global.fetch = async (_url, options) => {
@@ -64,7 +64,7 @@ try {
   console.error = () => {};
   res = await invoke();
   assert.equal(res.statusCode, 502);
-  assert.equal(res.body.fallback, '/demo.html#book');
+  assert.equal(res.body.fallback, undefined);
 } finally {
   if (previousWebhook === undefined) delete process.env.TRIAL_REQUEST_WEBHOOK_URL;
   else process.env.TRIAL_REQUEST_WEBHOOK_URL = previousWebhook;

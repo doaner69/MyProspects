@@ -182,7 +182,11 @@ function validateTrialField(field) {
 
   let message = '';
   if (field.validity.valueMissing) message = 'This field is required.';
-  else if (field.validity.typeMismatch) message = field.type === 'email' ? 'Enter a valid work email.' : 'Enter a valid value.';
+  else if (field.validity.typeMismatch) {
+    message = field.type === 'email'
+      ? field.name === 'workEmail' ? 'Enter a valid work email.' : 'Enter a valid email.'
+      : 'Enter a valid value.';
+  }
   else if (field.validity.patternMismatch) message = 'Enter a complete website address.';
   else if (field.validity.tooLong) message = `Keep this under ${field.maxLength} characters.`;
 
@@ -191,13 +195,108 @@ function validateTrialField(field) {
   return !message;
 }
 
+function normalizeWebsiteField(field) {
+  if (!field) return;
+  const value = field.value.trim();
+  if (value && !/^https?:\/\//i.test(value)) field.value = `https://${value}`;
+}
+
+function showConfirmationDialog(returnFocusTo) {
+  let dialog = document.querySelector('[data-confirmation-dialog]');
+  if (!dialog) {
+    dialog = document.createElement('dialog');
+    dialog.className = 'confirmation-dialog';
+    dialog.dataset.confirmationDialog = '';
+    dialog.setAttribute('aria-labelledby', 'confirmation-title');
+    dialog.setAttribute('aria-describedby', 'confirmation-message');
+    dialog.innerHTML = `
+      <div class="confirmation-dialog-card">
+        <span class="confirmation-dialog-icon" aria-hidden="true">✓</span>
+        <h2 id="confirmation-title">Thank you for reaching out.</h2>
+        <p id="confirmation-message">Someone from MyProspects will be contacting you soon!</p>
+        <button class="btn btn-primary" type="button" data-confirmation-close>Close</button>
+      </div>
+    `;
+    document.body.append(dialog);
+    dialog.querySelector('[data-confirmation-close]').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+
+  dialog.addEventListener('close', () => returnFocusTo?.focus(), { once: true });
+  dialog.showModal();
+}
+
 function initTrialForm() {
   const form = document.querySelector('[data-trial-form]');
   if (!form) return;
 
   const status = form.querySelector('[data-form-status]');
   const submit = form.querySelector('[type="submit"]');
+  const website = form.querySelector('#website');
   const fields = [...form.querySelectorAll('input, select, textarea')]
+    .filter((field) => field.name !== 'website_confirm');
+
+  fields.forEach((field) => {
+    field.addEventListener('blur', () => {
+      if (field === website) normalizeWebsiteField(field);
+      validateTrialField(field);
+    });
+    field.addEventListener('input', () => {
+      if (field.getAttribute('aria-invalid') === 'true') validateTrialField(field);
+    });
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    normalizeWebsiteField(website);
+    const valid = fields.map(validateTrialField).every(Boolean);
+    if (!valid) {
+      fields.find((field) => field.getAttribute('aria-invalid') === 'true')?.focus();
+      return;
+    }
+
+    submit.disabled = true;
+    submit.textContent = 'Sending request...';
+    status.className = 'form-status';
+    status.textContent = '';
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    data.consent = data.consent === 'on';
+
+    let succeeded = false;
+    try {
+      const response = await fetch('/api/trial-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'Unable to submit the request.');
+
+      form.reset();
+      succeeded = true;
+      showConfirmationDialog(submit);
+    } catch (error) {
+      status.className = 'form-status error visible';
+      status.textContent = error.message;
+    } finally {
+      submit.disabled = false;
+      submit.textContent = 'Start Your Free Trial';
+      if (!succeeded) status.focus();
+    }
+  });
+}
+
+function initContactForm() {
+  const form = document.querySelector('[data-contact-form]');
+  if (!form) return;
+
+  const status = form.querySelector('[data-form-status]');
+  const submit = form.querySelector('[type="submit"]');
+  const defaultSubmitLabel = submit.textContent;
+  const fields = [...form.querySelectorAll('input, textarea')]
     .filter((field) => field.name !== 'website_confirm');
 
   fields.forEach((field) => {
@@ -216,32 +315,31 @@ function initTrialForm() {
     }
 
     submit.disabled = true;
-    submit.textContent = 'Sending request...';
+    submit.textContent = 'Sending message...';
     status.className = 'form-status';
     status.textContent = '';
-
-    const data = Object.fromEntries(new FormData(form).entries());
-    data.consent = data.consent === 'on';
+    let succeeded = false;
 
     try {
-      const response = await fetch('/api/trial-request', {
+      const data = Object.fromEntries(new FormData(form).entries());
+      const response = await fetch('/api/contact-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || 'Unable to submit the request.');
+      if (!response.ok) throw new Error(result.error || 'Unable to send your message.');
 
       form.reset();
-      status.className = 'form-status success visible';
-      status.textContent = 'Your trial request is in. Our team will follow up with setup details.';
+      succeeded = true;
+      showConfirmationDialog(submit);
     } catch (error) {
       status.className = 'form-status error visible';
-      status.innerHTML = `${error.message} <a href="/demo.html#book">Use the live demo request instead.</a>`;
+      status.textContent = error.message;
     } finally {
       submit.disabled = false;
-      submit.textContent = 'Start Your Free Trial';
-      status.focus();
+      submit.textContent = defaultSubmitLabel;
+      if (!succeeded) status.focus();
     }
   });
 }
@@ -252,4 +350,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initPricingEstimator();
   initCycleSteps();
   initTrialForm();
+  initContactForm();
 });

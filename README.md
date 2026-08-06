@@ -20,10 +20,10 @@ The site is static HTML, CSS, and JavaScript. `api/trial-request.js` is a Vercel
 
 ## Trial Requests
 
-`trial.html` validates the form in the browser and posts to `/api/trial-request`.
+`trial.html` and `contact.html` validate their forms in the browser and post to `/api/trial-request` and `/api/contact-request` respectively.
 
-- Set `TRIAL_REQUEST_WEBHOOK_URL` in the server environment to forward validated trial requests.
-- Without that variable, the API returns a transparent fallback response that directs visitors to the interactive demo.
+- Set `TRIAL_REQUEST_WEBHOOK_URL` in the server environment to forward validated trial and contact requests. Each payload includes a distinct `source` value.
+- Without that variable, the APIs return a transparent temporary-configuration error.
 - The webhook URL is never included in client-side source.
 
 ## Validation
@@ -31,6 +31,7 @@ The site is static HTML, CSS, and JavaScript. `api/trial-request.js` is a Vercel
 ```bash
 node tests/site-smoke.mjs
 node tests/trial-api.mjs
+node tests/contact-api.mjs
 ```
 
 See [SITE-REFERENCE.md](SITE-REFERENCE.md) for the current route map, pricing presentation, content standards, and maintenance notes.

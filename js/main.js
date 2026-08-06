@@ -26,7 +26,10 @@ const NAV_HTML = `
           </div>
         </li>
       </ul>
-      <a href="/trial.html" class="btn btn-primary nav-cta">Start Your Free Trial</a>
+      <div class="nav-actions">
+        <a href="https://app.localsphere.com" class="btn nav-login">Log In</a>
+        <a href="/trial.html" class="btn btn-primary nav-cta">Start Your Free Trial</a>
+      </div>
       <button class="nav-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"
         aria-controls="mobile-site-menu" data-mobile-toggle>
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -38,12 +41,13 @@ const NAV_HTML = `
       <a href="/solutions/b2c.html">B2C Products &amp; Services</a>
       <a href="/solutions/nonprofit.html">Nonprofit</a>
       <a href="/product.html">Product</a>
-      <a href="/demo.html">Interactive Demo</a>
       <a href="/pricing.html">Pricing</a>
       <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
       <a href="/blog.html">Resource Hub</a>
       <a href="/case-studies.html">Outcome Playbooks</a>
       <a href="/use-cases.html">Use Cases</a>
+      <a href="https://app.localsphere.com">Log In</a>
       <a href="/trial.html">Start Your Free Trial</a>
     </div>
   </div>
@@ -70,7 +74,6 @@ const FOOTER_HTML = `
             <li><a href="/product.html#identity-graph">Intent Intelligence</a></li>
             <li><a href="/product.html#capabilities">Audience Activation</a></li>
             <li><a href="/product.html#implementation">Implementation</a></li>
-            <li><a href="/demo.html">Interactive Demo</a></li>
             <li><a href="/pricing.html">Pricing</a></li>
           </ul>
         </div>
@@ -96,6 +99,7 @@ const FOOTER_HTML = `
           <h4>Company</h4>
           <ul>
             <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
             <li><a href="/privacy-policy.html">Privacy Policy</a></li>
             <li><a href="/terms-of-service.html">Terms of Service</a></li>
             <li><a href="https://linkedin.com/company/myprospects" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>

@@ -1,4 +1,16 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/demo",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/demo.html",
+      "destination": "/contact",
+      "permanent": true
+    }
+  ]
 }
