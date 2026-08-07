@@ -86,6 +86,14 @@ for (const price of ['data-monthly-price="2000"', 'data-monthly-price="3500"', '
 assert.ok(pricing.includes('Standard onboarding is $2,000'), 'pricing should show the approved onboarding fee');
 assert.ok(pricing.indexOf('pricing-grid-primary') < pricing.indexOf('data-pricing-estimator'), 'plans should appear before the estimator');
 
+const privacyPolicy = read('privacy-policy.html');
+assert.ok(!privacyPolicy.includes('SOC 2 Type II certified'), 'privacy policy should not claim SOC 2 Type II certification');
+
+const terms = read('terms-of-service.html');
+assert.ok(terms.includes('href="https://myprospects.com">myprospects.com</a>'), 'terms should link to the current MyProspects domain');
+assert.ok(terms.includes('laws of the State of Florida'), 'terms should identify Florida as the governing state');
+assert.ok(terms.includes('mailto:steve@localsphere.com">steve@localsphere.com</a>'), 'terms should use the current legal contact email');
+
 const trial = read('trial.html');
 for (const field of ['firstName', 'lastName', 'workEmail', 'company', 'website', 'useCase', 'monthlyTraffic', 'consent', 'website_confirm']) {
   assert.ok(trial.includes(`name="${field}"`), `trial form should include ${field}`);
