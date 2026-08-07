@@ -15,6 +15,9 @@ const pages = [
   'privacy-policy.html', 'terms-of-service.html',
 ];
 
+const googleTagId = 'G-SQY7W3M8FR';
+const googleTagSrc = `https://www.googletagmanager.com/gtag/js?id=${googleTagId}`;
+
 for (const page of pages) {
   const html = read(page);
   const compact = html.replace(/\s+/g, ' ');
@@ -25,6 +28,11 @@ for (const page of pages) {
   assert.ok(html.includes('styles.css?v=20260713'), `${page} should use the current stylesheet`);
   assert.ok(html.includes('main.js?v=20260713'), `${page} should use the current shared script`);
   assert.ok(!html.includes('cdnjs.cloudflare.com/ajax/libs/gsap'), `${page} should not load unused GSAP`);
+  assert.equal((html.match(new RegExp(googleTagId, 'g')) || []).length, 2, `${page} should configure exactly one Google tag`);
+  assert.ok(html.includes(`<script async src="${googleTagSrc}"></script>`), `${page} should load gtag.js asynchronously`);
+  assert.ok(html.includes(`gtag('config', '${googleTagId}');`), `${page} should initialize the Google tag`);
+  const googleTagPosition = html.indexOf(googleTagSrc);
+  assert.ok(googleTagPosition > html.indexOf('<head>') && googleTagPosition < html.indexOf('</head>'), `${page} should load the Google tag inside the head`);
 }
 
 const marketingPages = pages.filter((page) => !['privacy-policy.html', 'terms-of-service.html'].includes(page));
