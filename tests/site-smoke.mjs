@@ -80,6 +80,14 @@ const pricing = read('pricing.html');
 assert.ok(pricing.includes('data-pricing-estimator') && pricing.includes('data-resolution-range'), 'pricing should include a resolution estimator');
 assert.equal((pricing.match(/data-price-card=/g) || []).length, 4, 'pricing should include four plan levels');
 
+const privacyPolicy = read('privacy-policy.html');
+assert.ok(!privacyPolicy.includes('SOC 2 Type II certified'), 'privacy policy should not claim SOC 2 Type II certification');
+
+const terms = read('terms-of-service.html');
+assert.ok(terms.includes('href="https://myprospects.com">myprospects.com</a>'), 'terms should link to the current MyProspects domain');
+assert.ok(terms.includes('laws of the State of Florida'), 'terms should identify Florida as the governing state');
+assert.ok(terms.includes('mailto:steve@localsphere.com">steve@localsphere.com</a>'), 'terms should use the current legal contact email');
+
 const demo = read('demo.html');
 for (const control of ['data-demo-persona-tab', 'data-visitor-explorer', 'data-channel-toggle', 'data-meter']) {
   assert.ok(demo.includes(control), `demo should include ${control}`);
