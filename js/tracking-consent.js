@@ -137,10 +137,11 @@
     banner.setAttribute('aria-labelledby', 'tracking-consent-title');
     banner.innerHTML = `
       <div class="tracking-consent-copy">
-        <h2 id="tracking-consent-title">Your privacy choices</h2>
-        <p>Optional analytics uses Google Analytics to measure visits. Visitor identification sends website activity, names, emails, Contact messages, Trial notes and copied text to Sitelytics (api.sitelytics.tech).</p>
-        <p>Partner tracking at ce.lijit.com and pxdrop.lijit.com may receive browser/IP identifiers and site activity. Messages and notes may contain confidential or sensitive information.</p>
-        <p>Accept enables both analytics and visitor identification. You can withdraw at any time using Privacy choices; withdrawal refreshes the page if tracking has loaded. <a href="/privacy-policy.html">Privacy Policy and full tracking details</a></p>
+        <h2 id="tracking-consent-title">We Respect Your Privacy</h2>
+        <p>We use cookies and similar technologies to measure traffic and identify visitors. After you accept optional tracking, we share information with Google Analytics and our visitor identification partners.</p>
+        <p>Visitor identification can share website activity, names, emails, Contact messages, Trial notes and copied text. Messages and notes may contain confidential or sensitive information. Our Privacy Policy explains the recipients and details.</p>
+        <p>You can reject optional tracking or withdraw at any time using Privacy choices in the footer. Withdrawal refreshes the page if tracking has loaded. We honor Global Privacy Control by keeping optional tracking off.</p>
+        <p><a href="/privacy-policy.html">Privacy Policy</a> | <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a></p>
         <p class="tracking-browser-choice" ${browserOptOut() ? '' : 'hidden'}>Your browser privacy preference keeps optional tracking off.</p>
       </div>
       <div class="tracking-consent-actions">

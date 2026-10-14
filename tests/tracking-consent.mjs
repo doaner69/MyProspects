@@ -61,10 +61,8 @@ function start({ pathname = '/', saved, savedKey = storageKey, globalPrivacyCont
 }
 
 const current = start();
-assert.match(current.banner.innerHTML, /Optional analytics uses Google Analytics to measure visits\./);
-assert.match(current.banner.innerHTML, /Accept enables both analytics and visitor identification\./);
-assert.match(current.banner.innerHTML, /names, emails, Contact messages, Trial notes and copied text to Sitelytics/);
-assert.match(current.banner.innerHTML, /ce\.lijit\.com and pxdrop\.lijit\.com/);
+assert.match(current.banner.innerHTML, /After you accept optional tracking, we share information with Google Analytics and our visitor identification partners\./);
+assert.match(current.banner.innerHTML, /names, emails, Contact messages, Trial notes and copied text/);
 assert.match(current.banner.innerHTML, /confidential or sensitive information/);
 assert.doesNotMatch(current.banner.innerHTML, /analytics only|currently inactive/);
 assert.match(current.banner.innerHTML, /withdraw at any time/);
