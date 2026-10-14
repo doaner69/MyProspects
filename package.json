@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "npx vercel dev",
-    "test": "node tests/site-smoke.mjs && node tests/lead-submissions.mjs && node tests/trial-api.mjs && node tests/contact-api.mjs"
+    "build:gtm": "node scripts/build-gtm-config.mjs",
+    "test": "node tests/site-smoke.mjs && node tests/tracking-consent.mjs && node tests/gtm-config.mjs && node tests/lead-submissions.mjs && node tests/trial-api.mjs && node tests/contact-api.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0"

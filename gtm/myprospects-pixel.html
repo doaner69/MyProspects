@@ -1,0 +1,13 @@
+<script>
+(function () {
+  if (!window.MyProspectsConsent || !window.MyProspectsConsent.isIdentityAllowed()) return;
+  var src = 'https://pixel.localsphere.com/pixels/f975a66e-59f3-4c58-988f-c5b1d9361f9b/p.js';
+  if (document.querySelector('script[src="' + src + '"]')) return;
+  var pixel = document.createElement('script');
+  pixel.src = src;
+  pixel.async = true;
+  pixel.setAttribute('data-ga4-key', 'G-VH43PH567B');
+  pixel.setAttribute('data-consent-category', 'marketing');
+  document.head.appendChild(pixel);
+}());
+</script>

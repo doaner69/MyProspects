@@ -15,9 +15,6 @@ const pages = [
   'privacy-policy.html', 'terms-of-service.html',
 ];
 
-const googleTagId = 'G-SQY7W3M8FR';
-const googleTagSrc = `https://www.googletagmanager.com/gtag/js?id=${googleTagId}`;
-
 for (const page of pages) {
   const html = read(page);
   const compact = html.replace(/\s+/g, ' ');
@@ -26,13 +23,19 @@ for (const page of pages) {
   assert.match(compact, /<meta name="description" content="[^"]{40,}"/, `${page} needs a useful description`);
   assert.ok(html.includes('id="site-nav"') && html.includes('id="site-footer"'), `${page} needs shared chrome`);
   assert.ok(html.includes('styles.css?v=20260713'), `${page} should use the current stylesheet`);
-  assert.ok(html.includes('main.js?v=20260713'), `${page} should use the current shared script`);
+  assert.ok(html.includes('main.js?v=20261014'), `${page} should use the current shared script`);
   assert.ok(!html.includes('cdnjs.cloudflare.com/ajax/libs/gsap'), `${page} should not load unused GSAP`);
-  assert.equal((html.match(new RegExp(googleTagId, 'g')) || []).length, 2, `${page} should configure exactly one Google tag`);
-  assert.ok(html.includes(`<script async src="${googleTagSrc}"></script>`), `${page} should load gtag.js asynchronously`);
-  assert.ok(html.includes(`gtag('config', '${googleTagId}');`), `${page} should initialize the Google tag`);
-  const googleTagPosition = html.indexOf(googleTagSrc);
-  assert.ok(googleTagPosition > html.indexOf('<head>') && googleTagPosition < html.indexOf('</head>'), `${page} should load the Google tag inside the head`);
+  assert.ok(!html.includes('G-SQY7W3M8FR'), `${page} must remove the old GA4 destination`);
+  assert.ok(!html.includes('googletagmanager.com/gtag/js'), `${page} must initialize GA4 only through GTM`);
+  assert.equal((html.match(/GTM-K3S8PSJ9/g) || []).length, 2, `${page} needs one GTM loader and one fallback`);
+  const consentPosition = html.indexOf('/js/tracking-consent.js?v=20261014');
+  const gtmPosition = html.indexOf('<!-- Google Tag Manager -->');
+  assert.ok(consentPosition > html.indexOf('<head>') && consentPosition < gtmPosition, `${page} must establish consent before GTM loads`);
+  assert.ok(html.includes('<script src="/js/tracking-consent.js?v=20261014"></script>'), `${page} must establish consent synchronously`);
+  assert.match(html, /<body\b[^>]*>\s*<!-- Google Tag Manager \(noscript\) -->/, `${page} needs the GTM fallback at the start of its body`);
+  if (/<form\b|<textarea\b/i.test(html)) {
+    assert.ok(['contact.html', 'trial.html'].includes(page), `${page} introduces a form requiring a collection review`);
+  }
 }
 
 const marketingPages = pages.filter((page) => !['privacy-policy.html', 'terms-of-service.html'].includes(page));

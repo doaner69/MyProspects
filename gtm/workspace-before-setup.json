@@ -1,0 +1,102 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-10-14 21:10:13",
+  "containerVersion": {
+    "path": "accounts/6382565138/containers/267143179/versions/0",
+    "accountId": "6382565138",
+    "containerId": "267143179",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6382565138/containers/267143179",
+      "accountId": "6382565138",
+      "containerId": "267143179",
+      "name": "www.myprospects.com",
+      "publicId": "GTM-K3S8PSJ9",
+      "usageContext": [
+        "WEB"
+      ],
+      "fingerprint": "1792003104029",
+      "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6382565138/containers/267143179/workspaces?apiLink=container",
+      "features": {
+        "supportUserPermissions": true,
+        "supportEnvironments": true,
+        "supportWorkspaces": true,
+        "supportGtagConfigs": false,
+        "supportBuiltInVariables": true,
+        "supportClients": false,
+        "supportFolders": true,
+        "supportTags": true,
+        "supportTemplates": true,
+        "supportTriggers": true,
+        "supportVariables": true,
+        "supportVersions": true,
+        "supportZones": true,
+        "supportTransformations": false
+      },
+      "tagIds": [
+        "GTM-K3S8PSJ9"
+      ]
+    },
+    "tag": [
+      {
+        "accountId": "6382565138",
+        "containerId": "267143179",
+        "tagId": "3",
+        "name": "GA4 \u2013 MyProspects \u2013 G-VH43PH567B",
+        "type": "googtag",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "tagId",
+            "value": "G-VH43PH567B"
+          }
+        ],
+        "fingerprint": "1792012012438",
+        "firingTriggerId": [
+          "2147479573"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        },
+        "consentSettings": {
+          "consentStatus": "NOT_SET"
+        }
+      }
+    ],
+    "builtInVariable": [
+      {
+        "accountId": "6382565138",
+        "containerId": "267143179",
+        "type": "PAGE_URL",
+        "name": "Page URL"
+      },
+      {
+        "accountId": "6382565138",
+        "containerId": "267143179",
+        "type": "PAGE_HOSTNAME",
+        "name": "Page Hostname"
+      },
+      {
+        "accountId": "6382565138",
+        "containerId": "267143179",
+        "type": "PAGE_PATH",
+        "name": "Page Path"
+      },
+      {
+        "accountId": "6382565138",
+        "containerId": "267143179",
+        "type": "REFERRER",
+        "name": "Referrer"
+      },
+      {
+        "accountId": "6382565138",
+        "containerId": "267143179",
+        "type": "EVENT",
+        "name": "Event"
+      }
+    ],
+    "fingerprint": "1792012213025",
+    "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6382565138/containers/267143179/versions/0?apiLink=version"
+  }
+}

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQY7W3M8FR"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SQY7W3M8FR');
-  </script>
+  <script src="/js/tracking-consent.js?v=20261014"></script>
+  <link rel="stylesheet" href="/css/tracking-consent.css?v=20261014">
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-K3S8PSJ9');</script>
+  <!-- End Google Tag Manager -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — MyProspects</title>
@@ -32,6 +34,10 @@
   </style>
 </head>
 <body class="legal-page">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K3S8PSJ9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <nav id="site-nav"></nav>
   <main class="page-top">
 
@@ -40,9 +46,9 @@
 
         <p class="label-tag" style="margin-bottom:1rem;">Legal</p>
         <h1 style="font-size:clamp(2rem,4vw,2.75rem);font-weight:800;line-height:1.15;letter-spacing:-0.02em;color:white;margin-bottom:1rem;">Privacy Policy</h1>
-        <p class="legal-effective">Effective Date: April 9, 2026 &nbsp;·&nbsp; Last Updated: April 9, 2026</p>
+        <p class="legal-effective">Effective Date: April 9, 2026 &nbsp;·&nbsp; Last Updated: October 14, 2026</p>
 
-        <p>This Privacy Policy describes how Local Sphere, LLC ("Local Sphere," "MyProspects," "we," "us," or "our") collects, uses, shares, and protects information in connection with the MyProspects identity resolution and buyer intent platform, including our website at myprospects.io (the "Site") and related services (collectively, the "Services").</p>
+        <p>This Privacy Policy describes how Local Sphere, LLC ("Local Sphere," "MyProspects," "we," "us," or "our") collects, uses, shares, and protects information in connection with the MyProspects identity resolution and buyer intent platform, including our website at www.myprospects.com (the "Site") and related services (collectively, the "Services").</p>
         <p>By using the Services, you agree to the collection and use of information in accordance with this policy. If you do not agree, please do not use our Services.</p>
 
         <div class="legal-section-divider"></div>
@@ -70,12 +76,13 @@
         <h3>1.3 Identity Resolution Data (Platform Customers)</h3>
         <p>Our core service — visitor identity resolution — processes data on behalf of our business customers ("Customers"). When deployed on a Customer's website via our JavaScript pixel, our platform may identify individuals visiting that site using probabilistic and deterministic matching techniques against our identity graph. This includes:</p>
         <ul>
-          <li>Hashed email addresses and identifiers (we use SHA-256 hashing — no plaintext PII is transmitted)</li>
+          <li>Hashed email addresses and identifiers (SHA-256 hashing for the platform customer identifier workflow)</li>
           <li>Behavioral signals observed across the open web (intent data)</li>
           <li>Household-level demographic context sourced from our Local Sphere data infrastructure</li>
           <li>On-site behavior including pages viewed, session duration, and interaction patterns</li>
         </ul>
         <p>In these contexts, MyProspects acts as a data processor on behalf of our Customers, who are the data controllers responsible for their own end-user privacy disclosures. We encourage all Customers to maintain a transparent privacy policy on their own sites.</p>
+        <p>This platform customer identifier workflow does not describe fields submitted on our public Site. The optional public-site pixel's collection of names, emails, Contact messages and Trial notes is described in Section 7.</p>
 
         <div class="legal-section-divider"></div>
 
@@ -127,7 +134,7 @@
         <ul>
           <li>AES-256 encryption at rest</li>
           <li>TLS 1.3 encryption in transit</li>
-          <li>SHA-256 hashing of all email identifiers — no plaintext PII is stored or transmitted</li>
+          <li>SHA-256 hashing for platform customer email identifiers. After optional tracking opt-in, the public-site pixel's tracking and form data described in Section 7 can be transmitted as plain-text fields within encrypted HTTPS requests.</li>
           <li>Isolated per-customer processing environments</li>
         </ul>
         <p>No method of transmission over the internet or electronic storage is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.</p>
@@ -140,7 +147,11 @@
         <div class="legal-section-divider"></div>
 
         <h2>7. Cookies and Tracking Technologies</h2>
-        <p>Our Site uses cookies and similar tracking technologies to analyze site traffic and improve user experience. You can control cookies through your browser settings. Note that disabling cookies may affect the functionality of certain parts of the Site. Our identity resolution pixel uses cookieless matching techniques and does not rely on third-party cookies.</p>
+        <p>Our Site offers optional Google Analytics to measure visits and visitor identification to recognize visitors and understand website activity. Accepting optional tracking enables both purposes only after opt-in, including a valid stored acceptance of this expanded notice. Global Privacy Control keeps optional tracking off even if you previously accepted.</p>
+        <p>We store your accept or reject choice in your browser for 180 days. This notice uses a new consent version: earlier analytics-only choices are not carried forward, and visitors must choose again. You can withdraw at any time by opening <strong>Privacy choices</strong> in the footer and choosing <strong>Reject optional tracking</strong>. Withdrawal is stored, disables optional analytics, and tells the pixel to stop future SDK collection. If the pixel has loaded, withdrawal also refreshes the page to unload running partner code and restart with tracking denied. Expiry or withdrawal in another tab applies the same refresh when the pixel is loaded. These actions do not retract information already sent or control downstream processing by recipients. An expired choice returns optional tracking to off until you accept again.</p>
+        <p>Our Google Analytics configuration removes query strings and fragments from the page location and reduces the referrer to its origin. Google advertising signals and advertising personalization are disabled.</p>
+        <p>After opt-in, the visitor identification pixel sends website activity and form values, including names, email addresses, Contact messages and Trial notes, and copied text to Sitelytics at <code>api.sitelytics.tech</code>. It also initiates partner tracking at <code>ce.lijit.com</code> and <code>pxdrop.lijit.com</code>, which may receive browser/IP identifiers and site activity.</p>
+        <p>Pixel collection can transmit plain-text fields within HTTPS requests and is not limited to hashed identifiers. Messages and notes may contain confidential or sensitive information. Our current Contact and Trial forms have no dedicated password or payment credential fields; do not enter passwords or payment credentials in messages or notes. Pixel form values are not sent by our Google Analytics configuration. These controls do not establish every downstream action taken by the vendor or its partners.</p>
 
         <div class="legal-section-divider"></div>
 
@@ -169,6 +180,6 @@
 
   </main>
   <footer id="site-footer"></footer>
-  <script src="js/main.js?v=20260713"></script>
+  <script src="js/main.js?v=20261014"></script>
 </body>
 </html>

@@ -108,6 +108,7 @@ const FOOTER_HTML = `
       </div>
       <div class="footer-bottom">
         <span>© 2026 Local Sphere. All rights reserved.</span>
+        <button type="button" class="tracking-choices-button" data-tracking-choices>Privacy choices</button>
         <span>A Local Sphere product</span>
       </div>
     </div>

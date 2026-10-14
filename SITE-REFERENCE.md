@@ -78,6 +78,18 @@ Use native browser capabilities, CSS transitions, and `IntersectionObserver` for
 
 Both forms must persist a validated row to Neon before reporting success. Slack notifications run only after persistence and are best-effort. Preview uses only `SLACK_WEBHOOK_URL_PREVIEW`; production uses only `SLACK_WEBHOOK_URL`. Database and Slack credentials must remain server-side Vercel environment variables.
 
+### Tracking Architecture (October 14, 2026)
+
+All 18 HTML pages load `js/tracking-consent.js` synchronously before the standard `GTM-K3S8PSJ9` head script and include its body noscript fallback and `css/tracking-consent.css`. The controller stores choices for 180 days, defaults optional tracking to denied, honors Global Privacy Control, and provides withdrawal through the shared footer's **Privacy choices** button.
+
+The maintained GTM package is `gtm/myprospects-container.json`; `npm run build:gtm` synchronizes the canonical consent JS/template and pixel HTML. GA4 `G-VH43PH567B` is initialized only through that package, once per page load, with analytics consent required and an exact production HTTPS host gate. The old direct `G-SQY7W3M8FR` installation is removed from the HTML. Page-location query strings/fragments are excluded, referrer values are reduced to origins, and advertising consent/signals remain disabled.
+
+The approved opt-in scope includes Google Analytics and visitor identification across all 18 pages on the production HTTPS host. The controller's `identityTrackingEnabled = true` gate still requires consent. Sitelytics at `api.sitelytics.tech` receives activity, names, emails, Contact messages, Trial notes and copied text; partner tracking at `ce.lijit.com` and `pxdrop.lijit.com` may receive browser/IP identifiers and site activity. A bounded probe observed image/script destinations respectively but blocked both loads; it did not establish copied-text or form-value transmission to the partners. The banner identifies both purposes and links the complete recipient notice.
+
+The expanded notice uses `myprospects-tracking-consent-v2` (schema version `2`), requiring visitors to choose again; version `1` analytics-only choices are ignored. Retain GPC, expiry, persistent withdrawal, and the vendor consent-required attribute. When applied consent changes from granted to denied, the controller first updates SDK consent, subscribers, the data layer, and expiry scheduling, then refreshes if the matching pixel SDK is loaded. The refresh unloads independent partner code and restarts denied; SDK denial alone cannot stop a partner script that already executed. Withdrawal cannot retract sent data or control recipient processing. Current Contact and Trial forms have no dedicated password or payment credential fields; keep those excluded from tracking and retain the reviewed field-mask limits. Our GA4 configuration sends no form values; downstream vendor forwarding is not established.
+
+Native GTM workspace `2` is the configuration counterpart to the maintained package. Reconcile its configuration before publishing, then verify production consent denial, renewed acceptance, withdrawal, GPC, vendor/partner requests, the production GA4 page view, and new-property ingestion. Site deployment and container publication are separate release steps. Local tests do not prove production collection or every downstream vendor action. See README.md for maintenance details.
+
 ## Content Guardrails
 
 - Do not publish testimonials, customer logos, performance outcomes, competitor pricing, or compliance certifications without explicit approval and evidence.
