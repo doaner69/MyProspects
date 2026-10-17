@@ -29,7 +29,7 @@ assert.ok(!JSON.stringify(config).includes('G-SQY7W3M8FR'));
 
 const pixel = config.tag.find(tag => tag.type === 'html');
 assert.ok(pixel);
-assert.equal(pixel.paused, false, 'The approved identity tag must be enabled behind explicit identity consent');
+assert.equal(pixel.paused, false, 'The approved identity tag must be enabled behind the controller privacy state');
 assert.equal(pixel.tagFiringOption, 'ONCE_PER_LOAD');
 const pixelHtml = pixel.parameter.find(parameter => parameter.key === 'html').value;
 const pixelCode = pixelHtml.match(/<script>([\s\S]*)<\/script>/)[1];
@@ -67,8 +67,8 @@ function triggersFor(tag, type, values) {
 }
 for (const path of ['/', '/contact', '/contact.html', '/trial', '/trial.html', '/solutions/b2b', '/resources/anonymous-traffic-to-named-pipeline']) {
   const values = { '{{Page URL}}': `https://www.myprospects.com${path}`, '{{MyProspects – Analytics consent}}': 'granted', '{{MyProspects – Identity consent}}': 'granted', '{{_event}}': 'myprospects_consent_granted' };
-  assert.equal(triggersFor(ga, 'INIT', values).length, 1, `${path}: GA4 must cover every intended page after stored consent`);
-  assert.equal(triggersFor(ga, 'CUSTOM_EVENT', values).length, 1, `${path}: first opt-in must start GA4`);
+  assert.equal(triggersFor(ga, 'INIT', values).length, 1, `${path}: GA4 must cover every intended page when the controller allows tracking`);
+  assert.equal(triggersFor(ga, 'CUSTOM_EVENT', values).length, 1, `${path}: explicit re-enabling must start GA4`);
   assert.equal(triggersFor(pixel, 'DOM_READY', values).length, 1, `${path}: pixel coverage must include form pages`);
   assert.equal(triggersFor(pixel, 'CUSTOM_EVENT', values).length, 1);
   values['{{MyProspects – Analytics consent}}'] = 'denied';

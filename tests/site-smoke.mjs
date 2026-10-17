@@ -28,10 +28,10 @@ for (const page of pages) {
   assert.ok(!html.includes('G-SQY7W3M8FR'), `${page} must remove the old GA4 destination`);
   assert.ok(!html.includes('googletagmanager.com/gtag/js'), `${page} must initialize GA4 only through GTM`);
   assert.equal((html.match(/GTM-K3S8PSJ9/g) || []).length, 2, `${page} needs one GTM loader and one fallback`);
-  const consentPosition = html.indexOf('/js/tracking-consent.js?v=20261014');
+  const consentPosition = html.indexOf('/js/tracking-consent.js?v=20261016-optout');
   const gtmPosition = html.indexOf('<!-- Google Tag Manager -->');
   assert.ok(consentPosition > html.indexOf('<head>') && consentPosition < gtmPosition, `${page} must establish consent before GTM loads`);
-  assert.ok(html.includes('<script src="/js/tracking-consent.js?v=20261014"></script>'), `${page} must establish consent synchronously`);
+  assert.ok(html.includes('<script src="/js/tracking-consent.js?v=20261016-optout"></script>'), `${page} must establish consent synchronously`);
   assert.match(html, /<body\b[^>]*>\s*<!-- Google Tag Manager \(noscript\) -->/, `${page} needs the GTM fallback at the start of its body`);
   if (/<form\b|<textarea\b/i.test(html)) {
     assert.ok(['contact.html', 'trial.html'].includes(page), `${page} introduces a form requiring a collection review`);
