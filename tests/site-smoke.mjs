@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, statSync } from 'node:fs';
-import { dirname, join, normalize } from 'node:path';
+import { dirname, extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -22,8 +22,8 @@ for (const page of pages) {
   assert.ok(compact.includes('MyProspects'), `${page} title or metadata should include the brand`);
   assert.match(compact, /<meta name="description" content="[^"]{40,}"/, `${page} needs a useful description`);
   assert.ok(html.includes('id="site-nav"') && html.includes('id="site-footer"'), `${page} needs shared chrome`);
-  assert.ok(html.includes('styles.css?v=20260713'), `${page} should use the current stylesheet`);
-  assert.ok(html.includes('main.js?v=20261014'), `${page} should use the current shared script`);
+  assert.ok(html.includes('styles.css?v=20261028-seo'), `${page} should use the current stylesheet`);
+  assert.ok(html.includes('main.js?v=20261028-seo'), `${page} should use the current shared script`);
   assert.ok(!html.includes('cdnjs.cloudflare.com/ajax/libs/gsap'), `${page} should not load unused GSAP`);
   assert.ok(!html.includes('G-SQY7W3M8FR'), `${page} must remove the old GA4 destination`);
   assert.ok(!html.includes('googletagmanager.com/gtag/js'), `${page} must initialize GA4 only through GTM`);
@@ -42,7 +42,7 @@ const marketingPages = pages.filter((page) => !['privacy-policy.html', 'terms-of
 for (const page of marketingPages) {
   const html = read(page);
   assert.ok(html.includes('Start Your Free Trial'), `${page} should present the primary CTA`);
-  assert.ok(html.includes('/pricing.html') || page === 'pricing.html', `${page} should connect to pricing`);
+  assert.ok(html.includes('href="/pricing"') || page === 'pricing.html', `${page} should connect to pricing`);
 }
 
 const rebuiltPages = marketingPages.filter((page) => page !== 'index.html');
@@ -72,9 +72,10 @@ for (const page of pages) {
   for (const [, rawRef] of html.matchAll(localRefPattern)) {
     const ref = rawRef.split('#')[0].split('?')[0];
     if (!ref || /^(?:https?:|mailto:|tel:|#)/.test(ref)) continue;
-    const resolved = ref.startsWith('/')
+    let resolved = ref.startsWith('/')
       ? join(root, ref.slice(1))
       : normalize(join(root, dirname(page), ref));
+    if (!existsSync(resolved) && !extname(resolved)) resolved += '.html';
     assert.ok(existsSync(resolved), `${page} references missing local file ${rawRef}`);
   }
 }
@@ -116,12 +117,11 @@ for (const field of ['name', 'email', 'message', 'website_confirm']) {
 }
 assert.equal((contact.match(/\brequired\b/g) || []).length, 3, 'contact form should have exactly three required fields');
 
-const mainScript = read('js/main.js');
-assert.ok(mainScript.includes('/trial.html') && mainScript.includes('Start Your Free Trial'), 'shared navigation should use the trial CTA');
-assert.ok(mainScript.includes('(solutions|resources)'), 'shared path handling should support both nested route groups');
-assert.ok(mainScript.includes('https://app.localsphere.com'), 'shared navigation should link to the Local Sphere app');
-assert.doesNotMatch(mainScript, /href="https:\/\/app\.localsphere\.com"[^>]*target=/, 'Log In should open in the same tab');
-assert.ok(mainScript.includes('/contact.html'), 'shared navigation and footer should link to Contact');
+const sharedChrome = read('templates/shared-chrome.mjs');
+assert.ok(sharedChrome.includes('/trial') && sharedChrome.includes('Start Your Free Trial'), 'shared navigation should use the trial CTA');
+assert.ok(sharedChrome.includes('https://app.localsphere.com'), 'shared navigation should link to the Local Sphere app');
+assert.doesNotMatch(sharedChrome, /href="https:\/\/app\.localsphere\.com"[^>]*target=/, 'Log In should open in the same tab');
+assert.ok(sharedChrome.includes('/contact'), 'shared navigation and footer should link to Contact');
 
 const subpageScript = read('js/subpages.js');
 assert.ok(subpageScript.includes('Someone from MyProspects will be contacting you soon!'), 'forms should use the approved confirmation message');

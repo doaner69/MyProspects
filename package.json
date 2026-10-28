@@ -4,7 +4,11 @@
   "scripts": {
     "dev": "npx vercel dev",
     "build:gtm": "node scripts/build-gtm-config.mjs",
-    "test": "node tests/site-smoke.mjs && node tests/tracking-consent.mjs && node tests/gtm-config.mjs && node tests/lead-submissions.mjs && node tests/trial-api.mjs && node tests/contact-api.mjs"
+    "test": "node tests/site-smoke.mjs && node tests/tracking-consent.mjs && node tests/gtm-config.mjs && node tests/lead-submissions.mjs && node tests/trial-api.mjs && node tests/contact-api.mjs && node tests/seo.mjs && node tests/shared-chrome.mjs && node tests/navigation.mjs && node tests/home-images.mjs && node tests/generators.mjs && npm run check:site",
+    "build:seo": "node scripts/generate-seo.mjs",
+    "build:chrome": "node scripts/build-shared-chrome.mjs",
+    "build:site": "npm run build:chrome && npm run build:seo",
+    "check:site": "node scripts/generate-seo.mjs --check && node scripts/build-shared-chrome.mjs --check"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0"

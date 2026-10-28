@@ -202,7 +202,7 @@
     banner.innerHTML = `
       <h2 id="tracking-consent-title">Cookie preferences</h2>
       <div class="tracking-consent-copy">
-        <p>We use cookies and similar technologies to improve your experience, analyze traffic, and support marketing and visitor identification. Tracking is on unless you opt out. We share information with Google Analytics and our visitor identification partners. Visitor identification can share website activity, names, emails, Contact messages, Trial notes and copied text, including confidential or sensitive information. You can opt out now or withdraw at any time using Privacy choices in the footer. See our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+        <p>We use cookies and similar technologies to improve your experience, analyze traffic, and support marketing and visitor identification. Tracking is on unless you opt out. We share information with Google Analytics and our visitor identification partners. Visitor identification can share website activity, names, emails, Contact messages, Trial notes and copied text, including confidential or sensitive information. You can opt out now or withdraw at any time using Privacy choices in the footer. See our <a href="/privacy-policy">Privacy Policy</a>.</p>
         <p class="tracking-browser-choice" ${browserOptOut() ? '' : 'hidden'}>Your browser privacy preference keeps optional tracking off.</p>
       </div>
       <div class="tracking-consent-actions">

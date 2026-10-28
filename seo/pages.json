@@ -1,0 +1,20 @@
+[
+  { "file": "index.html", "path": "/", "indexable": true },
+  { "file": "product.html", "path": "/product", "indexable": true },
+  { "file": "pricing.html", "path": "/pricing", "indexable": true },
+  { "file": "about.html", "path": "/about", "indexable": true },
+  { "file": "trial.html", "path": "/trial", "indexable": true },
+  { "file": "contact.html", "path": "/contact", "indexable": true },
+  { "file": "blog.html", "path": "/blog", "indexable": true },
+  { "file": "use-cases.html", "path": "/use-cases", "indexable": true },
+  { "file": "case-studies.html", "path": "/case-studies", "indexable": true },
+  { "file": "privacy-policy.html", "path": "/privacy-policy", "indexable": true },
+  { "file": "terms-of-service.html", "path": "/terms-of-service", "indexable": true },
+  { "file": "solutions/b2b.html", "path": "/solutions/b2b", "indexable": true },
+  { "file": "solutions/b2c.html", "path": "/solutions/b2c", "indexable": true },
+  { "file": "solutions/recruitment.html", "path": "/solutions/recruitment", "indexable": true },
+  { "file": "solutions/nonprofit.html", "path": "/solutions/nonprofit", "indexable": true },
+  { "file": "resources/anonymous-traffic-to-named-pipeline.html", "path": "/resources/anonymous-traffic-to-named-pipeline", "indexable": true },
+  { "file": "resources/on-domain-and-off-domain-intent.html", "path": "/resources/on-domain-and-off-domain-intent", "indexable": true },
+  { "file": "resources/activating-known-audiences.html", "path": "/resources/activating-known-audiences", "indexable": true }
+]

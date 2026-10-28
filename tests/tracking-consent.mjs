@@ -79,7 +79,7 @@ assert.match(current.banner.innerHTML, /You can opt out now or withdraw at any t
 assert.match(current.banner.innerHTML, /Google Analytics and our visitor identification partners/);
 assert.match(current.banner.innerHTML, /names, emails, Contact messages, Trial notes and copied text/);
 assert.match(current.banner.innerHTML, /confidential or sensitive information/);
-assert.match(current.banner.innerHTML, /href="\/privacy-policy\.html"/);
+assert.match(current.banner.innerHTML, /href="\/privacy-policy"/);
 assert.doesNotMatch(current.banner.innerHTML, /After you accept|By continuing to browse|analytics only|currently inactive/);
 assert.equal(current.api.isAllowed(), true, 'New visitors must start allowed');
 assert.equal(current.api.isIdentityAllowed(), true, 'Production HTTPS visitors must start with identity allowed');
@@ -217,10 +217,12 @@ for (const sessionBlocked of [false, true]) {
   assert.equal(restarted.api.isAllowed(), false, 'A failed preference write must not undo an opt-out on reload');
   assert.equal(restarted.reloads.length, 0);
   if (sessionBlocked) {
-    const link = { href: 'https://www.myprospects.com/contact.html' };
+    const link = { href: 'https://www.myprospects.com/contact#message' };
     restarted.documentEvents.click({ target: { closest(selector) { return selector === 'a[href]' ? link : null; } } });
-    assert.equal(new URL(link.href).searchParams.get('myprospects_opt_out'), '1', 'Fallback opt-out must carry through internal links');
-    assert.equal(start({ writesBlocked: true, sessionBlocked, saved: savedGrant, pathname: '/contact.html', search: new URL(link.href).search }).api.isAllowed(), false);
+    assert.equal(new URL(link.href).searchParams.get('myprospects_opt_out'), '1', 'Fallback opt-out must carry through clean internal links');
+    assert.equal(new URL(link.href).hash, '#message', 'Privacy fallback must preserve link fragments');
+    assert.equal(new URL(link.href).pathname, '/contact', 'Privacy fallback must retain clean paths');
+    assert.equal(start({ writesBlocked: true, sessionBlocked, saved: savedGrant, pathname: '/contact', search: new URL(link.href).search }).api.isAllowed(), false);
   }
   restarted.api.setChoice('accept');
   assert.equal(restarted.api.isAllowed(), true);

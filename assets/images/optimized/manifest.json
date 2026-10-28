@@ -1,0 +1,580 @@
+{
+  "pillowVersion": "12.3.0",
+  "format": "WebP",
+  "quality": 92,
+  "method": 6,
+  "resize": "LANCZOS, full original aspect ratio, no upscaling",
+  "images": [
+    {
+      "name": "home-identity-flow",
+      "original": "assets/images/home-identity-flow.png",
+      "originalWidth": 1659,
+      "originalHeight": 948,
+      "originalBytes": 1090085,
+      "originalSha256": "5c8fc3e6b832967bd869c574445623340a78568f7a6c447973b4044c38229ed6",
+      "defaultWidth": 960,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/home-identity-flow-320.webp",
+          "width": 320,
+          "height": 183,
+          "bytes": 7208
+        },
+        {
+          "path": "assets/images/optimized/home-identity-flow-640.webp",
+          "width": 640,
+          "height": 366,
+          "bytes": 18312
+        },
+        {
+          "path": "assets/images/optimized/home-identity-flow-960.webp",
+          "width": 960,
+          "height": 549,
+          "bytes": 32080
+        },
+        {
+          "path": "assets/images/optimized/home-identity-flow-1280.webp",
+          "width": 1280,
+          "height": 731,
+          "bytes": 49276
+        },
+        {
+          "path": "assets/images/optimized/home-identity-flow-1536.webp",
+          "width": 1536,
+          "height": 878,
+          "bytes": 61620
+        }
+      ]
+    },
+    {
+      "name": "home-dark-funnel",
+      "original": "assets/images/home-dark-funnel.png",
+      "originalWidth": 1672,
+      "originalHeight": 941,
+      "originalBytes": 1305148,
+      "originalSha256": "0fad2f9975363fc774944b3b0f5f0eacfea75f3ffc656710052e8302eea81c28",
+      "defaultWidth": 640,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/home-dark-funnel-320.webp",
+          "width": 320,
+          "height": 180,
+          "bytes": 6140
+        },
+        {
+          "path": "assets/images/optimized/home-dark-funnel-640.webp",
+          "width": 640,
+          "height": 360,
+          "bytes": 19454
+        },
+        {
+          "path": "assets/images/optimized/home-dark-funnel-960.webp",
+          "width": 960,
+          "height": 540,
+          "bytes": 36696
+        },
+        {
+          "path": "assets/images/optimized/home-dark-funnel-1280.webp",
+          "width": 1280,
+          "height": 720,
+          "bytes": 59080
+        }
+      ]
+    },
+    {
+      "name": "identity-graph-website",
+      "original": "assets/images/identity-graph-website.png",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "originalBytes": 808240,
+      "originalSha256": "0d6f476126dfb85ebd6dacbf009aed37f428c4080f80b81056f4e85bd29abc36",
+      "defaultWidth": 320,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/identity-graph-website-160.webp",
+          "width": 160,
+          "height": 160,
+          "bytes": 2602
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-website-320.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 5454
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-website-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 8250
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-website-640.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 11274
+        }
+      ]
+    },
+    {
+      "name": "identity-graph-resolution",
+      "original": "assets/images/identity-graph-resolution.png",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "originalBytes": 926495,
+      "originalSha256": "96a297f24418c32a73d2bff39e124ed58c9fb84410281daf266fbcaff7838586",
+      "defaultWidth": 320,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/identity-graph-resolution-160.webp",
+          "width": 160,
+          "height": 160,
+          "bytes": 4988
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-resolution-320.webp",
+          "width": 320,
+          "height": 320,
+          "bytes": 12612
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-resolution-480.webp",
+          "width": 480,
+          "height": 480,
+          "bytes": 21268
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-resolution-640.webp",
+          "width": 640,
+          "height": 640,
+          "bytes": 30704
+        }
+      ]
+    },
+    {
+      "name": "identity-graph-profiles",
+      "original": "assets/images/identity-graph-profiles.png",
+      "originalWidth": 1536,
+      "originalHeight": 1024,
+      "originalBytes": 1115153,
+      "originalSha256": "520d9958f96a6b3220b934f3666670dfe4f5f2e73efcbd8d826bbb00a5ef18f0",
+      "defaultWidth": 320,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/identity-graph-profiles-160.webp",
+          "width": 160,
+          "height": 107,
+          "bytes": 2816
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-profiles-320.webp",
+          "width": 320,
+          "height": 213,
+          "bytes": 6814
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-profiles-480.webp",
+          "width": 480,
+          "height": 320,
+          "bytes": 11370
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-profiles-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 16616
+        }
+      ]
+    },
+    {
+      "name": "identity-graph-intent",
+      "original": "assets/images/identity-graph-intent.png",
+      "originalWidth": 1312,
+      "originalHeight": 1199,
+      "originalBytes": 876902,
+      "originalSha256": "066b5e7cc49d3b23c7eaeece6c472635523cf8fa95457d16f59e14a093615834",
+      "defaultWidth": 320,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/identity-graph-intent-160.webp",
+          "width": 160,
+          "height": 146,
+          "bytes": 4508
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-intent-320.webp",
+          "width": 320,
+          "height": 292,
+          "bytes": 10602
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-intent-480.webp",
+          "width": 480,
+          "height": 439,
+          "bytes": 17236
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-intent-640.webp",
+          "width": 640,
+          "height": 585,
+          "bytes": 23856
+        }
+      ]
+    },
+    {
+      "name": "identity-graph-activate",
+      "original": "assets/images/identity-graph-activate.png",
+      "originalWidth": 1536,
+      "originalHeight": 1024,
+      "originalBytes": 1115171,
+      "originalSha256": "b234162a469b60c775a909e528c18c033ed158af018ba1f09f7fb5daee15d626",
+      "defaultWidth": 320,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/identity-graph-activate-160.webp",
+          "width": 160,
+          "height": 107,
+          "bytes": 2938
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-activate-320.webp",
+          "width": 320,
+          "height": 213,
+          "bytes": 7122
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-activate-480.webp",
+          "width": 480,
+          "height": 320,
+          "bytes": 11518
+        },
+        {
+          "path": "assets/images/optimized/identity-graph-activate-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 15968
+        }
+      ]
+    },
+    {
+      "name": "solution-b2b",
+      "original": "assets/images/solution-b2b.png",
+      "originalWidth": 1693,
+      "originalHeight": 929,
+      "originalBytes": 828309,
+      "originalSha256": "189e779c40a1314df631a8b0b0bd02de0cf710001804920d2cec228c9d7dd74f",
+      "defaultWidth": 640,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/solution-b2b-320.webp",
+          "width": 320,
+          "height": 176,
+          "bytes": 7870
+        },
+        {
+          "path": "assets/images/optimized/solution-b2b-640.webp",
+          "width": 640,
+          "height": 351,
+          "bytes": 16908
+        },
+        {
+          "path": "assets/images/optimized/solution-b2b-960.webp",
+          "width": 960,
+          "height": 527,
+          "bytes": 25496
+        },
+        {
+          "path": "assets/images/optimized/solution-b2b-1280.webp",
+          "width": 1280,
+          "height": 702,
+          "bytes": 37028
+        }
+      ]
+    },
+    {
+      "name": "solution-recruitment",
+      "original": "assets/images/solution-recruitment.png",
+      "originalWidth": 1536,
+      "originalHeight": 1024,
+      "originalBytes": 1054340,
+      "originalSha256": "739ba083ab336988775971b0fb6eaee225c0bfcf433879fb0f556d7a1f326bfa",
+      "defaultWidth": 640,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/solution-recruitment-320.webp",
+          "width": 320,
+          "height": 213,
+          "bytes": 8114
+        },
+        {
+          "path": "assets/images/optimized/solution-recruitment-640.webp",
+          "width": 640,
+          "height": 427,
+          "bytes": 18386
+        },
+        {
+          "path": "assets/images/optimized/solution-recruitment-960.webp",
+          "width": 960,
+          "height": 640,
+          "bytes": 30398
+        },
+        {
+          "path": "assets/images/optimized/solution-recruitment-1280.webp",
+          "width": 1280,
+          "height": 853,
+          "bytes": 44904
+        }
+      ]
+    },
+    {
+      "name": "solution-b2c",
+      "original": "assets/images/solution-b2c.png",
+      "originalWidth": 1568,
+      "originalHeight": 1003,
+      "originalBytes": 872169,
+      "originalSha256": "a7148df11ccea33896f53b8a4c1a9ffe0f703cd0167f84a87c686e17f521f553",
+      "defaultWidth": 640,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/solution-b2c-320.webp",
+          "width": 320,
+          "height": 205,
+          "bytes": 9674
+        },
+        {
+          "path": "assets/images/optimized/solution-b2c-640.webp",
+          "width": 640,
+          "height": 409,
+          "bytes": 20634
+        },
+        {
+          "path": "assets/images/optimized/solution-b2c-960.webp",
+          "width": 960,
+          "height": 614,
+          "bytes": 32236
+        },
+        {
+          "path": "assets/images/optimized/solution-b2c-1280.webp",
+          "width": 1280,
+          "height": 819,
+          "bytes": 46166
+        }
+      ]
+    },
+    {
+      "name": "solution-nonprofit",
+      "original": "assets/images/solution-nonprofit.png",
+      "originalWidth": 1660,
+      "originalHeight": 948,
+      "originalBytes": 923693,
+      "originalSha256": "95461c403ea590a3a0983fa90da4f7e56631672f61a9a067dc24a3d9b5b55d9c",
+      "defaultWidth": 640,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/solution-nonprofit-320.webp",
+          "width": 320,
+          "height": 183,
+          "bytes": 8696
+        },
+        {
+          "path": "assets/images/optimized/solution-nonprofit-640.webp",
+          "width": 640,
+          "height": 365,
+          "bytes": 18158
+        },
+        {
+          "path": "assets/images/optimized/solution-nonprofit-960.webp",
+          "width": 960,
+          "height": 548,
+          "bytes": 29068
+        },
+        {
+          "path": "assets/images/optimized/solution-nonprofit-1280.webp",
+          "width": 1280,
+          "height": 731,
+          "bytes": 42208
+        }
+      ]
+    },
+    {
+      "name": "capability-identity",
+      "original": "assets/images/capability-identity.png",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "originalBytes": 362710,
+      "originalSha256": "736610bb51df51acf2661dc914152d63bf357f35b94c47a1b5503c6f09585ec6",
+      "defaultWidth": 128,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/capability-identity-64.webp",
+          "width": 64,
+          "height": 64,
+          "bytes": 3478
+        },
+        {
+          "path": "assets/images/optimized/capability-identity-128.webp",
+          "width": 128,
+          "height": 128,
+          "bytes": 8004
+        },
+        {
+          "path": "assets/images/optimized/capability-identity-192.webp",
+          "width": 192,
+          "height": 192,
+          "bytes": 13272
+        }
+      ]
+    },
+    {
+      "name": "capability-intent",
+      "original": "assets/images/capability-intent.png",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "originalBytes": 244444,
+      "originalSha256": "bbbf33a3bcac47c536488ff53ec28eb12308ded8e45add4e86fc24ce88b46f58",
+      "defaultWidth": 128,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/capability-intent-64.webp",
+          "width": 64,
+          "height": 64,
+          "bytes": 2586
+        },
+        {
+          "path": "assets/images/optimized/capability-intent-128.webp",
+          "width": 128,
+          "height": 128,
+          "bytes": 5664
+        },
+        {
+          "path": "assets/images/optimized/capability-intent-192.webp",
+          "width": 192,
+          "height": 192,
+          "bytes": 9528
+        }
+      ]
+    },
+    {
+      "name": "capability-enrichment",
+      "original": "assets/images/capability-enrichment.png",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "originalBytes": 410724,
+      "originalSha256": "6d151fdc92aa386b765c93e8cf9b332931de454191d8f4c0eb999f29d1b10bba",
+      "defaultWidth": 128,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/capability-enrichment-64.webp",
+          "width": 64,
+          "height": 64,
+          "bytes": 2338
+        },
+        {
+          "path": "assets/images/optimized/capability-enrichment-128.webp",
+          "width": 128,
+          "height": 128,
+          "bytes": 4514
+        },
+        {
+          "path": "assets/images/optimized/capability-enrichment-192.webp",
+          "width": 192,
+          "height": 192,
+          "bytes": 6416
+        }
+      ]
+    },
+    {
+      "name": "capability-activation",
+      "original": "assets/images/capability-activation.png",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "originalBytes": 328271,
+      "originalSha256": "afe794931abf35ddf980377e95fd747c1fdc6d22e66f8846f9ac4f767a3edc67",
+      "defaultWidth": 128,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/capability-activation-64.webp",
+          "width": 64,
+          "height": 64,
+          "bytes": 2664
+        },
+        {
+          "path": "assets/images/optimized/capability-activation-128.webp",
+          "width": 128,
+          "height": 128,
+          "bytes": 5930
+        },
+        {
+          "path": "assets/images/optimized/capability-activation-192.webp",
+          "width": 192,
+          "height": 192,
+          "bytes": 9480
+        }
+      ]
+    },
+    {
+      "name": "capability-privacy",
+      "original": "assets/images/capability-privacy.png",
+      "originalWidth": 1254,
+      "originalHeight": 1254,
+      "originalBytes": 469159,
+      "originalSha256": "437ba199cd2496c33d7265ab8589b3d0dd8832367c54afef569b627b49c0619f",
+      "defaultWidth": 128,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/capability-privacy-64.webp",
+          "width": 64,
+          "height": 64,
+          "bytes": 3130
+        },
+        {
+          "path": "assets/images/optimized/capability-privacy-128.webp",
+          "width": 128,
+          "height": 128,
+          "bytes": 6844
+        },
+        {
+          "path": "assets/images/optimized/capability-privacy-192.webp",
+          "width": 192,
+          "height": 192,
+          "bytes": 11200
+        }
+      ]
+    },
+    {
+      "name": "home-local-sphere",
+      "original": "assets/images/home-local-sphere.png",
+      "originalWidth": 1520,
+      "originalHeight": 1008,
+      "originalBytes": 866063,
+      "originalSha256": "2f29322c759206210c4210239a639ff51fc810d513422565fe7a24d50c10f4d8",
+      "defaultWidth": 640,
+      "candidates": [
+        {
+          "path": "assets/images/optimized/home-local-sphere-320.webp",
+          "width": 320,
+          "height": 212,
+          "bytes": 8324
+        },
+        {
+          "path": "assets/images/optimized/home-local-sphere-640.webp",
+          "width": 640,
+          "height": 424,
+          "bytes": 20090
+        },
+        {
+          "path": "assets/images/optimized/home-local-sphere-960.webp",
+          "width": 960,
+          "height": 637,
+          "bytes": 33520
+        },
+        {
+          "path": "assets/images/optimized/home-local-sphere-1280.webp",
+          "width": 1280,
+          "height": 849,
+          "bytes": 49786
+        }
+      ]
+    }
+  ]
+}
