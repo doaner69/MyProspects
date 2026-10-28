@@ -115,4 +115,3 @@ export const FOOTER_HTML = `
     </div>
   </div>
 `;
-
