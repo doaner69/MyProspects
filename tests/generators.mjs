@@ -1,0 +1,56 @@
+import assert from 'node:assert/strict';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { generateSEO, normalizeInternalLinks, renderSitemap, loadPages } from '../scripts/generate-seo.mjs';
+import { buildSharedChrome } from '../scripts/build-shared-chrome.mjs';
+
+const root = mkdtempSync(join(tmpdir(), 'myprospects-generators-'));
+const page = { file: 'index.html', path: '/', indexable: true };
+const fixture = '<!DOCTYPE html><html><head><title>Kept title</title></head><body><nav id="site-nav"></nav><main id="example"><a href="/index.html?myprospects_opt_out=1&amp;segment=b2b#example">Keep copy</a></main><footer id="site-footer"></footer></body></html>';
+const read = file => readFileSync(join(root, file), 'utf8');
+const write = (file, content) => writeFileSync(join(root, file), content);
+try {
+  mkdirSync(join(root, 'seo'));
+  write('seo/pages.json', JSON.stringify([page]));
+  write('index.html', fixture);
+  assert.equal(generateSEO(root, { check: true }).length, 3, 'check detects stale HTML and absent discovery files');
+  assert.equal(read('index.html'), fixture, 'check is read-only');
+  generateSEO(root);
+  assert.match(read('index.html'), /href="https:\/\/www\.myprospects\.com\/"/);
+  assert.match(read('index.html'), /href="\/\?myprospects_opt_out=1&amp;segment=b2b#example"/, 'clean links preserve all query values and fragments');
+  assert.match(read('index.html'), /<title>Kept title<\/title>/, 'generation does not rewrite business metadata');
+  assert.equal(generateSEO(root).length, 0, 'SEO generation is idempotent');
+  assert.equal(buildSharedChrome(root, { check: true }).length, 1);
+  assert.doesNotMatch(read('index.html'), /NAV:START/, 'chrome check does not mutate source');
+  buildSharedChrome(root);
+  assert.equal(buildSharedChrome(root).length, 0, 'chrome generation is idempotent');
+  assert.equal(generateSEO(root, { check: true }).length, 0, 'generators agree on shared clean links');
+  const stale = read('index.html');
+  write('index.html', stale.replace('href="/pricing"', 'href="/wrong"'));
+  assert.equal(buildSharedChrome(root, { check: true }).length, 1, 'detect edited generated output');
+  buildSharedChrome(root);
+  assert.equal(buildSharedChrome(root, { check: true }).length, 0);
+  const nested = { file: 'solutions/b2b.html', path: '/solutions/b2b', indexable: true };
+  assert.equal(normalizeInternalLinks('<a href="../index.html#example">Home</a><a href="https://elsewhere.test/product.html">External</a>', nested, [page, nested]), '<a href="/#example">Home</a><a href="https://elsewhere.test/product.html">External</a>');
+  assert.doesNotMatch(renderSitemap([page, { file: 'contact.html', path: '/contact', indexable: false }]), /\/contact/);
+  write('seo/pages.json', JSON.stringify([page, page]));
+  assert.throws(() => loadPages(root), /Duplicate/);
+  write('seo/pages.json', JSON.stringify([{ file: '../index.html', path: '/', indexable: true }]));
+  assert.throws(() => loadPages(root), /Invalid public/);
+  write('seo/pages.json', JSON.stringify([{ ...page, path: '/?private=1' }]));
+  assert.throws(() => loadPages(root), /Invalid canonical/);
+  write('seo/pages.json', JSON.stringify([page]));
+  write('index.html', fixture.replace('</head>', '<!-- SEO:END --><link rel="canonical" href="https://wrong.test/"><!-- SEO:START --></head>'));
+  assert.throws(() => generateSEO(root, { check: true }), /Malformed SEO markers/, 'reversed markers cannot hide a wrong existing canonical');
+  write('index.html', fixture.replace('</body>', '<!-- SEO:START --><!-- SEO:END --></body>'));
+  assert.throws(() => generateSEO(root), /Conflicting canonical/, 'managed canonical must be inside the head');
+  write('index.html', fixture.replace('</head>', '<link rel="canonical" href="https://wrong.test/"></head>'));
+  assert.throws(() => generateSEO(root), /Conflicting canonical/);
+  assert.ok(!read('index.html').includes('SEO:START'), 'invalid output is not written');
+  write('index.html', fixture.replace('<nav id="site-nav"></nav>', '<!-- NAV:START --><nav id="site-nav"></nav>'));
+  assert.throws(() => buildSharedChrome(root), /Malformed NAV/);
+  console.log('generators: read-only checks, idempotence, privacy/fragment preservation, shared output and invalid-input rejection');
+} finally {
+  rmSync(root, { recursive: true, force: true });
+}

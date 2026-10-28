@@ -1,6 +1,6 @@
 # MyProspects Current Build Reference
 
-Updated: July 2026
+Updated: October 28, 2026 (technical routing and maintenance)
 
 This file is the source of truth for the live site's public structure and messaging. It complements the internal GTM and pricing strategy documents; internal forecasts, competitive analysis, and legacy package assumptions are not automatically approved as public website copy.
 
@@ -21,9 +21,9 @@ Every explanation should keep consent, suppression, frequency, and responsible a
 
 | Priority | Copy | Destination |
 | --- | --- | --- |
-| Primary | Start Your Free Trial | `/trial.html` |
-| Secondary | See Pricing | `/pricing.html` |
-| Expert conversation | Talk to an Expert | `/contact.html` |
+| Primary | Start Your Free Trial | `/trial` |
+| Secondary | See Pricing | `/pricing` |
+| Expert conversation | Talk to an Expert | `/contact` |
 
 The free-trial flow collects contact details, company, website, use case, traffic range, notes, and consent. It evaluates fit, signal quality, and workflow design; it is not described as a complete production implementation.
 
@@ -31,11 +31,12 @@ The free-trial flow collects contact details, company, website, use case, traffi
 
 | Area | Routes |
 | --- | --- |
-| Platform | `/product.html`, `/pricing.html`, `/about.html` |
-| Solutions | `/solutions/b2b.html`, `/solutions/b2c.html`, `/solutions/recruitment.html`, `/solutions/nonprofit.html` |
-| Practical workflows | `/use-cases.html`, `/case-studies.html` |
-| Resources | `/blog.html`, `/resources/anonymous-traffic-to-named-pipeline.html`, `/resources/on-domain-and-off-domain-intent.html`, `/resources/activating-known-audiences.html` |
-| Conversion and legal | `/trial.html`, `/contact.html`, `/privacy-policy.html`, `/terms-of-service.html`, `/ccpa.html` |
+| Home | `/` |
+| Platform | `/product`, `/pricing`, `/about` |
+| Solutions | `/solutions/b2b`, `/solutions/b2c`, `/solutions/recruitment`, `/solutions/nonprofit` |
+| Practical workflows | `/use-cases`, `/case-studies` |
+| Resources | `/blog`, `/resources/anonymous-traffic-to-named-pipeline`, `/resources/on-domain-and-off-domain-intent`, `/resources/activating-known-audiences` |
+| Conversion and legal | `/trial`, `/contact`, `/privacy-policy`, `/terms-of-service` |
 
 `case-studies.html` uses illustrative outcome playbooks until approved customer proof is available. Legal body copy is intentionally preserved and should receive separate legal review.
 
@@ -64,7 +65,10 @@ The free-trial flow collects contact details, company, website, use case, traffi
 
 ## Build Architecture
 
-- Shared navigation and footer: `js/main.js`
+- Public page inventory: `seo/pages.json`; production origin `https://www.myprospects.com`
+- Static shared navigation/footer source: `templates/shared-chrome.mjs`; generated into each HTML page by `scripts/build-shared-chrome.mjs`
+- Canonical/discovery generation: `scripts/generate-seo.mjs`; sitemap includes intended indexable canonical pages, robots adds only its location without altering bot access
+- Navigation/animation enhancement: `js/main.js`; content and mobile navigation remain accessible if enhancement fails
 - Shared page interaction and trial validation: `js/subpages.js`
 - Homepage style system: `css/styles.css`
 - Subpage and resource styles: `css/subpages.css`
@@ -73,6 +77,9 @@ The free-trial flow collects contact details, company, website, use case, traffi
 - Shared persistence and Slack notification pipeline: `api/_lead-submissions.js`
 - Lead schema: `db/001-create-myprospects-leads.sql`
 - Generated visual assets: `assets/images/subpages/`
+- Responsive homepage artwork: `assets/images/optimized/`; originals preserved, rebuilt by `scripts/optimize-home-images.py`
+
+Run `npm run build:site` after editing the shared template, route inventory or generated blocks; run `npm run check:site` and `npm test` before review. Generated output is committed; no deployment build/infrastructure change is part of this workflow. Current titles/descriptions and all commercial/legal/product copy remain authored and unchanged by these generators. See README for image tooling and the specific business decisions required before the next content cycle.
 
 Use native browser capabilities, CSS transitions, and `IntersectionObserver` for motion. Preserve keyboard access, visible focus, responsive layouts, and `prefers-reduced-motion` support.
 

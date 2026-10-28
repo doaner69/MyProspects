@@ -1,142 +1,17 @@
-const NAV_HTML = `
-  <div class="container">
-    <div class="nav-inner">
-      <a href="/index.html" class="brand-wordmark" aria-label="MyProspects home">
-        <img src="assets/images/myprospects-logo.png" alt="MyProspects">
-      </a>
-      <ul class="nav-links">
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-trigger" type="button" aria-expanded="false">Solutions <span aria-hidden="true">⌄</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="/solutions/b2b.html">B2B Sales &amp; Marketing</a>
-            <a href="/solutions/recruitment.html">Recruitment</a>
-            <a href="/solutions/b2c.html">B2C Products &amp; Services</a>
-            <a href="/solutions/nonprofit.html">Nonprofit</a>
-          </div>
-        </li>
-        <li><a href="/product.html">Product</a></li>
-        <li><a href="/pricing.html">Pricing</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li class="nav-dropdown">
-          <button class="nav-dropdown-trigger" type="button" aria-expanded="false">Resources <span aria-hidden="true">⌄</span></button>
-          <div class="nav-dropdown-menu">
-            <a href="/blog.html">Resource Hub</a>
-            <a href="/case-studies.html">Outcome Playbooks</a>
-            <a href="/use-cases.html">Use Cases</a>
-          </div>
-        </li>
-      </ul>
-      <div class="nav-actions">
-        <a href="https://app.localsphere.com" class="btn nav-login">Log In</a>
-        <a href="/trial.html" class="btn btn-primary nav-cta">Start Your Free Trial</a>
-      </div>
-      <button class="nav-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"
-        aria-controls="mobile-site-menu" data-mobile-toggle>
-        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
-    </div>
-    <div class="mobile-menu" id="mobile-site-menu" aria-hidden="true" data-mobile-menu>
-      <a href="/solutions/b2b.html">B2B Sales &amp; Marketing</a>
-      <a href="/solutions/recruitment.html">Recruitment</a>
-      <a href="/solutions/b2c.html">B2C Products &amp; Services</a>
-      <a href="/solutions/nonprofit.html">Nonprofit</a>
-      <a href="/product.html">Product</a>
-      <a href="/pricing.html">Pricing</a>
-      <a href="/about.html">About</a>
-      <a href="/contact.html">Contact</a>
-      <a href="/blog.html">Resource Hub</a>
-      <a href="/case-studies.html">Outcome Playbooks</a>
-      <a href="/use-cases.html">Use Cases</a>
-      <a href="https://app.localsphere.com">Log In</a>
-      <a href="/trial.html">Start Your Free Trial</a>
-    </div>
-  </div>
-`;
-
-const FOOTER_HTML = `
-  <div class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <a href="/index.html" class="brand-wordmark footer-logo" aria-label="MyProspects home">
-            <img src="assets/images/myprospects-logo.png" alt="MyProspects">
-          </a>
-          <p style="margin-top:16px;max-width:320px;">Person-level visitor identity resolution and buyer intent data for B2B, B2C, recruitment, and nonprofit teams.</p>
-          <div class="footer-badges">
-            <span class="badge">Person-level identity</span>
-            <span class="badge">Privacy-first activation</span>
-          </div>
-        </div>
-        <div>
-          <h4>Product</h4>
-          <ul>
-            <li><a href="/product.html#identity-graph">Identity Resolution</a></li>
-            <li><a href="/product.html#identity-graph">Intent Intelligence</a></li>
-            <li><a href="/product.html#capabilities">Audience Activation</a></li>
-            <li><a href="/product.html#implementation">Implementation</a></li>
-            <li><a href="/pricing.html">Pricing</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Solutions</h4>
-          <ul>
-            <li><a href="/solutions/b2b.html">B2B Sales &amp; Marketing</a></li>
-            <li><a href="/solutions/recruitment.html">Recruitment</a></li>
-            <li><a href="/solutions/b2c.html">B2C Products &amp; Services</a></li>
-            <li><a href="/solutions/nonprofit.html">Nonprofit</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Resources</h4>
-          <ul>
-            <li><a href="/blog.html">Resource Hub</a></li>
-            <li><a href="/case-studies.html">Outcome Playbooks</a></li>
-            <li><a href="/use-cases.html">Use Cases</a></li>
-            <li><a href="/trial.html">Start Your Free Trial</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Company</h4>
-          <ul>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="/terms-of-service.html">Terms of Service</a></li>
-            <li><a href="https://linkedin.com/company/myprospects" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 Local Sphere. All rights reserved.</span>
-        <button type="button" class="tracking-choices-button" data-tracking-choices>Privacy choices</button>
-        <span>A Local Sphere product</span>
-      </div>
-    </div>
-  </div>
-`;
-
-function getPathPrefix() {
-  return /\/(solutions|resources)\//.test(window.location.pathname) ? '..' : '';
-}
-
-function fixPaths(html, prefix) {
-  if (!prefix) return html;
-  return html
-    .replace(/href="\//g, `href="${prefix}/`)
-    .replace(/src="assets\//g, `src="${prefix}/assets/`);
-}
-
-function injectSharedChrome() {
-  const prefix = getPathPrefix();
+function initCurrentNav() {
   const nav = document.getElementById('site-nav');
-  const footer = document.getElementById('site-footer');
-  if (nav) nav.innerHTML = fixPaths(NAV_HTML, prefix);
-  if (footer) footer.innerHTML = fixPaths(FOOTER_HTML, prefix);
+  if (!nav) return;
 
-  const currentPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
-  nav?.querySelectorAll('a[href]').forEach((link) => {
-    const linkPath = new URL(link.href, window.location.href).pathname.replace(/\/$/, '');
-    if (linkPath === currentPath) link.setAttribute('aria-current', 'page');
+  const normalizePath = (path) => path.replace(/\/index\.html$/, '/').replace(/\.html$/, '').replace(/\/$/, '') || '/';
+  const currentUrl = new URL(window.location.href);
+  const currentPath = normalizePath(currentUrl.pathname);
+  nav.querySelectorAll('a[href]').forEach((link) => {
+    const url = new URL(link.href, currentUrl);
+    if (url.origin === currentUrl.origin && normalizePath(url.pathname) === currentPath) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
   });
 }
 
@@ -144,6 +19,7 @@ function initNav() {
   const nav = document.getElementById('site-nav');
   const toggle = document.querySelector('[data-mobile-toggle]');
   const menu = document.querySelector('[data-mobile-menu]');
+  const disclosure = document.querySelector('[data-mobile-navigation]');
   if (!nav) return;
 
   const setScrolled = () => {
@@ -153,10 +29,11 @@ function initNav() {
   setScrolled();
   window.addEventListener('scroll', setScrolled, { passive: true });
 
-  if (toggle && menu) {
+  if (toggle && menu && disclosure) {
     const menuLinks = [...menu.querySelectorAll('a')];
 
     const setMenuState = (isOpen, restoreFocus = false) => {
+      disclosure.open = isOpen;
       menu.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
       toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
@@ -169,8 +46,9 @@ function initNav() {
       }
     };
 
-    toggle.addEventListener('click', () => {
-      setMenuState(!menu.classList.contains('open'));
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      setMenuState(!disclosure.open);
     });
 
     menu.addEventListener('click', (event) => {
@@ -209,17 +87,16 @@ function initNav() {
     window.matchMedia('(min-width: 821px)').addEventListener('change', (event) => {
       if (event.matches) setMenuState(false);
     });
+
+    // Preserve a native disclosure opened before enhancement finished loading.
+    setMenuState(disclosure.open);
   }
 }
 
 function initFadeIn() {
   const items = document.querySelectorAll('[data-fade]');
-  if (!items.length) return;
-
-  if (!('IntersectionObserver' in window)) {
-    items.forEach((item) => item.classList.add('is-visible'));
-    return;
-  }
+  if (!items.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -303,7 +180,7 @@ function initWorkflowStory() {
     timer = window.setInterval(() => render((activeIndex + 1) % steps.length), 1700);
   };
 
-  if (reduceMotion) {
+  if (reduceMotion || !('IntersectionObserver' in window)) {
     steps.forEach((step) => step.classList.add('is-complete'));
     flow.style.setProperty('--workflow-progress', '80%');
     return;
@@ -397,7 +274,7 @@ function initCounters() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  injectSharedChrome();
+  initCurrentNav();
   initNav();
   initFadeIn();
   initSolutionTabs();

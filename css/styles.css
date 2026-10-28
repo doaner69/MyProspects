@@ -408,6 +408,10 @@ button {
   box-shadow: 0 16px 30px rgba(0, 16, 38, 0.28);
 }
 
+.mobile-navigation {
+  display: none;
+}
+
 .nav-mobile-toggle {
   display: none;
   width: 42px;
@@ -418,6 +422,11 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius);
   cursor: pointer;
+  list-style: none;
+}
+
+.nav-mobile-toggle::-webkit-details-marker {
+  display: none;
 }
 
 .mobile-menu {
@@ -1937,15 +1946,16 @@ button {
   font-size: 13px;
 }
 
-[data-fade] {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 520ms ease, transform 520ms ease;
+/* Content is readable before JavaScript and if an observer never fires. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-fade].is-visible {
+    animation: content-enter 520ms ease;
+  }
 }
 
-[data-fade].is-visible {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes content-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2053,6 +2063,10 @@ button {
     display: none !important;
   }
 
+  .mobile-navigation {
+    display: block;
+  }
+
   .nav-mobile-toggle {
     position: fixed;
     top: 15px;
@@ -2095,6 +2109,7 @@ button {
     box-shadow: var(--shadow);
   }
 
+  .mobile-navigation[open] .mobile-menu,
   .mobile-menu.open {
     display: grid;
     animation: mobile-menu-in 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
