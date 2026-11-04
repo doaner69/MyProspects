@@ -54,7 +54,7 @@ The Codex bundled Python runtime can run that script when system Python lacks Pi
 Both endpoints accept a JSON object. Malformed JSON and non-object bodies (including `null`, arrays, numbers, booleans, and JSON string values) return HTTP 400 without attempting persistence or notifications. Missing/invalid fields retain the existing field-validation responses; valid submissions and honeypot behavior are unchanged.
 
 - Validated submissions are inserted first into `public.myprospects_leads` in Neon. The two flows are distinguished by `submission_type` and the exact `source` values `myprospects-trial-page` and `myprospects-contact-page`.
-- After persistence succeeds, the server sends a formatted Slack notification. A missing or failing Slack webhook is logged but does not lose the saved lead or turn the form into an error.
+- After persistence succeeds, the server sends a formatted Slack notification. Structured operational logs distinguish sent, skipped (missing webhook), and failed notifications without losing the saved lead or turning the form into an error. Server-generated request IDs are returned in `X-Request-Id` and correlate request, persistence and notification durations/outcomes. Diagnostics exclude submitted fields and raw errors; the existing Slack business notification content is unchanged.
 - The idempotent schema is maintained in `db/001-create-myprospects-leads.sql` and is also ensured by the server function before its first insert.
 
 ### Required Vercel Environment Variables
@@ -91,7 +91,7 @@ The maintained package uses the native GTM schema and IDs from workspace `2`. Ve
 npm test
 ```
 
-This runs the six original suites (site smoke, consent controller, GTM package, lead submissions, trial API, contact API), plus SEO/discovery, social metadata/JSON-LD/LLM inventory, local font delivery, static navigation, navigation/failure behavior, responsive images, generator contracts and deployment-checker regression tests against a local HTTP fixture server. The two read-only generation checks run last. These checks do not submit leads or contact external APIs.
+This runs the six original suites (site smoke, consent controller, GTM package, lead submissions, trial API, contact API), plus SEO/discovery, social metadata/JSON-LD/LLM inventory, local font delivery, static navigation, navigation/failure behavior, responsive images, generator contracts, safe operational logging, trusted production-deployment selection, and deployment-checker regression tests against a local HTTP fixture server. The two read-only generation checks run last. These checks do not submit leads or contact external APIs.
 
 Before release, also inspect representative desktop/mobile home, product, pricing, nested solution and guide pages. Verify normal and failed/disabled JavaScript, keyboard/mobile menu behavior, anchor navigation, GPC/opt-outs and the query fallback. Local browser diagnostics cannot establish production redirects, field Core Web Vitals, indexing, analytics ingestion or ranking gains. Publication remains a separate authorized step.
 
@@ -99,7 +99,7 @@ Before release, also inspect representative desktop/mobile home, product, pricin
 
 `.github/workflows/ci.yml` runs on pull requests, pushes to `main`, and manual dispatch. The job uses Node.js 24 (matching the production runtime), installs the lockfile with `npm ci`, then runs `npm test`, including the read-only generated-file checks. Actions are pinned to verified commits; repository permissions are read-only and checkout credentials are not persisted. No database, Slack, Vercel, or analytics secrets are required. The workflow does not deploy or regenerate committed output.
 
-Repository branch protection is separate from this workflow: the test job must be configured as a required status check if merges should be blocked on failure. Adding this file alone does not change Vercel's deployment policy or gate automatic production deployments.
+GitHub `main` protection now requires this exact test-job name from GitHub Actions, an up-to-date PR, and passing checks, including for administrators. Vercel also requires the job before promoting Production deployments. Keep the job name synchronized with both settings. See `ops/main-branch-protection.json` and [RELEASE-OPERATIONS.md](RELEASE-OPERATIONS.md) for the applied configuration, verification limits and recovery procedure.
 
 ### Read-only deployment verification
 
@@ -114,7 +114,7 @@ The default target is production. To check an accessible preview or local server
 
 The checker uses only GET requests, at most four at a time, with a ten-second timeout covering each request/redirect chain and its response body. It checks the public-page inventory, self-canonicals, Open Graph URLs, connected JSON-LD, indexability headers/meta tags, shared stylesheet/script references, removal of obsolete Google Fonts dependencies, discovery files, local fonts and shared assets. Committed discovery/shared-asset bytes and MIME types must match. It also checks permanent extensionless/trailing-slash redirects and, on production, the apex-to-www redirect.
 
-Failures are listed by path and produce a nonzero exit status. Compare against the deployed revision: newer local CSS, JavaScript or discovery files intentionally fail against an older deployment. The checker never submits forms, calls lead APIs, executes page scripts or writes data. It does not measure browser rendering, Core Web Vitals, tracking ingestion, database health or search indexing. It is deliberately separate from the CI job; `npm test` exercises its failure behavior using only a local fixture server.
+Failures are listed by path and produce a nonzero exit status. Compare against the deployed revision: newer local CSS, JavaScript or discovery files intentionally fail against an older deployment. The checker never submits forms, calls lead APIs, executes page scripts or writes data. It does not measure browser rendering, Core Web Vitals, tracking ingestion, database health or search indexing. It is deliberately separate from the CI job; `npm test` exercises its failure behavior using only a local fixture server. `.github/workflows/verify-production.yml` runs it automatically after a trusted successful Vercel Production deployment and supports manual dispatch on `main`. The workflow selects the active production commit from GitHub metadata, validates its main-branch ancestry, checks out that exact revision, and checks only the canonical production domain. Stale, failed, preview and untrusted events are skipped. Failures surface in the GitHub run and summary; no external notifications or automatic rollback are configured. The production path requires its control helper on `main` after merge; preview events can already exercise the guarded skip path on PR branches. Its first real production verification must still be checked.
 
 ## Business Decisions for the Next Content Cycle
 

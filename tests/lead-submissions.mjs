@@ -67,6 +67,7 @@ assert.equal(failureCalls, 2, 'a failed schema check should be retryable on the 
 
 const order = [];
 await saveLeadWithNotification(contactLead, {
+  logger: {},
   saveLead: async () => { order.push('database'); return { id: 1 }; },
   notifySlack: async () => { order.push('slack'); return { status: 'sent' }; },
 });
@@ -75,6 +76,7 @@ assert.deepEqual(order, ['database', 'slack']);
 let notificationAttempted = false;
 await assert.rejects(
   () => saveLeadWithNotification(contactLead, {
+    logger: {},
     saveLead: async () => { throw new Error('database write failed'); },
     notifySlack: async () => { notificationAttempted = true; },
   }),

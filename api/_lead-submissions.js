@@ -1,3 +1,5 @@
+const { createRequestContext } = require('./_operational-log.js');
+
 const DATABASE_URL_KEYS = [
   'NEON_DATABASE_URL',
   'DATABASE_URL',
@@ -255,11 +257,31 @@ async function saveLeadWithNotification(input, dependencies = {}) {
   const sendNotification = dependencies.notifySlack ?? notifySlack;
   const logger = dependencies.logger ?? console;
 
-  const savedLead = await persist(input);
+  const context = dependencies.context ?? createRequestContext({
+    route: input.submissionType === 'free_trial' ? '/api/trial-request' : '/api/contact-request',
+    logger,
+    now: dependencies.now,
+  });
+  const persistenceStarted = context.now();
+  let savedLead;
   try {
-    await sendNotification(input);
+    savedLead = await persist(input);
+    context.event('info', 'lead.persistence', { outcome: 'saved', durationMs: context.elapsed(persistenceStarted) });
   } catch (error) {
-    logger.warn('MyProspects Slack lead notification failed.', error);
+    context.persistenceFailed(persistenceStarted);
+    throw error;
+  }
+  const notificationStarted = context.now();
+  try {
+    const notification = await sendNotification(input);
+    const skipped = notification?.status === 'skipped';
+    context.event(skipped ? 'warn' : 'info', 'lead.notification', {
+      outcome: skipped ? 'skipped' : 'sent',
+      durationMs: context.elapsed(notificationStarted),
+      ...(skipped ? { reason: 'missing_webhook' } : {}),
+    });
+  } catch {
+    context.event('warn', 'lead.notification', { outcome: 'failed', durationMs: context.elapsed(notificationStarted), reason: 'delivery_failed' });
   }
 
   return savedLead;

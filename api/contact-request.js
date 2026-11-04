@@ -1,3 +1,4 @@
+const { createRequestContext } = require('./_operational-log.js');
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const {
   getUserAgent,
@@ -44,9 +45,15 @@ function createHandler(dependencies = {}) {
   const logger = dependencies.logger ?? console;
 
   return async function handler(req, res) {
+    const context = createRequestContext({ route: '/api/contact-request', logger, now: dependencies.now });
+    res.setHeader('X-Request-Id', context.requestId);
+    const respond = (status, body, outcome) => {
+      context.event('info', 'lead.request', { outcome, status, durationMs: context.elapsed() });
+      return sendJson(res, status, body);
+    };
     if (req.method !== 'POST') {
       res.setHeader('Allow', 'POST');
-      return sendJson(res, 405, { error: 'Method not allowed.' });
+      return respond(405, { error: 'Method not allowed.' }, 'method_rejected');
     }
 
     let body = req.body;
@@ -54,13 +61,13 @@ function createHandler(dependencies = {}) {
       try {
         body = JSON.parse(body);
       } catch {
-        return sendJson(res, 400, { error: 'Request body must be valid JSON.' });
+        return respond(400, { error: 'Request body must be valid JSON.' }, 'malformed_json');
       }
     }
 
     const validation = validatePayload(body);
-    if (!validation.ok) return sendJson(res, 400, { error: 'Review the highlighted fields.', fields: validation.errors });
-    if (validation.honeypot) return sendJson(res, 200, { ok: true });
+    if (!validation.ok) return respond(400, { error: 'Review the highlighted fields.', fields: validation.errors }, 'validation_rejected');
+    if (validation.honeypot) return respond(200, { ok: true }, 'honeypot');
 
     try {
       await submitLead({
@@ -68,11 +75,11 @@ function createHandler(dependencies = {}) {
         source: 'myprospects-contact-page',
         ...validation.payload,
         userAgent: getUserAgent(req),
-      });
-      return sendJson(res, 200, { ok: true });
-    } catch (error) {
-      logger.error('Contact request persistence failed:', error);
-      return sendJson(res, 503, { error: 'We could not save your message right now. Please try again shortly.' });
+      }, { context, logger });
+      return respond(200, { ok: true }, 'accepted');
+    } catch {
+      context.persistenceFailed();
+      return respond(503, { error: 'We could not save your message right now. Please try again shortly.' }, 'unavailable');
     }
   };
 }
