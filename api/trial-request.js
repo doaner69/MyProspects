@@ -17,6 +17,10 @@ function normalizeWebsite(value) {
 }
 
 function validatePayload(body = {}) {
+  if (body === null || typeof body !== 'object' || Array.isArray(body)) {
+    return { ok: false, errors: { body: 'Request body must be a JSON object.' }, payload: null };
+  }
+
   const payload = {
     firstName: cleanString(body.firstName, 80),
     lastName: cleanString(body.lastName, 80),

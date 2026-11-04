@@ -41,6 +41,16 @@ assert.equal(res.headers.Allow, 'POST');
 res = await invoke(handler, { body: '{bad json' });
 assert.equal(res.statusCode, 400);
 
+// JSON primitives and arrays must never reach persistence or throw outside the handler.
+for (const body of [null, [], [validBody], true, false, 0, 42, 'null', '[]', '[{}]', 'true', 'false', '0', '"text"', '""']) {
+  res = await invoke(handler, { body });
+  assert.equal(res.statusCode, 400, `reject non-object request body: ${JSON.stringify(body)}`);
+  assert.equal(res.headers['Cache-Control'], 'no-store');
+  assert.equal(typeof res.body.error, 'string');
+  assert.equal(submissions.length, 0, 'malformed requests must not reach persistence');
+}
+assert.equal(contactModule.validatePayload(Object.assign([], validBody)).ok, false, 'arrays with field-shaped properties are not payload objects');
+
 res = await invoke(handler, { body: { ...validBody, name: '', email: 'invalid', message: '' } });
 assert.equal(res.statusCode, 400);
 assert.ok(res.body.fields.name && res.body.fields.email && res.body.fields.message);
@@ -63,6 +73,11 @@ assert.deepEqual(submissions[0], {
   userAgent: 'MyProspects API test',
 });
 
+res = await invoke(handler, { body: JSON.stringify(validBody) });
+assert.equal(res.statusCode, 200, 'valid JSON object strings remain accepted');
+assert.equal(submissions.length, 2);
+assert.deepEqual(submissions[1], submissions[0]);
+
 const failingHandler = contactModule.createHandler({
   submitLead: async () => { throw new Error('database unavailable'); },
   logger: { error() {} },
@@ -71,4 +86,4 @@ res = await invoke(failingHandler);
 assert.equal(res.statusCode, 503);
 assert.match(res.body.error, /could not save/i);
 
-console.log('contact-api: method, validation, honeypot, persistence success, and database failure paths validated');
+console.log('contact-api: method, malformed-body rejection, validation, honeypot, persistence success, and database failure paths validated');

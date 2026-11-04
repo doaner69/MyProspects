@@ -51,6 +51,8 @@ The Codex bundled Python runtime can run that script when system Python lacks Pi
 
 `trial.html` and `contact.html` validate their forms in the browser and post to `/api/trial-request` and `/api/contact-request` respectively.
 
+Both endpoints accept a JSON object. Malformed JSON and non-object bodies (including `null`, arrays, numbers, booleans, and JSON string values) return HTTP 400 without attempting persistence or notifications. Missing/invalid fields retain the existing field-validation responses; valid submissions and honeypot behavior are unchanged.
+
 - Validated submissions are inserted first into `public.myprospects_leads` in Neon. The two flows are distinguished by `submission_type` and the exact `source` values `myprospects-trial-page` and `myprospects-contact-page`.
 - After persistence succeeds, the server sends a formatted Slack notification. A missing or failing Slack webhook is logged but does not lose the saved lead or turn the form into an error.
 - The idempotent schema is maintained in `db/001-create-myprospects-leads.sql` and is also ensured by the server function before its first insert.
@@ -89,9 +91,30 @@ The maintained package uses the native GTM schema and IDs from workspace `2`. Ve
 npm test
 ```
 
-This runs the six original suites (site smoke, consent controller, GTM package, lead submissions, trial API, contact API), plus SEO/discovery, social metadata/JSON-LD/LLM inventory, local font delivery, static navigation, navigation/failure behavior, responsive images and generator-contract checks. The two read-only generation checks run last. These checks do not submit leads or contact external APIs.
+This runs the six original suites (site smoke, consent controller, GTM package, lead submissions, trial API, contact API), plus SEO/discovery, social metadata/JSON-LD/LLM inventory, local font delivery, static navigation, navigation/failure behavior, responsive images, generator contracts and deployment-checker regression tests against a local HTTP fixture server. The two read-only generation checks run last. These checks do not submit leads or contact external APIs.
 
 Before release, also inspect representative desktop/mobile home, product, pricing, nested solution and guide pages. Verify normal and failed/disabled JavaScript, keyboard/mobile menu behavior, anchor navigation, GPC/opt-outs and the query fallback. Local browser diagnostics cannot establish production redirects, field Core Web Vitals, indexing, analytics ingestion or ranking gains. Publication remains a separate authorized step.
+
+### Continuous integration
+
+`.github/workflows/ci.yml` runs on pull requests, pushes to `main`, and manual dispatch. The job uses Node.js 24 (matching the production runtime), installs the lockfile with `npm ci`, then runs `npm test`, including the read-only generated-file checks. Actions are pinned to verified commits; repository permissions are read-only and checkout credentials are not persisted. No database, Slack, Vercel, or analytics secrets are required. The workflow does not deploy or regenerate committed output.
+
+Repository branch protection is separate from this workflow: the test job must be configured as a required status check if merges should be blocked on failure. Adding this file alone does not change Vercel's deployment policy or gate automatic production deployments.
+
+### Read-only deployment verification
+
+After a release, run the checker from the checkout that was deployed:
+
+```bash
+npm run check:deployment
+npm run check:deployment -- --url https://www.myprospects.com
+```
+
+The default target is production. To check an accessible preview or local server, pass its HTTP(S) origin with `--url`; credentials, subpaths, queries and fragments are rejected. Canonical and structured-data URLs must still identify `https://www.myprospects.com` on previews. Production checks reject `noindex`/`none` in robots headers or metadata; preview/local checks permit those intentional indexing restrictions. Protected deployments report HTTP 401/403; the checker does not bypass authentication or accept secrets.
+
+The checker uses only GET requests, at most four at a time, with a ten-second timeout covering each request/redirect chain and its response body. It checks the public-page inventory, self-canonicals, Open Graph URLs, connected JSON-LD, indexability headers/meta tags, shared stylesheet/script references, removal of obsolete Google Fonts dependencies, discovery files, local fonts and shared assets. Committed discovery/shared-asset bytes and MIME types must match. It also checks permanent extensionless/trailing-slash redirects and, on production, the apex-to-www redirect.
+
+Failures are listed by path and produce a nonzero exit status. Compare against the deployed revision: newer local CSS, JavaScript or discovery files intentionally fail against an older deployment. The checker never submits forms, calls lead APIs, executes page scripts or writes data. It does not measure browser rendering, Core Web Vitals, tracking ingestion, database health or search indexing. It is deliberately separate from the CI job; `npm test` exercises its failure behavior using only a local fixture server.
 
 ## Business Decisions for the Next Content Cycle
 
