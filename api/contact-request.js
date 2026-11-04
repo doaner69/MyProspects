@@ -9,6 +9,10 @@ function cleanString(value, maxLength) {
 }
 
 function validatePayload(body = {}) {
+  if (body === null || typeof body !== 'object' || Array.isArray(body)) {
+    return { ok: false, errors: { body: 'Request body must be a JSON object.' }, payload: null };
+  }
+
   const payload = {
     name: cleanString(body.name, 120),
     email: cleanString(body.email, 160).toLowerCase(),
