@@ -1,0 +1,89 @@
+name: Verify production
+
+on:
+  deployment_status:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: read
+
+jobs:
+  select:
+    name: Select trusted production revision
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'deployment_status' &&
+       github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Production' &&
+       github.event.sender.id == 35613825 &&
+       github.event.deployment.creator.id == 35613825 &&
+       github.event.deployment_status.creator.id == 35613825 &&
+       github.event.repository.id == 1204386385)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      run: ${{ steps.deployment.outputs.run }}
+      sha: ${{ steps.deployment.outputs.sha }}
+    steps:
+      - name: Check out trusted control code
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Select current trusted production revision
+        id: deployment
+        run: node scripts/select-production-deployment.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Report selection
+        if: always()
+        env:
+          SELECTION_RESULT: ${{ job.status }}
+          SELECTED_SHA: ${{ steps.deployment.outputs.sha }}
+          SHOULD_VERIFY: ${{ steps.deployment.outputs.run }}
+        run: |
+          {
+            printf '### Production deployment selection\n\n'
+            printf 'Result: %s\n\n' "$SELECTION_RESULT"
+            printf 'Selected revision: `%s`\n\n' "$SELECTED_SHA"
+            if [ "$SHOULD_VERIFY" != 'true' ]; then printf 'No eligible current production deployment selected. See selection logs for the reason.\n'; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  verify:
+    name: Verify deployed production revision
+    needs: select
+    if: needs.select.outputs.run == 'true'
+    # Selection has no concurrency group: ignored/stale events cannot cancel a valid verification.
+    concurrency:
+      group: verify-myprospects-production-${{ needs.select.outputs.sha }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the deployed revision
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.select.outputs.sha }}
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Verify the production site
+        run: npm run check:deployment -- --url https://www.myprospects.com
+      - name: Report result
+        if: always()
+        env:
+          CHECK_RESULT: ${{ job.status }}
+          CHECKED_SHA: ${{ needs.select.outputs.sha }}
+        run: |
+          {
+            printf '### Production verification\n\n'
+            printf 'Result: %s\n\n' "$CHECK_RESULT"
+            printf 'Selected revision: `%s`\n\n' "$CHECKED_SHA"
+            if [ "$CHECK_RESULT" = 'failure' ]; then printf 'Inspect the failed step and the release runbook. No automatic rollback was performed.\n'; fi
+          } >> "$GITHUB_STEP_SUMMARY"
