@@ -31,12 +31,12 @@ npm run check:site
 npm test
 ```
 
-- `build:site` runs both dependency-free Node generators. `build:chrome` populates the marked navigation/footer blocks in all public HTML from `templates/shared-chrome.mjs`. `build:seo` synchronizes self-canonicals, normalizes known internal page links and writes `sitemap.xml` and `robots.txt`.
+- `build:site` runs both dependency-free Node generators. `build:chrome` populates the marked navigation/footer blocks in all public HTML from `templates/shared-chrome.mjs`. `build:seo` synchronizes self-canonicals, normalizes known internal page links and writes `sitemap.xml`, `robots.txt`, and `llms.txt`. It also generates page-specific Open Graph/Twitter metadata and connected Organization, Brand, WebSite, WebPage and breadcrumb JSON-LD from the authored titles/descriptions. Existing partial social tags are replaced to avoid duplicates. The shared logo is the social preview image; its actual PNG dimensions are declared.
 - `check:site` checks generated output without changing files and fails if anything is stale. Commit the generated HTML/discovery files with their sources; this cycle does not add a deployment build step.
 - Edit shared navigation in `templates/shared-chrome.mjs`, not its generated HTML blocks. JavaScript enhances existing markup; it does not inject the navigation/footer. The native mobile disclosure opens without JavaScript, stays collapsed during startup, and is enhanced with Escape/focus handling when scripts run. Main content stays visible without animation code.
 - To add a public page, create its HTML with the existing consent/GTM bootstrap, unique title/description and one H1; register its file/path/indexability; retain the shared block markers or empty `site-nav`/`site-footer` containers; run `build:site` and all checks. Update the deliberate route contract in `tests/seo.mjs` when adding/removing a public route.
 - The sitemap currently lists all 18 intended public pages, including contact/legal pages. No update dates are guessed. `robots.txt` adds only the sitemap declaration: existing unrestricted crawl access, including AI training bots, is unchanged. Any future bot-policy change requires an explicit decision.
-- New shared CSS/JS uses the `20261028-seo` cache version. Bump the corresponding HTML asset references when making incompatible shared changes.
+- Shared CSS uses the `20261104-aeo` cache version; unchanged shared JavaScript retains `20261028-seo`. Bump the corresponding HTML asset references when changing shared assets. Inter and JetBrains Mono Latin variable fonts are served from `assets/fonts/` under their included SIL OFL licenses. `font-display: optional` avoids a late font swap; a slow first visit can use the system fallback. Do not reintroduce the blocking Google Fonts stylesheet.
 
 Homepage originals remain under `assets/images/`. Committed responsive WebP candidates and their source hashes live in `assets/images/optimized/`. To regenerate them, use an **existing** Python environment with Pillow/WebP support:
 
@@ -89,7 +89,7 @@ The maintained package uses the native GTM schema and IDs from workspace `2`. Ve
 npm test
 ```
 
-This runs the six original suites (site smoke, consent controller, GTM package, lead submissions, trial API, contact API), plus SEO/discovery, static navigation, navigation/failure behavior, responsive images and generator-contract checks. The two read-only generation checks run last. These checks do not submit leads or contact external APIs.
+This runs the six original suites (site smoke, consent controller, GTM package, lead submissions, trial API, contact API), plus SEO/discovery, social metadata/JSON-LD/LLM inventory, local font delivery, static navigation, navigation/failure behavior, responsive images and generator-contract checks. The two read-only generation checks run last. These checks do not submit leads or contact external APIs.
 
 Before release, also inspect representative desktop/mobile home, product, pricing, nested solution and guide pages. Verify normal and failed/disabled JavaScript, keyboard/mobile menu behavior, anchor navigation, GPC/opt-outs and the query fallback. Local browser diagnostics cannot establish production redirects, field Core Web Vitals, indexing, analytics ingestion or ranking gains. Publication remains a separate authorized step.
 
@@ -103,6 +103,8 @@ Technical SEO does not approve new commercial or product claims. Before changing
 - **Capabilities:** supported countries/traffic/fields, confidence and refresh limitations, native/export/custom integrations, and customer versus vendor responsibilities.
 - **Trust/editorial:** approved security/privacy wording and concrete controls, real expert/reviewer identities, actual article dates, and permission/evidence for customer proof. Legal language needs its own review.
 
-Keep illustrative playbooks labeled. Structured data, commercial rewrites, expanded editorial content and conversion instrumentation are later tasks; their facts and any API/tracking/publication changes need separate review.
+Keep illustrative playbooks labeled. The implemented structured data uses only existing organization/brand relationships and page metadata. Commercial rewrites, expanded editorial content and conversion instrumentation remain later tasks; their facts and any API/tracking/publication changes need separate review.
 
 See [SITE-REFERENCE.md](SITE-REFERENCE.md) for the current route map, pricing presentation, content standards, and maintenance notes.
+
+See [SEO-AEO-AUDIT.md](SEO-AEO-AUDIT.md) for the November 4 audit diagnosis, implemented scope, verification, and publication follow-up. `llms.txt` is a supplementary discovery proposal, not a ranking guarantee or crawler access policy.

@@ -22,7 +22,7 @@ for (const page of pages) {
   assert.ok(compact.includes('MyProspects'), `${page} title or metadata should include the brand`);
   assert.match(compact, /<meta name="description" content="[^"]{40,}"/, `${page} needs a useful description`);
   assert.ok(html.includes('id="site-nav"') && html.includes('id="site-footer"'), `${page} needs shared chrome`);
-  assert.ok(html.includes('styles.css?v=20261028-seo'), `${page} should use the current stylesheet`);
+  assert.ok(html.includes('styles.css?v=20261104-aeo'), `${page} should use the current stylesheet`);
   assert.ok(html.includes('main.js?v=20261028-seo'), `${page} should use the current shared script`);
   assert.ok(!html.includes('cdnjs.cloudflare.com/ajax/libs/gsap'), `${page} should not load unused GSAP`);
   assert.ok(!html.includes('G-SQY7W3M8FR'), `${page} must remove the old GA4 destination`);

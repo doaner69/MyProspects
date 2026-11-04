@@ -2,7 +2,7 @@ export const NAV_HTML = `
   <div class="container">
     <div class="nav-inner">
       <a href="/" class="brand-wordmark" aria-label="MyProspects home">
-        <img src="/assets/images/myprospects-logo.png" alt="MyProspects">
+        <img src="/assets/images/myprospects-logo.png" width="961" height="231" alt="MyProspects">
       </a>
       <ul class="nav-links">
         <li class="nav-dropdown">
@@ -60,7 +60,7 @@ export const FOOTER_HTML = `
       <div class="footer-grid">
         <div>
           <a href="/" class="brand-wordmark footer-logo" aria-label="MyProspects home">
-            <img src="/assets/images/myprospects-logo.png" alt="MyProspects">
+            <img src="/assets/images/myprospects-logo.png" width="961" height="231" alt="MyProspects">
           </a>
           <p style="margin-top:16px;max-width:320px;">Person-level visitor identity resolution and buyer intent data for B2B, B2C, recruitment, and nonprofit teams.</p>
           <div class="footer-badges">

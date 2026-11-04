@@ -30,6 +30,52 @@ export function renderCanonical(page) {
   return `<link rel="canonical" href="${ORIGIN}${page.path}">`;
 }
 
+const escapeHTML = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+const decodeHTML = value => value.replace(/&#(x[0-9a-f]+|\d+);/gi, (_, code) => String.fromCodePoint(code[0].toLowerCase() === 'x' ? parseInt(code.slice(1), 16) : Number(code)))
+  .replaceAll('&quot;', '"').replaceAll('&#39;', "'").replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&');
+
+export function pageMetadata(html, page) {
+  const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] || '';
+  const title = head.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+  const description = head.match(/<meta\b[^>]*name="description"[^>]*content="([^"]+)"/i)?.[1];
+  if (!title || !description) throw new Error(`Missing title or description: ${page.file}`);
+  return { title: decodeHTML(title.trim()), description: decodeHTML(description.trim()) };
+}
+
+export function renderDiscovery(page, { title, description }) {
+  const url = ORIGIN + page.path;
+  const image = `${ORIGIN}/assets/images/myprospects-logo.png`;
+  const organization = `${ORIGIN}/#organization`;
+  const brand = `${ORIGIN}/#brand`;
+  const website = `${ORIGIN}/#website`;
+  const graph = [
+    { '@type': 'Organization', '@id': organization, name: 'Local Sphere', legalName: 'Local Sphere, LLC', url: `${ORIGIN}/about`, brand: { '@id': brand } },
+    { '@type': 'Brand', '@id': brand, name: 'MyProspects', url: `${ORIGIN}/`, logo: image },
+    { '@type': 'WebSite', '@id': website, url: `${ORIGIN}/`, name: 'MyProspects', publisher: { '@id': organization }, inLanguage: 'en' },
+    { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: title, description, isPartOf: { '@id': website }, about: { '@id': brand }, inLanguage: 'en',
+      ...(page.path === '/' ? {} : { breadcrumb: { '@id': `${url}#breadcrumb` } }) },
+  ];
+  if (page.path !== '/') graph.push({ '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'MyProspects', item: `${ORIGIN}/` },
+    { '@type': 'ListItem', position: 2, name: title, item: url },
+  ] });
+  const tags = {
+    'og:type': 'website', 'og:site_name': 'MyProspects', 'og:locale': 'en_US', 'og:url': url,
+    'og:title': title, 'og:description': description, 'og:image': image,
+    'og:image:type': 'image/png', 'og:image:width': '961', 'og:image:height': '231', 'og:image:alt': 'MyProspects',
+    'twitter:card': 'summary', 'twitter:title': title, 'twitter:description': description,
+    'twitter:image': image, 'twitter:image:alt': 'MyProspects',
+  };
+  return [renderCanonical(page), '<link rel="describedby" href="/llms.txt" type="text/plain">',
+    ...Object.entries(tags).map(([key, value]) => `<meta ${key.startsWith('og:') ? 'property' : 'name'}="${key}" content="${escapeHTML(value)}">`),
+    `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replaceAll('<', '\\u003c')}</script>`,
+  ].join('\n  ');
+}
+
+export function renderLLMs(entries) {
+  return `# MyProspects\n\n> MyProspects is a Local Sphere product for website visitor identity, intent intelligence, and audience activation.\n\n## Public pages\n\n${entries.filter(({ page }) => page.indexable).map(({ page, metadata }) => `- [${metadata.title.replace(/[\[\]\\\r\n]/g, ' ')}](${ORIGIN}${page.path}): ${metadata.description.replace(/[\r\n]/g, ' ')}`).join('\n')}\n`;
+}
+
 export function renderSitemap(pages) {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter(page => page.indexable).map(page => `  <url><loc>${ORIGIN}${page.path}</loc></url>`).join('\n')}\n</urlset>\n`;
 }
@@ -47,10 +93,15 @@ export function normalizeInternalLinks(html, page, pages) {
 
 export function generateSEO(root = ROOT, { check = false } = {}) {
   const pages = loadPages(root);
+  const entries = [];
   const outputs = pages.map(page => {
     const filename = resolve(root, page.file);
     let html = readFileSync(filename, 'utf8');
-    const block = `${START}\n  ${renderCanonical(page)}\n  ${END}`;
+    const metadata = pageMetadata(html, page);
+    entries.push({ page, metadata });
+    // Replace legacy partial social tags so crawlers see one authoritative value.
+    html = html.replace(/<meta\b(?=[^>]*(?:property|name)="(?:og:|twitter:))[^>]*>\s*/gi, '');
+    const block = `${START}\n  ${renderDiscovery(page, metadata)}\n  ${END}`;
     const starts = html.split(START).length - 1;
     const ends = html.split(END).length - 1;
     if (starts !== ends || starts > 1 || (starts && html.indexOf(START) > html.indexOf(END))) throw new Error(`Malformed SEO markers: ${page.file}`);
@@ -64,6 +115,7 @@ export function generateSEO(root = ROOT, { check = false } = {}) {
   // A sitemap declaration adds discovery without changing existing crawl/training permissions.
   outputs.push([resolve(root, 'robots.txt'), `Sitemap: ${ORIGIN}/sitemap.xml\n`]);
   outputs.push([resolve(root, 'sitemap.xml'), renderSitemap(pages)]);
+  outputs.push([resolve(root, 'llms.txt'), renderLLMs(entries)]);
   const stale = [];
   for (const [filename, content] of outputs) {
     if (existsSync(filename) && readFileSync(filename, 'utf8') === content) continue;
