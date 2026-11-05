@@ -100,9 +100,9 @@ function initPricingEstimator() {
   if (!range || !output || !planName || !planCopy) return;
 
   const plans = [
-    { max: 1000, key: 'tier-1', name: 'Tier 1', copy: 'Up to 1,000 Monthly Unique Resolved Visitors for $499 per month.' },
-    { max: 5000, key: 'tier-2', name: 'Tier 2', copy: 'Up to 5,000 Monthly Unique Resolved Visitors for $1,999 per month.' },
-    { max: 10000, key: 'tier-3', name: 'Tier 3', copy: 'Up to 10,000 Monthly Unique Resolved Visitors for $2,499 per month.' },
+    { max: 1000, key: 'tier-1', name: 'Essentials', copy: 'Up to 1,000 Monthly Unique Resolved Visitors for $499 per month.' },
+    { max: 5000, key: 'tier-2', name: 'Professional', copy: 'Up to 5,000 Monthly Unique Resolved Visitors for $1,999 per month.' },
+    { max: 10000, key: 'tier-3', name: 'Managed', copy: 'Up to 10,000 Monthly Unique Resolved Visitors for $2,499 per month.' },
     { max: Infinity, key: 'enterprise', name: 'Enterprise', copy: 'More than 10,000 Monthly Unique Resolved Visitors. Contact us for custom Enterprise pricing.' },
   ];
 

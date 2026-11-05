@@ -53,13 +53,14 @@ The free-trial flow collects contact details, company, website, use case, traffi
 
 | Tier | Price / month | Monthly Unique Resolved Visitors (cap) |
 | --- | ---: | ---: |
-| Tier 1 | $499 | 1,000 |
-| Tier 2 | $1,999 | 5,000 |
-| Tier 3 | $2,499 | 10,000 |
+| Tier 1 — Essentials | $499 | 1,000 |
+| Tier 2 — Professional | $1,999 | 5,000 |
+| Tier 3 — Managed | $2,499 | 10,000 |
 | Enterprise | Contact us | More than 10,000 |
 
 - Pricing is based on total Monthly Unique Resolved Visitors. Repeat visits by the same resolved visitor count once in that month; anonymous sessions do not count.
 - Present the three tiers as month-to-month; do not apply an annual discount to this monthly schedule.
+- Tier 1 and Tier 2 include Self service; Tier 3 includes Managed services.
 - Standard onboarding remains $2,000 and covers pixel setup and implementation support.
 - Pricing content focuses on identity resolution volume. Omit activation, intent, and interest features from pricing descriptions and recommendations.
 - Overage charges, rollover, and cross-device identity counting require commercial confirmation before making specific promises.
