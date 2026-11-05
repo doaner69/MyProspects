@@ -51,17 +51,18 @@ The free-trial flow collects contact details, company, website, use case, traffi
 
 ## Pricing Presentation
 
-| Plan | Price | Resolved visitor capacity | Public framing |
-| --- | ---: | ---: | --- |
-| Launch | $2,000/month | Up to 1,000 monthly | Website identity |
-| Growth | $3,500/month | Up to 3,000 monthly | Identity and intent |
-| Scale | $5,000/month | Up to 7,500 monthly | Coordinated activation |
-| Enterprise | Custom | Custom | Identity graph configuration |
+| Tier | Price / month | Monthly Unique Resolved Visitors (cap) |
+| --- | ---: | ---: |
+| Tier 1 | $499 | 1,000 |
+| Tier 2 | $1,999 | 5,000 |
+| Tier 3 | $2,499 | 10,000 |
+| Enterprise | Contact us | More than 10,000 |
 
-- Plans are presented as month-to-month.
-- Standard onboarding is $2,000 and covers pixel setup, routing, and launch support.
-- Annual billing offers a 15% discount once the platform is proven in the workflow.
-- Intent, premium activation destinations, and custom integrations are scoped separately; do not add public pricing for modules unless it has current commercial approval.
+- Pricing is based on total Monthly Unique Resolved Visitors. Repeat visits by the same resolved visitor count once in that month; anonymous sessions do not count.
+- Present the three tiers as month-to-month; do not apply an annual discount to this monthly schedule.
+- Standard onboarding remains $2,000 and covers pixel setup and implementation support.
+- Pricing content focuses on identity resolution volume. Omit activation, intent, and interest features from pricing descriptions and recommendations.
+- Overage charges, rollover, and cross-device identity counting require commercial confirmation before making specific promises.
 
 ## Build Architecture
 

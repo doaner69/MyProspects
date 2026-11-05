@@ -96,16 +96,14 @@ function initPricingEstimator() {
   const output = estimator.querySelector('[data-resolution-output]');
   const planName = estimator.querySelector('[data-plan-name]');
   const planCopy = estimator.querySelector('[data-plan-copy]');
-  const billingButtons = [...document.querySelectorAll('[data-billing]')];
-  const priceEls = [...document.querySelectorAll('[data-monthly-price]')];
   const cards = [...document.querySelectorAll('[data-price-card]')];
   if (!range || !output || !planName || !planCopy) return;
 
   const plans = [
-    { max: 1000, name: 'Launch', copy: 'Best for teams starting with visitor identification on one primary domain.' },
-    { max: 3000, name: 'Growth', copy: 'Adds off-domain intent and higher monthly resolution capacity.' },
-    { max: 7500, name: 'Scale', copy: 'Built for coordinated audience activation, attribution, and larger traffic volumes.' },
-    { max: Infinity, name: 'Enterprise', copy: 'Custom capacity, support, and identity graph configuration.' },
+    { max: 1000, key: 'tier-1', name: 'Tier 1', copy: 'Up to 1,000 Monthly Unique Resolved Visitors for $499 per month.' },
+    { max: 5000, key: 'tier-2', name: 'Tier 2', copy: 'Up to 5,000 Monthly Unique Resolved Visitors for $1,999 per month.' },
+    { max: 10000, key: 'tier-3', name: 'Tier 3', copy: 'Up to 10,000 Monthly Unique Resolved Visitors for $2,499 per month.' },
+    { max: Infinity, key: 'enterprise', name: 'Enterprise', copy: 'More than 10,000 Monthly Unique Resolved Visitors. Contact us for custom Enterprise pricing.' },
   ];
 
   const formatNumber = (value) => new Intl.NumberFormat('en-US').format(value);
@@ -117,24 +115,10 @@ function initPricingEstimator() {
     output.textContent = output.value;
     planName.textContent = plan.name;
     planCopy.textContent = plan.copy;
-    cards.forEach((card) => card.classList.toggle('recommended', card.dataset.priceCard === plan.name.toLowerCase()));
-  };
-
-  const updateBilling = (button) => {
-    activateButtonSet(billingButtons, button);
-    const annual = button.dataset.billing === 'annual';
-    priceEls.forEach((element) => {
-      const monthly = Number(element.dataset.monthlyPrice);
-      if (!Number.isFinite(monthly)) return;
-      element.textContent = `$${formatNumber(Math.round(annual ? monthly * 0.85 : monthly))}`;
-    });
-    document.querySelectorAll('[data-billing-note]').forEach((note) => {
-      note.textContent = annual ? 'per month, billed annually at 15% savings' : 'per month, billed month-to-month';
-    });
+    cards.forEach((card) => card.classList.toggle('recommended', card.dataset.priceCard === plan.key));
   };
 
   range.addEventListener('input', updateRecommendation);
-  billingButtons.forEach((button) => button.addEventListener('click', () => updateBilling(button)));
   updateRecommendation();
 }
 
