@@ -92,10 +92,17 @@ assert.equal((useCases.match(/class="use-case-body"/g) || []).length, 4, 'each u
 const pricing = read('pricing.html');
 assert.ok(pricing.includes('data-pricing-estimator') && pricing.includes('data-resolution-range'), 'pricing should include a resolution estimator');
 assert.equal((pricing.match(/data-price-card=/g) || []).length, 4, 'pricing should include four plan levels');
-for (const price of ['data-monthly-price="2000"', 'data-monthly-price="3500"', 'data-monthly-price="5000"']) {
+for (const price of ['data-monthly-price="499"', 'data-monthly-price="1999"', 'data-monthly-price="2499"']) {
   assert.ok(pricing.includes(price), `pricing should include ${price}`);
 }
 assert.ok(pricing.includes('Standard onboarding is $2,000'), 'pricing should show the approved onboarding fee');
+const pricingMain = pricing.match(/<main\b[\s\S]*?<\/main>/)[0];
+for (const cap of ['1,000', '5,000', '10,000']) {
+  assert.ok(pricingMain.includes(`Up to ${cap} Monthly Unique Resolved Visitors`), `pricing needs the ${cap} cap`);
+}
+assert.ok(pricingMain.includes('More than 10,000 Monthly Unique Resolved Visitors'), 'Enterprise starts above 10,000');
+assert.doesNotMatch(pricingMain, /activat|intent|interest/i, 'pricing should focus on identity resolution volume');
+assert.doesNotMatch(pricingMain, /data-billing=|save 15%/i, 'pricing should present the approved monthly prices');
 assert.ok(pricing.indexOf('pricing-grid-primary') < pricing.indexOf('data-pricing-estimator'), 'plans should appear before the estimator');
 
 const privacyPolicy = read('privacy-policy.html');

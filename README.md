@@ -121,7 +121,7 @@ Failures are listed by path and produce a nonzero exit status. Compare against t
 Technical SEO does not approve new commercial or product claims. Before changing public copy, obtain these decisions and supporting evidence:
 
 - **Trial:** duration and start event; eligibility; evaluation versus production scope; onboarding timing/fee; payment requirements; cancellation and paid conversion.
-- **Pricing:** what counts as one resolved visitor across repeat visits/devices; resets, overages/rollover; Growth intent inclusion versus separately scoped modules; monthly/annual assumptions.
+- **Pricing:** cross-device identity counting, resets, and overages/rollover. The approved monthly tiers use Monthly Unique Resolved Visitors; see SITE-REFERENCE.md.
 - **Claims:** definitions, provenance, dates, denominator and publishing permission for 4.5B+ records, 35B daily signals, 50%+ resolution and 24–48h setup. Separate graph scale, match coverage and accuracy.
 - **Capabilities:** supported countries/traffic/fields, confidence and refresh limitations, native/export/custom integrations, and customer versus vendor responsibilities.
 - **Trust/editorial:** approved security/privacy wording and concrete controls, real expert/reviewer identities, actual article dates, and permission/evidence for customer proof. Legal language needs its own review.
